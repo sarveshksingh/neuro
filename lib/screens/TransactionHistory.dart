@@ -676,36 +676,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                                   ),
                                 ],
                               ),
-/*
-                              // For Second Column
-                              Column(
-
-
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(left:2.0,bottom: 20.0,top: 120),
-
-                                    child: Row(
-                                        children:[
-
-                                          // Container(
-                                          //   child: Icon(Icons.network_cell),
-                                          //
-                                          // ),
-                                          // SizedBox(width: 10),
-                                          Container(
-                                            child: Text('Credit',style: TextStyle(color: Color(0xff00BE0D),fontSize: 12.0),),
-                                          )
-                                        ]
-
-                                    ),
-                                  ),
-
-
-                                ],
-
-                              ),
-                            */
                             ],
                           ),
 
