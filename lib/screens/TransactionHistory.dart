@@ -771,20 +771,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
             _buildListView(context, _hardwareDetailsList);*/
             Toast.show("Data Received", context,
                 duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-            //loadProgress();
-            /*SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setBool('Login', true);
-            pref.setString("Branch", respose.Branch);
-            pref.setString("Name", respose.Name);
-            pref.setString("Image_Path", respose.Image_Path);
-            pref.setString("User_ID", respose.User_ID);
-            pref.setString("Deligated_ByName", respose.Deligated_ByName);
-            pref.setString("Deligated_By", respose.Deligated_By);
-            pref.setString("Department", respose.Department);
-            pref.setString("M_app_key", respose.M_App_Key);*/
-            // Navigator.pushNamedAndRemoveUntil(
-            //     context, Routes.home, ModalRoute.withName(Routes.home));
-            //return _buildPosts(context, respose);
           } else
           /*if (respose.Error_Code == "400")*/ {
             Toast.show("Oops something went wrong", context,
