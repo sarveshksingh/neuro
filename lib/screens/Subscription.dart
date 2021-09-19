@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 class Subscription extends StatefulWidget {
   static const String routeName = '/subscription';
   @override
@@ -8,9 +10,11 @@ class Subscription extends StatefulWidget {
 
 class _SubscriptionState extends State<Subscription> {
   var checkBoxValue;
+  final List<String> entries = <String>['A', 'B', 'C'];
 
   @override
   Widget build(BuildContext context) {
+
     List<String> listItem = ["Delegate", "Visitor", "Contacts", "Home"];
     return MaterialApp(
       // title: 'My Demo',
@@ -265,6 +269,7 @@ class _SubscriptionState extends State<Subscription> {
                             ),
                             onPressed: () {
                               print('Basic package tapped');
+                              showCustomModelBottomSheet();
                             },
                             textColor: Color(0xffFFFFFF),
                             color: Color(0xFFE02935),
@@ -664,4 +669,178 @@ class _SubscriptionState extends State<Subscription> {
       ),
     );
   }
+
+  void showCustomModelBottomSheet(){
+
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder( //the rounded corner is created here.
+          borderRadius: BorderRadius.only(topLeft:Radius.circular(60.0),topRight:Radius.circular(60.0)),
+        ),
+        context: context,
+        builder: (context) {
+          return Container(
+            margin: EdgeInsets.only(top: 10.0,bottom: 5.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+
+                Container(
+                  margin: EdgeInsets.only(top: 30.0,left: 10.0),
+                  //color: Colors.red,
+                  child: Text('CHANNEL LIST',style: TextStyle(color: Color(0xff333333)),),
+                ),
+
+
+                SizedBox(height: 5),
+                ListView.builder(
+                  padding: EdgeInsets.only(top: 5),
+                  physics: NeverScrollableScrollPhysics(), ///
+                  shrinkWrap: true, ///
+                  scrollDirection: Axis.vertical, ///
+                  itemCount: entries.length,
+                  itemBuilder: (BuildContext context, int index) => Card(
+                    child: Column(
+                      children: <Widget>[
+                        // //Image.asset('assets/images/pluse.jpg'),
+                        // Text('hello')
+                        ListTile(
+                          trailing: new Icon(Icons.photo),
+                          title: new Text('Photo'),
+                          onTap: () {
+                            // Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+
+/*
+                ListTile(
+                  trailing: new Icon(Icons.photo),
+                  title: new Text('Photo'),
+                  onTap: () {
+                    // Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  trailing: new Icon(Icons.music_note),
+                  title: new Text('Music'),
+                  onTap: () {
+                    //Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  trailing: new Icon(Icons.videocam),
+                  title: new Text('Video'),
+                  onTap: () {
+                    //Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  trailing: new Icon(Icons.share),
+                  title: new Text('Share'),
+                  onTap: () {
+                    //Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  trailing: new Icon(Icons.photo),
+                  title: new Text('Photo'),
+                  onTap: () {
+                    // Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  trailing: new Icon(Icons.videocam),
+                  title: new Text('Video'),
+                  onTap: () {
+                    //Navigator.pop(context);
+                  },
+                ),
+*/
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10.0,left: 40),
+                      // width: 50,
+                      //color: Colors.red,
+                      child: FlatButton(
+                        child: Row(
+                          children: [
+                            Text(
+                              "REMOVE",
+                              style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
+                            ),
+                            // SizedBox(
+                            //   //width: 207.0,
+                            // ),
+                            // Image.asset(
+                            //   'assets/images/pluse.png',
+                            //   width: 20.0,
+                            //   height: 20.0,
+                            // )
+                          ],
+                        ),
+                        onPressed: () {
+                          print('Remove button tapped');
+                        },
+
+                        textColor: Color(0xffF9F9FB),
+
+                        color: Color(0xffDF193E),
+                        shape: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                style: BorderStyle.solid, width: 1.0, color: Colors.transparent),
+                            borderRadius: new BorderRadius.circular(15.0)),
+                      ),
+                    ),
+
+                    SizedBox(width: 20),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10.0,right: 50),
+                      //width: 30,
+                      //color: Colors.green,
+                      child: FlatButton(
+                        child: Row(
+                          children: [
+                            Text(
+                              "CANCEL",
+                              style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
+                            ),
+                            // SizedBox(
+                            //  // width: 207.0,
+                            // ),
+                            // Image.asset(
+                            //   'assets/images/pluse.png',
+                            //   width: 20.0,
+                            //   height: 20.0,
+                            // )
+                          ],
+                        ),
+                        onPressed: () {
+                          print('Cancel button tapped');
+                        },
+
+                        // textColor: Color(0xF9F9FB),
+                        textColor: Color(0xffF9F9FB),
+
+                        color: Color(0xff727272),
+                        shape: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                style: BorderStyle.solid, width: 1.0, color: Colors.transparent),
+                            borderRadius: new BorderRadius.circular(15.0)),
+                      ),
+                    ),
+                  ],
+                ),
+
+              ],
+            ),
+          );
+        });
+  }
+
 }
