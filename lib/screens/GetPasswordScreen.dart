@@ -97,9 +97,11 @@ class _GetScreenState extends State<GetPasswordScreen> {
                                 'Forgot password',
                                 style: TextStyle(
                                     color: Colors.black87,
-                                    fontSize: 18,
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 20,
+                                    fontFamily: 'OpenSans-Bold',
+                                    //fontStyle: FontStyle.normal,
+                                    //fontWeight: FontWeight.bold
+                                ),
                               )),
                         ),
                         Expanded(

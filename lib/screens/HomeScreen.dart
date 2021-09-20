@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
-import 'package:neurosms/routes/Routes.dart';
 import 'package:neurosms/screens/Subscription.dart';
 import 'package:neurosms/screens/TransactionHistory.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
       contactNumber = '',
       email = '',
       logoPath = '',
-      logo,
-      currentBalance = '';
+      logo;
+  double currentBalance = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               brightness: Brightness.light,
               elevation: 0.0,
               title: new Text('Dashboard'))),
-      backgroundColor: Colors.redAccent,
+      backgroundColor: Color(0xffDF1D3B),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
@@ -124,40 +123,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(right: 20.0),
-                          //child: SvgPicture.asset('assets/images/wallet.svg')
-                          child: Image.asset('assets/images/bank.png'),
+                          width: 57,
+                          height: 57,
+                          margin: EdgeInsets.only(right: 13.0),
+                          decoration: BoxDecoration(
+                              //color: Colors.red,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage('assets/images/bank.png')
+                                  /*image: logo == ''
+                                    ? Image.asset('assets/images/bank.png')
+                                    : NetworkImage(logoPath +
+                                    logo), */ //NetworkImage(logoPath)
+                                  ),
+                              borderRadius: BorderRadius.circular(57.0)),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            /*Container(
-                                margin: EdgeInsets.only(top: 10.0),
-                                child: new Text(
-                                  userName,
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )),*/
                             Container(
                                 margin: EdgeInsets.only(top: 10.0),
                                 child: new Text(
                                   companyName,
                                   style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                    color: Color(0xffDF1D3B),
+                                    fontSize: 14,
+                                    fontFamily: 'Roboto_Bold',
+                                    //fontWeight: FontWeight.bold
+                                  ),
                                 )),
                             Container(
                                 margin: EdgeInsets.only(top: 5.0),
                                 child: new Text(
                                   contactNumber,
                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal),
+                                    color: Color(0xff333333),
+                                    fontSize: 12,
+                                    fontFamily: 'Roboto_Medium',
+                                    //fontWeight: FontWeight.normal
+                                  ),
                                 )),
                             Row(children: [
                               Container(
@@ -166,9 +171,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: new Text(
                                     'Email:',
                                     style: TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal),
+                                      color: Color(0xff808080),
+                                      fontSize: 12,
+                                      fontFamily: 'Roboto_Regular',
+                                      //fontWeight: FontWeight.normal
+                                    ),
                                   )),
                               Container(
                                   margin: EdgeInsets.only(
@@ -176,9 +183,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: new Text(
                                     email,
                                     style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal),
+                                      color: Color(0xff333333),
+                                      fontSize: 12,
+                                      fontFamily: 'Roboto_Medium',
+                                    ),
                                   ))
                             ])
                           ],
@@ -191,10 +199,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Container(
-                            margin: EdgeInsets.only(right: 20.0),
-                            child: Image.asset('assets/images/wallet.png')
-                            //child: SvgPicture.asset('assets/images/wallet.svg')
-                            ),
+                          width: 35,
+                          height: 35,
+                          margin: EdgeInsets.only(right: 13.0),
+                          decoration: BoxDecoration(
+                              //color: Colors.red,
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image:
+                                      AssetImage('assets/images/wallet.png')),
+                              borderRadius: BorderRadius.circular(35.0)),
+                        ),
                         Container(
                             child: Expanded(
                                 child: Column(
@@ -206,18 +221,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: new Text(
                                   'Current Balance',
                                   style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal),
+                                    color: Color(0xff333333),
+                                    fontSize: 12,
+                                    fontFamily: 'Roboto_Light',
+                                  ),
                                 )),
                             Container(
                                 margin: EdgeInsets.only(bottom: 5.0),
                                 child: new Text(
                                   '\u20B9 ${currentBalance}',
                                   style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                    //color: Colors.green,
+                                    color: currentBalance > 0
+                                        ? Color(0xff227700)
+                                        : Color(0xffDF1D3B),
+                                    fontSize: 14,
+                                    fontFamily: 'Roboto_Bold',
+                                  ),
                                 )),
                           ],
                         ))),
@@ -230,8 +250,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => TransactionHistory()
-                                        ),
+                                        builder: (context) =>
+                                            TransactionHistory()),
                                   );
                                   /*Navigator.pushNamedAndRemoveUntil(
                                       context,
@@ -245,9 +265,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: new Text(
                                         'VIEW TRANSACTION',
                                         style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal),
+                                          color: Color(0xffDF1D3B),
+                                          fontSize: 12,
+                                          fontFamily: 'Lato_Regular',
+                                        ),
                                       )),
                                   Container(
                                       margin: EdgeInsets.only(
@@ -301,7 +322,8 @@ class _HomeScreenState extends State<HomeScreen> {
             logoPath = respose.logoPath;
             prefs.setString('User_ID', respose.dashboardinfo.userDetail.userId);
             prefs.setString('Name', respose.dashboardinfo.userDetail.userId);
-            prefs.setString('subsWalletId', respose.dashboardinfo.subscriberProfile.walletId);
+            prefs.setString('subsWalletId',
+                respose.dashboardinfo.subscriberProfile.walletId);
             userName = respose.dashboardinfo.subscriberProfile.subscriberName;
             companyName =
                 respose.dashboardinfo.subscriberProfile.mainAccountName;
@@ -309,8 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 .subscriberProfileAddress.phoneNo;
             email = respose.dashboardinfo.subscriberProfile.subscriberEmail;
             currentBalance = respose
-                .dashboardinfo.subscriberProfile.subscriberTotalWalletBalance
-                .toString();
+                .dashboardinfo.subscriberProfile.subscriberTotalWalletBalance;
             Toast.show("Get Dashboard Data successfully", context,
                 duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
             _hardwareDetailsList = respose.dashboardinfo.hardwareDetailsList;
@@ -348,6 +369,8 @@ class _HomeScreenState extends State<HomeScreen> {
       itemBuilder: (context, index) {
         _subscriptionList =
             _hardwareDetailsList.elementAt(index).hardsubscriptionList;
+        String statusValue =
+            _hardwareDetailsList.elementAt(index).hardwareStatusValue;
         return Card(
             elevation: 8.0,
             margin: EdgeInsets.only(
@@ -363,13 +386,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                           child: Row(children: [
                         new Text(
-                          _hardwareDetailsList
-                              .elementAt(index)
-                              .hardwareStatusValue,
+                          statusValue,
                           style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal),
+                            color: statusValue == 'Active'
+                                ? Color(0xff227700)
+                                : Color(0xffDF1D3B),
+                            fontSize: 12,
+                            fontFamily: 'Roboto_Regular',
+                          ),
                         )
                       ])),
                       Container(
@@ -380,18 +404,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: new Text(
                               'STB:',
                               style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal),
+                                color: Color(0xff333333),
+                                fontSize: 12,
+                                fontFamily: 'Roboto_Medium',
+                              ),
                             )),
                             Container(
                                 margin: EdgeInsets.only(left: 10.0),
                                 child: new Text(
                                   _hardwareDetailsList.elementAt(index).stbVcNo,
                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal),
+                                    color: Color(0xff333333),
+                                    fontSize: 12,
+                                    fontFamily: 'Roboto_Medium',
+                                  ),
                                 ))
                           ])),
                       Container(
@@ -401,11 +427,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM);*/
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TransactionHistory()
-                                        ),
-                                  );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TransactionHistory()),
+                                );
                                 /*Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     Routes.transaction,
@@ -416,12 +442,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //margin: EdgeInsets.only(left: 40.0),
                                     padding: EdgeInsets.all(5.0),
                                     child: new Text(
-                                  'VIEW TRANSACTION',
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal),
-                                )),
+                                      'VIEW TRANSACTION',
+                                      style: TextStyle(
+                                        color: Color(0xffDF1D3B),
+                                        fontSize: 12,
+                                        fontFamily: 'Lato_Regular',
+                                      ),
+                                    )),
                                 Container(
                                     margin: EdgeInsets.only(
                                         left: 10.0, right: 10.0),
@@ -437,7 +464,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               margin: EdgeInsets.only(
                                   bottom: 10.0, top: 10.0, right: 10.0),
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.redAccent),
+                                  border: Border.all(color: Color(0xffDF1D3B)),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: new InkWell(
@@ -446,11 +473,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         duration: Toast.LENGTH_SHORT,
                                         gravity: Toast.BOTTOM);*/
                                     Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Subscription()
-                                        ),
-                                  );
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Subscription()),
+                                    );
                                     /*Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         Routes.subscription,
@@ -460,25 +486,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Row(children: [
                                     Container(
                                         margin: EdgeInsets.only(
-                                            left: 10.0,
+                                            left: 5.0,
                                             bottom: 10.0,
                                             top: 10.0,
-                                            right: 10.0),
+                                            right: 5.0),
                                         child: new Text(
                                           'SUBSCRIPTION',
                                           style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.normal),
+                                            color: Color(0xffDF1D3B),
+                                            fontSize: 12,
+                                            fontFamily: 'Lato_Regular',
+                                          ),
                                         )),
                                     Container(
-                                        margin: EdgeInsets.only(right: 10.0),
+                                        margin: EdgeInsets.only(right: 5.0),
                                         child: SvgPicture.asset(
                                             'assets/images/group7517.svg')),
                                   ]))),
                           Container(
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.redAccent),
+                                  border: Border.all(color: Color(0xffDF1D3B)),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: new InkWell(
@@ -496,26 +523,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Row(children: [
                                     Container(
                                         margin: EdgeInsets.only(
-                                            left: 10.0,
+                                            left: 5.0,
                                             bottom: 10.0,
                                             top: 10.0,
-                                            right: 10.0),
+                                            right: 5.0),
                                         child: new Text(
                                           'QUICK RECHARGE',
                                           style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.normal),
+                                            color: Color(0xffDF1D3B),
+                                            fontSize: 12,
+                                            fontFamily: 'Lato_Regular',
+                                          ),
                                         )),
                                     Container(
-                                        margin: EdgeInsets.only(right: 10.0),
+                                        margin: EdgeInsets.only(right: 5.0),
                                         child: SvgPicture.asset(
                                             'assets/images/group7517.svg')),
                                   ])))
                         ],
                       )),
                       LimitedBox(
-                          maxHeight: 200,
+                          maxHeight: 150,
                           child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -562,16 +590,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.all(5.0),
                         //child: Image.asset('assets/images/Group7536.png')
                         child: Container(
-                          width: 50,
-                          height: 50,
-                          /*child: Text(
-                          'NEUROSMS',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold),
-                        ),*/
+                          width: 30,
+                          height: 30,
                           decoration: BoxDecoration(
                               //color: Colors.red,
                               image: DecorationImage(
@@ -583,7 +603,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : NetworkImage(logoPath +
                                         logo), //NetworkImage(logoPath)
                               ),
-                              borderRadius: BorderRadius.circular(50.0)),
+                              borderRadius: BorderRadius.circular(30.0)),
                           //child: Image.asset('assets/images/bank.png')
                         ),
                       ),
@@ -597,14 +617,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 productName, //'BASICS',//productName
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: Color(0xff333333),
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold),
+                                    fontFamily: 'Roboto_Medium'),
                               ),
                               Text(
                                 formattedDate, //'15-Aug-2021',
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
+                                    color: Color(0xff333333),
+                                    fontSize: 12,
+                                    fontFamily: 'Roboto_Regular'),
                               ),
                             ],
                           ),
@@ -620,16 +642,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 expire,
                                 style: TextStyle(
-                                    color: Colors.grey,
+                                    color: Color(0xff808080),
                                     fontSize: 10,
-                                    fontWeight: FontWeight.bold),
+                                    fontFamily: 'Roboto_Regular'),
                               ),
                               Text(
                                 alert,
                                 style: TextStyle(
-                                    color: Colors.green,
+                                    color: isActive
+                                        ? Color(0xff227700)
+                                        : Color(0xffDF1D3B),
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold),
+                                    fontFamily: 'Roboto_Regular'),
                               ),
                             ],
                           ),
