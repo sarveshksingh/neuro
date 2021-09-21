@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:neurosms/screens/Subscription.dart';
-import 'package:neurosms/screens/TransactionHistory.dart';
+import 'package:neurosms/screens/TransactionHistoryScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
@@ -65,32 +65,49 @@ class _HomeScreenState extends State<HomeScreen> {
       //body: _homePage(),
       drawer: AppDrawer(),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-            ),
+            icon: _selectedIndex == 0
+                ? SvgPicture.asset('assets/images/home.svg',
+                    color: Color(0xffDF1D3B))
+                : SvgPicture.asset(
+                    'assets/images/home.svg',
+                  ),
             label: 'Home',
             //backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: _selectedIndex == 1
+                ? SvgPicture.asset('assets/images/profile.svg',
+                    color: Color(0xffDF1D3B))
+                : SvgPicture.asset(
+                    'assets/images/profile.svg',
+                  ),
             label: 'Billing',
             //backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: _selectedIndex == 2
+                ? SvgPicture.asset('assets/images/user.svg',
+                    color: Color(0xffDF1D3B))
+                : SvgPicture.asset(
+                    'assets/images/user.svg',
+                  ),
             label: 'Account',
             //backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: _selectedIndex == 3
+                ? SvgPicture.asset('assets/images/support.svg',
+                    color: Color(0xffDF1D3B))
+                : SvgPicture.asset('assets/images/support.svg'),
             label: 'Support',
             //backgroundColor: Colors.pink,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xffDF193E),
+        type: BottomNavigationBarType.fixed,
+        //selectedItemColor: Color(0xffDF193E),
         unselectedItemColor: Color(0xff515353),
         onTap: _onItemTapped,
       ),
@@ -243,15 +260,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         ))),
                         Container(
                             child: new InkWell(
-                                onTap: () {
+                                onTap: () async {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
                                   /*Toast.show("Transaction Click", context,
                                       duration: Toast.LENGTH_SHORT,
                                       gravity: Toast.BOTTOM);*/
+                                  prefs.setString('encDvcMapId', '');
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            TransactionHistory()),
+                                            TransactionHistoryScreen()),
                                   );
                                   /*Navigator.pushNamedAndRemoveUntil(
                                       context,
@@ -274,7 +294,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       margin: EdgeInsets.only(
                                           left: 10.0, right: 10.0),
                                       child: SvgPicture.asset(
-                                          'assets/images/next.svg')),
+                                          'assets/images/next.svg',
+                                          color: Color(0xffDF1D3B))),
                                 ]))),
                       ],
                     )
@@ -321,10 +342,11 @@ class _HomeScreenState extends State<HomeScreen> {
           if (respose.status == 1) {
             logoPath = respose.logoPath;
             prefs.setString('User_ID', respose.dashboardinfo.userDetail.userId);
-            prefs.setString('Name', respose.dashboardinfo.userDetail.userId);
+
             prefs.setString('subsWalletId',
                 respose.dashboardinfo.subscriberProfile.walletId);
             userName = respose.dashboardinfo.subscriberProfile.subscriberName;
+            prefs.setString('Name', userName);
             companyName =
                 respose.dashboardinfo.subscriberProfile.mainAccountName;
             contactNumber = respose.dashboardinfo.subscriberProfile
@@ -332,6 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
             email = respose.dashboardinfo.subscriberProfile.subscriberEmail;
             currentBalance = respose
                 .dashboardinfo.subscriberProfile.subscriberTotalWalletBalance;
+            prefs.setDouble('balance', currentBalance);
             Toast.show("Get Dashboard Data successfully", context,
                 duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
             _hardwareDetailsList = respose.dashboardinfo.hardwareDetailsList;
@@ -371,6 +394,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _hardwareDetailsList.elementAt(index).hardsubscriptionList;
         String statusValue =
             _hardwareDetailsList.elementAt(index).hardwareStatusValue;
+        String encDvcMapId = _hardwareDetailsList.elementAt(index).encDvcMapId;
         return Card(
             elevation: 8.0,
             margin: EdgeInsets.only(
@@ -422,15 +446,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           ])),
                       Container(
                           child: new InkWell(
-                              onTap: () {
+                              onTap: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
                                 /* Toast.show("Transaction Click", context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM);*/
+                                prefs.setString('encDvcMapId', encDvcMapId);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          TransactionHistory()),
+                                          TransactionHistoryScreen()),
                                 );
                                 /*Navigator.pushNamedAndRemoveUntil(
                                     context,
@@ -453,7 +480,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     margin: EdgeInsets.only(
                                         left: 10.0, right: 10.0),
                                     child: SvgPicture.asset(
-                                        'assets/images/next.svg')),
+                                        'assets/images/next.svg',
+                                        color: Color(0xffDF1D3B))),
                               ]))),
                       Container(
                           child: Row(
@@ -501,7 +529,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                         margin: EdgeInsets.only(right: 5.0),
                                         child: SvgPicture.asset(
-                                            'assets/images/group7517.svg')),
+                                            'assets/images/group75171.svg',
+                                            color: Color(0xffDF1D3B))),
                                   ]))),
                           Container(
                               decoration: BoxDecoration(
@@ -538,7 +567,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                         margin: EdgeInsets.only(right: 5.0),
                                         child: SvgPicture.asset(
-                                            'assets/images/group7517.svg')),
+                                            'assets/images/group75171.svg',
+                                            color: Color(0xffDF1D3B))),
                                   ])))
                         ],
                       )),

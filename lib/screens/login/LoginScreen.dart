@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
-  String _username, _password, imgPath='';
+  String _username, _password, imgPath = '';
 
   bool visible = true;
 
@@ -114,13 +114,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.bold),
                         ),*/
                         decoration: BoxDecoration(
-                            //color: Colors.red,
-                            image: DecorationImage(
-                                fit: BoxFit.fill,
-                                //image: AssetImage('assets/images/bank.png')
-                                //image: SvgPicture.asset('assets/images/bank.svg')
-                                image: NetworkImage(imgPath)),
-                            //borderRadius: BorderRadius.circular(50.0)
+                          //color: Colors.red,
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              //image: AssetImage('assets/images/bank.png')
+                              //image: SvgPicture.asset('assets/images/bank.svg')
+                              image: NetworkImage(imgPath)),
+                          //borderRadius: BorderRadius.circular(50.0)
                         ),
                         //child: Image.asset('assets/images/bank.png')
                       ),
@@ -173,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       end: 16.0,
                                                       top: 8.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/user.svg'), // myIcon is a 48px-wide widget.
+                                                  'assets/images/user.svg',
+                                                  color: Color(
+                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             suffixIcon: Padding(
                                               padding:
@@ -183,7 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       end: 16.0,
                                                       top: 8.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/tick.svg'), // myIcon is a 48px-wide widget.
+                                                  'assets/images/tick.svg',
+                                                  color: Color(
+                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             labelText: 'Email',
                                             hintText:
@@ -220,7 +224,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       end: 16.0,
                                                       top: 8.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/lock.svg'), // myIcon is a 48px-wide widget.
+                                                  'assets/images/lock.svg',
+                                                  color: Color(
+                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             suffixIcon: Padding(
                                               padding:
@@ -230,7 +236,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       end: 16.0,
                                                       top: 8.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/visibility.svg'), // myIcon is a 48px-wide widget.
+                                                  'assets/images/visibility.svg',
+                                                  color: Color(
+                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             labelText: 'Password',
                                             hintText: 'Enter secure password'),

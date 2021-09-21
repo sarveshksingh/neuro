@@ -34,6 +34,7 @@ dependencies:
   json_annotation: any
   firebase_auth: ^0.20.0+1
   http: ^0.12.0+2
+  intl: ^0.16.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -80,10 +81,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Open_Sans
+    - family: Open_Sans_Bold
       fonts:
         #- asset: assets/fonts/OpenSans/OpenSans-Regular.ttf
         - asset: assets/fonts/Open_Sans/OpenSans-Bold.ttf
+
+    - family: Open_Sans_Regular
+      fonts:
+        - asset: assets/fonts/Open_Sans/OpenSans-Regular.ttf
 
     - family: Roboto_Bold
       fonts:

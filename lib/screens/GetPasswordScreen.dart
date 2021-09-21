@@ -135,7 +135,7 @@ class _GetScreenState extends State<GetPasswordScreen> {
                                                       end: 16.0,
                                                       top: 16.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/user.svg'), // myIcon is a 48px-wide widget.
+                                                  'assets/images/user.svg', color: Color(0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             suffixIcon: Padding(
                                               padding:
@@ -145,7 +145,7 @@ class _GetScreenState extends State<GetPasswordScreen> {
                                                       end: 16.0,
                                                       top: 8.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/tick.svg'), // myIcon is a 48px-wide widget.
+                                                  'assets/images/tick.svg', color: Color(0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             labelText: 'Enter User Name',
                                             hintText: 'Enter valid User Name'),

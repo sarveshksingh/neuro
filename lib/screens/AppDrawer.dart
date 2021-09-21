@@ -1,3 +1,6 @@
+import 'dart:wasm';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neurosms/routes/Routes.dart';
@@ -11,20 +14,21 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   SharedPreferences pref;
   String userName = '', userId = '', key = '', imgPath = '';
+  double balance = 0;
 
-  /*@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //getCredential();
-  }*/
+    getCredential();
+  }
 
   getCredential() async {
     pref = await SharedPreferences.getInstance();
     setState(() {
       userId = pref.getString('User_ID');
-      userName = pref.getString("Name");
-      // key = pref.getString("M_app_key");
+      userName = pref.getString('Name');
+      balance = pref.getDouble('balance');
       // imgPath = pref.getString('Image_Path');
     });
   }
@@ -108,21 +112,60 @@ class _AppDrawerState extends State<AppDrawer> {
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
         decoration: BoxDecoration(
-            color: Colors.redAccent,
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage('path/to/header_background.png')
-                //image: NetworkImage(imgPath)
-                )),
+          color: Colors.redAccent,
+          // image: DecorationImage(
+          //     fit: BoxFit.fill, image: AssetImage('assets/images/bank.png')
+          //     //image: NetworkImage(imgPath)
+          //     )
+        ),
         child: Stack(children: <Widget>[
-          Positioned(
-              bottom: 12.0,
-              left: 16.0,
-              child: Text(userName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500))),
+          Column(crossAxisAlignment: CrossAxisAlignment.start,
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 20.0),
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                            //color: Colors.red,
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: AssetImage('assets/images/bank.png')),
+                            borderRadius: BorderRadius.circular(30.0)),
+                      ),
+                    ]),
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(top: 10.0),
+                          child: Text(userName,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Roboto_Bold'))),
+                    ]),
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(top: 10.0),
+                          child: Text('\u20B9 ${balance}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Roboto_Bold'))),
+                    ])
+              ]
+
+              //child: Image.asset('assets/images/bank.png')
+              )
         ]));
   }
 
@@ -133,7 +176,7 @@ class _AppDrawerState extends State<AppDrawer> {
         children: <Widget>[
           Container(
               margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-              child: SvgPicture.asset(icon)),
+              child: SvgPicture.asset(icon,color: Color(0xffDF1D3B))),
           //SvgPicture.asset(icon),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
