@@ -840,7 +840,7 @@ class _SubscriptionState extends State<Subscription> {
 
                 //SizedBox(height: 5),
                 Container(
-
+                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
                   color: Colors.white,
                   child: new Padding(padding: EdgeInsets.all(8.0),
                     child: new Card(
