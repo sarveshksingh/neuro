@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:neurosms/screens/BottomNavigationbar.dart';
+import 'package:neurosms/screens/QuickRecharge.dart';
 import 'package:neurosms/screens/Subscription.dart';
 import 'package:neurosms/screens/TransactionHistoryScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -491,12 +492,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Toast.show("Transaction Click", context,
                                         duration: Toast.LENGTH_SHORT,
                                         gravity: Toast.BOTTOM);
-                                    /*Navigator.push(
+                                    Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        //builder: (context) => TimesheetPage()
+                                        builder: (context) => QuickRecharge()
                                         ),
-                                  );*/
+                                  );
                                   },
                                   child: Row(children: [
                                     Container(
