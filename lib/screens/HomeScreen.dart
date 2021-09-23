@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
+import 'package:neurosms/screens/BottomNavigationbar.dart';
 import 'package:neurosms/screens/Subscription.dart';
 import 'package:neurosms/screens/TransactionHistoryScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               brightness: Brightness.light,
               elevation: 0.0,
               title: new Text('Dashboard'))),
-      backgroundColor: Color(0xffDF1D3B),
+      backgroundColor: Color(0xffffffff),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
@@ -64,60 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       //body: _homePage(),
       drawer: AppDrawer(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 0
-                ? SvgPicture.asset('assets/images/home.svg',
-                    color: Color(0xffDF1D3B))
-                : SvgPicture.asset(
-                    'assets/images/home.svg',
-                  ),
-            label: 'Home',
-            //backgroundColor: Colors.red,
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 1
-                ? SvgPicture.asset('assets/images/profile.svg',
-                    color: Color(0xffDF1D3B))
-                : SvgPicture.asset(
-                    'assets/images/profile.svg',
-                  ),
-            label: 'Billing',
-            //backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 2
-                ? SvgPicture.asset('assets/images/user.svg',
-                    color: Color(0xffDF1D3B))
-                : SvgPicture.asset(
-                    'assets/images/user.svg',
-                  ),
-            label: 'Account',
-            //backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 3
-                ? SvgPicture.asset('assets/images/support.svg',
-                    color: Color(0xffDF1D3B))
-                : SvgPicture.asset('assets/images/support.svg'),
-            label: 'Support',
-            //backgroundColor: Colors.pink,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        type: BottomNavigationBarType.fixed,
-        //selectedItemColor: Color(0xffDF193E),
-        unselectedItemColor: Color(0xff515353),
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: BottomNavigationbar(_selectedIndex),
     );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   Widget _buildUserCard() => new Container(

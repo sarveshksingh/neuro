@@ -21,17 +21,18 @@ class _SubscriptionState extends State<Subscription> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          brightness: Brightness.light,
           title: Text(
             'Subscription',
             textDirection: TextDirection.ltr,
             style: TextStyle(color: Color(0xffFFFFFF)),
           ),
-          backgroundColor: Color(0xffDF193E),
+          backgroundColor: Color(0xffDF1D3B),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          centerTitle: true,
+          //centerTitle: true,
         ),
         body: Column(
           children: <Widget>[

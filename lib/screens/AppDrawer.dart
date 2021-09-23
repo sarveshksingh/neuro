@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neurosms/routes/Routes.dart';
+import 'package:neurosms/screens/AccountScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -51,10 +52,14 @@ class _AppDrawerState extends State<AppDrawer> {
             //onTap: () => Navigator.pushReplacementNamed(context, Routes.patentreport)
           ),
           _createDrawerItem(
-            icon: 'assets/images/user.svg',
-            text: 'Account',
-            //onTap: () => Navigator.pushReplacementNamed(context, Routes.timesheet)
-          ),
+              icon: 'assets/images/user.svg',
+              text: 'Account',
+              onTap: () =>
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AccountScreen()))),
           _createDrawerItem(
             icon: 'assets/images/support.svg',
             text: 'Support',
@@ -112,7 +117,7 @@ class _AppDrawerState extends State<AppDrawer> {
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
         decoration: BoxDecoration(
-          color: Colors.redAccent,
+          color: Color(0xffDF1D3B),
           // image: DecorationImage(
           //     fit: BoxFit.fill, image: AssetImage('assets/images/bank.png')
           //     //image: NetworkImage(imgPath)
@@ -176,7 +181,7 @@ class _AppDrawerState extends State<AppDrawer> {
         children: <Widget>[
           Container(
               margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-              child: SvgPicture.asset(icon,color: Color(0xffDF1D3B))),
+              child: SvgPicture.asset(icon, color: Color(0xffDF1D3B))),
           //SvgPicture.asset(icon),
           Padding(
             padding: EdgeInsets.only(left: 8.0),

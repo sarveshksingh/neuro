@@ -1,3 +1,4 @@
+import 'package:neurosms/screens/AccountScreen.dart';
 import 'package:neurosms/screens/GetPasswordScreen.dart';
 import 'package:neurosms/screens/HomeScreen.dart';
 import 'package:neurosms/screens/MSOScreen.dart';
@@ -12,5 +13,5 @@ class Routes {
   static const String forget = GetPasswordScreen.routeName;
   static const String transaction = TransactionHistoryScreen.routeName;
   static const String subscription = Subscription.routeName;
-  //static const String client = TrademarkReportPage.routeName;
+  static const String account = AccountScreen.routeName;
 }
