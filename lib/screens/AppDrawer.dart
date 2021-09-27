@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:neurosms/screens/AccountScreen.dart';
+import 'package:neurosms/screens/SupportScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'BillingScreen.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -49,7 +52,11 @@ class _AppDrawerState extends State<AppDrawer> {
           _createDrawerItem(
             icon: 'assets/images/profile.svg',
             text: 'Billing',
-            //onTap: () => Navigator.pushReplacementNamed(context, Routes.patentreport)
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        BillingScreen()))
           ),
           _createDrawerItem(
               icon: 'assets/images/user.svg',
@@ -63,7 +70,11 @@ class _AppDrawerState extends State<AppDrawer> {
           _createDrawerItem(
             icon: 'assets/images/support.svg',
             text: 'Support',
-            //onTap: () => Navigator.pushReplacementNamed(context, Routes.timerecordlist)
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SupportScreen()))
           ),
           /*_createDrawerItem(
               icon: 'assets/images/trademark_report_nav.svg',

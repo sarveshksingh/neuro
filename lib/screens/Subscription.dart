@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-
-
 class Subscription extends StatefulWidget {
   static const String routeName = '/subscription';
+
   @override
   _SubscriptionState createState() => _SubscriptionState();
 }
@@ -14,7 +13,6 @@ class _SubscriptionState extends State<Subscription> {
 
   @override
   Widget build(BuildContext context) {
-
     List<String> listItem = ["Delegate", "Visitor", "Contacts", "Home"];
     return MaterialApp(
       // title: 'My Demo',
@@ -61,157 +59,155 @@ class _SubscriptionState extends State<Subscription> {
                         //return new Text(listItem[index]);
                         int ind = index;
                         return GestureDetector(
-                            onTap: (){
-                              print("index $ind");
-                              showCustomModelBottomSheetChannel();
-                            },
-                             child: Card(
+                          onTap: () {
+                            print("index $ind");
+                            showCustomModelBottomSheetChannel();
+                          },
+                          child: Card(
+                            child: Row(
+                              children: [
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 25.0, top: 20.0, bottom: 20.0),
+                                      child: Row(children: [
+                                        Container(
+                                          child: Icon(Icons.network_cell),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        // Container(
+                                        //   child: Text('Hello'),
+                                        // )
+                                      ]),
+                                    ),
+                                  ],
+                                ),
 
-                              child: Row(
-                                children: [
-                                  Column(
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 25.0, top: 20.0, bottom: 20.0),
-                                        child: Row(children: [
-                                          Container(
-                                            child: Icon(Icons.network_cell),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          // Container(
-                                          //   child: Text('Hello'),
-                                          // )
-                                        ]),
-                                      ),
-                                    ],
-                                  ),
-
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      /* ListTile(
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    /* ListTile(
                 leading: Icon(Icons.wifi),
                 title: Text(listItem[index],style: TextStyle(fontSize: 18,color: Colors.grey),),
 
               ),*/
-                                      Container(
-                                        margin:
-                                        EdgeInsets.only(left: 15.0, top: 20.0),
-                                        child: Row(children: [
-                                          // Container(
-                                          //   child: Icon(Icons.network_cell),
-                                          // ),
-                                          // SizedBox(width: 10,),
-                                          Container(
-                                            child: Text('Basic'),
-                                          )
-                                        ]),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 15.0, top: 5),
-                                        child: Row(children: [
-                                          // Container(
-                                          //   child: Icon(Icons.network_cell),
-                                          //
-                                          // ),
-                                          //SizedBox(width: 10),
-                                          Container(
-                                            child: Text(
-                                              'Active',
-                                              style: TextStyle(
-                                                  color: Color(0xff227700)),
-                                            ),
-                                          )
-                                        ]),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 15.0, top: 5, bottom: 20),
-                                        child: Row(children: [
-                                          // Container(
-                                          //   child: Icon(Icons.network_cell),
-                                          //
-                                          // ),
-                                          //SizedBox(width: 10),
-                                          Container(
-                                            child: Text('6 sep 2021'),
-                                          )
-                                        ]),
-                                      ),
-                                    ],
-                                  ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 15.0, top: 20.0),
+                                      child: Row(children: [
+                                        // Container(
+                                        //   child: Icon(Icons.network_cell),
+                                        // ),
+                                        // SizedBox(width: 10,),
+                                        Container(
+                                          child: Text('Basic'),
+                                        )
+                                      ]),
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(left: 15.0, top: 5),
+                                      child: Row(children: [
+                                        // Container(
+                                        //   child: Icon(Icons.network_cell),
+                                        //
+                                        // ),
+                                        //SizedBox(width: 10),
+                                        Container(
+                                          child: Text(
+                                            'Active',
+                                            style: TextStyle(
+                                                color: Color(0xff227700)),
+                                          ),
+                                        )
+                                      ]),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 15.0, top: 5, bottom: 20),
+                                      child: Row(children: [
+                                        // Container(
+                                        //   child: Icon(Icons.network_cell),
+                                        //
+                                        // ),
+                                        //SizedBox(width: 10),
+                                        Container(
+                                          child: Text('6 sep 2021'),
+                                        )
+                                      ]),
+                                    ),
+                                  ],
+                                ),
 
-                                  Column(
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 5.0, top: 20.0, bottom: 20.0),
-                                        child: Row(children: [
-                                          // Container(
-                                          //   child: Icon(Icons.network_cell),
-                                          // ),
-                                          // SizedBox(width: 20,),
-                                          Container(
-                                            child: Text('20 Days Ago'),
-                                          )
-                                        ]),
-                                      ),
-                                    ],
-                                  ),
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 5.0, top: 20.0, bottom: 20.0),
+                                      child: Row(children: [
+                                        // Container(
+                                        //   child: Icon(Icons.network_cell),
+                                        // ),
+                                        // SizedBox(width: 20,),
+                                        Container(
+                                          child: Text('20 Days Ago'),
+                                        )
+                                      ]),
+                                    ),
+                                  ],
+                                ),
 
-                                  // For Second Column
-                                  Column(
-                                    children: <Widget>[
-                                      Container(
-                                        margin:
-                                        EdgeInsets.only(left: 50.0, top: 20.0),
-                                        child: Row(children: [
-                                          // Container(
-                                          //   child: Icon(Icons.network_cell),
-                                          //
-                                          // ),
-                                          // SizedBox(width: 10),
-                                          Container(
-                                            child: Text('Rs 222.45'),
-                                          )
-                                        ]),
-                                      ),
-                                      Container(
-                                        margin:
-                                        EdgeInsets.only(left: 50.0, top: 5.0),
-                                        child: Row(children: [
-                                          // Container(
-                                          //   child: Icon(Icons.network_cell),
-                                          //   // child: Checkbox(
-                                          //   //
-                                          //   //   activeColor: Colors.green,
-                                          //   // ),
-                                          //
-                                          // ),
-                                          // SizedBox(width: 10),
-                                          Container(
-                                            child: Text('19 oct 2021'),
-                                          )
-                                        ]),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-
-                              color: Colors.white,
-                              shadowColor: Colors.lightBlue,
-                              elevation: 5.0,
-                              //margin: EdgeInsets.all(15.0),
-                              margin: EdgeInsets.only(
-                                  left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
+                                // For Second Column
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 50.0, top: 20.0),
+                                      child: Row(children: [
+                                        // Container(
+                                        //   child: Icon(Icons.network_cell),
+                                        //
+                                        // ),
+                                        // SizedBox(width: 10),
+                                        Container(
+                                          child: Text('Rs 222.45'),
+                                        )
+                                      ]),
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(left: 50.0, top: 5.0),
+                                      child: Row(children: [
+                                        // Container(
+                                        //   child: Icon(Icons.network_cell),
+                                        //   // child: Checkbox(
+                                        //   //
+                                        //   //   activeColor: Colors.green,
+                                        //   // ),
+                                        //
+                                        // ),
+                                        // SizedBox(width: 10),
+                                        Container(
+                                          child: Text('19 oct 2021'),
+                                        )
+                                      ]),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
+
+                            color: Colors.white,
+                            shadowColor: Colors.lightBlue,
+                            elevation: 5.0,
+                            //margin: EdgeInsets.all(15.0),
+                            margin: EdgeInsets.only(
+                                left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
+                          ),
                         );
-
-
                       }),
                 ),
               ),
@@ -258,15 +254,17 @@ class _SubscriptionState extends State<Subscription> {
                           ),
                         ),
                         SizedBox(
-                          width: 350,
+                          //width: 350,
                           child: FlatButton(
                             child: Row(
                               children: [
-                                Text(
+                                Expanded(
+                                    child: Text(
                                   "Basic Package",
                                   style: TextStyle(
-                                      fontSize: 13.0, fontFamily: "Raleway"),
-                                ),
+                                      fontSize: 13,
+                                      fontFamily: 'Open_Sans_Regular'),
+                                )),
                                 SizedBox(
                                   width: 207.0,
                                 ),
@@ -294,15 +292,17 @@ class _SubscriptionState extends State<Subscription> {
                         ),
                         SizedBox(width: 1),
                         SizedBox(
-                          width: 350,
+                          //width: 350,
                           child: FlatButton(
                             child: Row(
                               children: [
-                                Text(
+                                Expanded(
+                                    child: Text(
                                   "Add On Package",
                                   style: TextStyle(
-                                      fontSize: 13.0, fontFamily: "Raleway"),
-                                ),
+                                      fontSize: 13,
+                                      fontFamily: 'Open_Sans_Regular'),
+                                )),
                                 SizedBox(
                                   width: 193.0,
                                 ),
@@ -329,15 +329,16 @@ class _SubscriptionState extends State<Subscription> {
                         ),
                         SizedBox(width: 1),
                         SizedBox(
-                          width: 350,
+                          //width: 350,
                           child: FlatButton(
                             child: Row(
                               children: [
-                                Text(
+                                Expanded(
+                                    child: Text(
                                   "A-LA Carte",
                                   style: TextStyle(
-                                      fontSize: 13.0, fontFamily: "Raleway"),
-                                ),
+                                      fontSize: 13.0, fontFamily: "Open_Sans_Regular"),
+                                )),
                                 SizedBox(
                                   width: 228.0,
                                 ),
@@ -398,7 +399,7 @@ class _SubscriptionState extends State<Subscription> {
                                 "Sub Total",
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                               SizedBox(
@@ -408,7 +409,7 @@ class _SubscriptionState extends State<Subscription> {
                                 '\u{20B9} ${0.00}',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                             ],
@@ -429,7 +430,7 @@ class _SubscriptionState extends State<Subscription> {
                                 "CGST (9.00%)",
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                               SizedBox(
@@ -439,7 +440,7 @@ class _SubscriptionState extends State<Subscription> {
                                 '\u{20B9} ${0.00}',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                             ],
@@ -460,7 +461,7 @@ class _SubscriptionState extends State<Subscription> {
                                 "SGST (9.00%)",
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                               SizedBox(
@@ -470,7 +471,7 @@ class _SubscriptionState extends State<Subscription> {
                                 '\u{20B9} ${0.00}',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                             ],
@@ -491,7 +492,7 @@ class _SubscriptionState extends State<Subscription> {
                                 "Refund",
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                               SizedBox(
@@ -501,7 +502,7 @@ class _SubscriptionState extends State<Subscription> {
                                 '\u{20B9} ${0.00}',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                             ],
@@ -522,7 +523,7 @@ class _SubscriptionState extends State<Subscription> {
                                 "Total",
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                               SizedBox(
@@ -532,7 +533,7 @@ class _SubscriptionState extends State<Subscription> {
                                 '\u{20B9} ${0.00}',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                             ],
@@ -553,7 +554,7 @@ class _SubscriptionState extends State<Subscription> {
                                 "Wallet Balance",
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                               SizedBox(
@@ -563,7 +564,7 @@ class _SubscriptionState extends State<Subscription> {
                                 '\u{20B9} ${151.00}',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                             ],
@@ -584,7 +585,7 @@ class _SubscriptionState extends State<Subscription> {
                                 "Net Payable Amount",
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                               SizedBox(
@@ -594,7 +595,7 @@ class _SubscriptionState extends State<Subscription> {
                                 '\u{20B9} ${0.00}',
                                 style: TextStyle(
                                     fontSize: 15.0,
-                                    fontFamily: "Raleway",
+                                    fontFamily: "Open_Sans_Regular",
                                     color: Color(0xff333333)),
                               ),
                             ],
@@ -611,19 +612,20 @@ class _SubscriptionState extends State<Subscription> {
                               SizedBox(
                                 width: 100,
                                 child: FlatButton(
-                                  child: Row(
+                                  child: Column(
                                     children: [
                                       Text(
                                         "SUBMIT",
                                         style: TextStyle(
                                             fontSize: 15.0,
-                                            fontFamily: "Raleway"),
+                                            fontFamily: "Open_Sans_Regular"),
                                         textAlign: TextAlign.center,
                                       ),
                                     ],
                                   ),
                                   onPressed: () {
                                     print('Submit button Clicked');
+                                    Navigator.pop(context);
                                   },
                                   textColor: Color(0xffFFFFFF),
                                   color: Color(0xffDF193E),
@@ -642,13 +644,13 @@ class _SubscriptionState extends State<Subscription> {
                               SizedBox(
                                 width: 100,
                                 child: FlatButton(
-                                  child: Row(
+                                  child: Column(
                                     children: [
                                       Text(
                                         "CANCEL",
                                         style: TextStyle(
                                           fontSize: 15.0,
-                                          fontFamily: "Raleway",
+                                          fontFamily: "Open_Sans_Regular",
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
@@ -656,6 +658,7 @@ class _SubscriptionState extends State<Subscription> {
                                   ),
                                   onPressed: () {
                                     print('Submit button Clicked');
+                                    Navigator.pop(context);
                                   },
                                   textColor: Color(0xffFFFFFF),
                                   color: Color(0xff727272),
@@ -683,34 +686,41 @@ class _SubscriptionState extends State<Subscription> {
     );
   }
 
-  void showCustomModelBottomSheetChannel(){
-
+  void showCustomModelBottomSheetChannel() {
     showModalBottomSheet(
-        shape: RoundedRectangleBorder( //the rounded corner is created here.
-          borderRadius: BorderRadius.only(topLeft:Radius.circular(60.0),topRight:Radius.circular(60.0)),
+        shape: RoundedRectangleBorder(
+          //the rounded corner is created here.
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(60.0), topRight: Radius.circular(60.0)),
         ),
         context: context,
         builder: (context) {
           return Container(
-            margin: EdgeInsets.only(top: 10.0,bottom: 5.0),
+            margin: EdgeInsets.only(top: 10.0, bottom: 5.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
                 Container(
-                  margin: EdgeInsets.only(top: 30.0,left: 10.0),
+                  margin: EdgeInsets.only(top: 30.0, left: 10.0),
                   //color: Colors.red,
-                  child: Text('CHANNEL LIST',style: TextStyle(color: Color(0xff333333)),),
+                  child: Text(
+                    'CHANNEL LIST',
+                    style: TextStyle(color: Color(0xff333333)),
+                  ),
                 ),
-
-
                 SizedBox(height: 5),
                 ListView.builder(
                   padding: EdgeInsets.only(top: 5),
-                  physics: NeverScrollableScrollPhysics(), ///
-                  shrinkWrap: true, ///
-                  scrollDirection: Axis.vertical, ///
+                  physics: NeverScrollableScrollPhysics(),
+
+                  ///
+                  shrinkWrap: true,
+
+                  ///
+                  scrollDirection: Axis.vertical,
+
+                  ///
                   itemCount: entries.length,
                   itemBuilder: (BuildContext context, int index) => Card(
                     child: Column(
@@ -728,13 +738,10 @@ class _SubscriptionState extends State<Subscription> {
                     ),
                   ),
                 ),
-
-
-
                 Row(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(bottom: 10.0,left: 40),
+                      margin: EdgeInsets.only(bottom: 10.0, left: 40),
                       // width: 50,
                       //color: Colors.red,
                       child: FlatButton(
@@ -742,7 +749,8 @@ class _SubscriptionState extends State<Subscription> {
                           children: [
                             Text(
                               "REMOVE",
-                              style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
+                              style: TextStyle(
+                                  fontSize: 12.0, fontFamily: "Open_Sans_Regular"),
                             ),
                             // SizedBox(
                             //   //width: 207.0,
@@ -757,20 +765,19 @@ class _SubscriptionState extends State<Subscription> {
                         onPressed: () {
                           print('Remove button tapped');
                         },
-
                         textColor: Color(0xffF9F9FB),
-
                         color: Color(0xffDF193E),
                         shape: OutlineInputBorder(
                             borderSide: BorderSide(
-                                style: BorderStyle.solid, width: 1.0, color: Colors.transparent),
+                                style: BorderStyle.solid,
+                                width: 1.0,
+                                color: Colors.transparent),
                             borderRadius: new BorderRadius.circular(15.0)),
                       ),
                     ),
-
                     SizedBox(width: 20),
                     Container(
-                      margin: EdgeInsets.only(bottom: 10.0,right: 50),
+                      margin: EdgeInsets.only(bottom: 10.0, right: 50),
                       //width: 30,
                       //color: Colors.green,
                       child: FlatButton(
@@ -778,7 +785,8 @@ class _SubscriptionState extends State<Subscription> {
                           children: [
                             Text(
                               "CANCEL",
-                              style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
+                              style: TextStyle(
+                                  fontSize: 12.0, fontFamily: "Open_Sans_Regular"),
                             ),
                             // SizedBox(
                             //  // width: 207.0,
@@ -800,28 +808,32 @@ class _SubscriptionState extends State<Subscription> {
                         color: Color(0xff727272),
                         shape: OutlineInputBorder(
                             borderSide: BorderSide(
-                                style: BorderStyle.solid, width: 1.0, color: Colors.transparent),
+                                style: BorderStyle.solid,
+                                width: 1.0,
+                                color: Colors.transparent),
                             borderRadius: new BorderRadius.circular(15.0)),
                       ),
                     ),
                   ],
                 ),
-
               ],
             ),
           );
         });
   }
-  void showCustomModelBottomSheetBasicPackage(){
+
+  void showCustomModelBottomSheetBasicPackage() {
     TextEditingController controller = new TextEditingController();
     final List<Map> myProducts =
-    List.generate(200, (index) => {"id": index, "name": "Product $index"})
-        .toList();
+        List.generate(200, (index) => {"id": index, "name": "Product $index"})
+            .toList();
 
     showModalBottomSheet(
-        isScrollControlled:true,
-        shape: RoundedRectangleBorder( //the rounded corner is created here.
-          borderRadius: BorderRadius.only(topLeft:Radius.circular(60.0),topRight:Radius.circular(60.0)),
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          //the rounded corner is created here.
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(60.0), topRight: Radius.circular(60.0)),
         ),
         context: context,
         builder: (context) {
@@ -831,38 +843,39 @@ class _SubscriptionState extends State<Subscription> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-
                 Container(
-                  margin: EdgeInsets.only(top: 30.0,left: 10.0),
+                  margin: EdgeInsets.only(top: 30.0, left: 10.0),
                   //color: Colors.red,
-                  child: Text('BASICK PACKAGE',style: TextStyle(color: Color(0xff333333)),),
+                  child: Text(
+                    'BASICK PACKAGE',
+                    style: TextStyle(color: Color(0xff333333)),
+                  ),
                 ),
-
 
                 //SizedBox(height: 5),
                 Container(
-                  margin: EdgeInsets.only(left: 5.0,right: 5.0),
+                  margin: EdgeInsets.only(left: 5.0, right: 5.0),
                   color: Colors.white,
-                  child: new Padding(padding: EdgeInsets.all(8.0),
+                  child: new Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: new Card(
                       child: new ListTile(
                         leading: new Icon(Icons.search),
                         title: new TextField(
                           controller: controller,
                           decoration: InputDecoration(
-                              hintText: 'Search', border: InputBorder.none
-                          ),
+                              hintText: 'Search', border: InputBorder.none),
                           //onChanged: onSearchTextChanged,
                         ),
-                        trailing: new IconButton(icon: new Icon(Icons.cancel), onPressed: () {
-                          controller.clear();
-                          //onSearchTextChanged('');
-                        },
+                        trailing: new IconButton(
+                          icon: new Icon(Icons.cancel),
+                          onPressed: () {
+                            controller.clear();
+                            //onSearchTextChanged('');
+                          },
                         ),
                       ),
-
                     ),
-
                   ),
                 ),
 
@@ -875,8 +888,8 @@ class _SubscriptionState extends State<Subscription> {
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 3 / 2,
                         crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,),
-
+                        mainAxisSpacing: 20,
+                      ),
                       itemCount: myProducts.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return Container(
@@ -889,7 +902,8 @@ class _SubscriptionState extends State<Subscription> {
                                 color: Color(0xff00000029),
                                 spreadRadius: 15,
                                 blurRadius: 7,
-                                offset: Offset(0, 3), // changes position of shadow
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -901,9 +915,14 @@ class _SubscriptionState extends State<Subscription> {
                                 child: Row(
                                   children: [
                                     Expanded(
-
                                       // child: Text(myProducts[index]["name"]),
-                                      child: Text('BASIC WALA',style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold,color: Color(0xff333333)),),
+                                      child: Text(
+                                        'BASIC WALA',
+                                        style: TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff333333)),
+                                      ),
                                     ),
                                     Container(
                                       alignment: Alignment.topRight,
@@ -912,53 +931,55 @@ class _SubscriptionState extends State<Subscription> {
                                       decoration: BoxDecoration(
                                         //color: Colors.red,
                                         image: DecorationImage(
-                                          image: AssetImage("assets/images/hd.png"),
+                                          image: AssetImage(
+                                              "assets/images/hd.png"),
                                           fit: BoxFit.cover,
                                         ),
-
                                       ),
-
                                     ),
                                   ],
-
                                 ),
                               ),
-
-
                               Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(top: 30.0,left: 5),
-
+                                    margin: EdgeInsets.only(top: 30.0, left: 5),
 
                                     //child: Text(myProducts[index]["name"]),
-                                    child: Text('198 CHANNELS',style: TextStyle(fontSize: 12.0,fontWeight: FontWeight.normal,color: Color(0xff333333)),),
+                                    child: Text(
+                                      '198 CHANNELS',
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xff333333)),
+                                    ),
                                   ),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(top: 1.0,left: 5),
-
-                                    child: Text('Rs 440 / MONTH',style: TextStyle(fontSize: 12.0,fontWeight: FontWeight.normal,color: Color(0xff333333)),),
+                                    margin: EdgeInsets.only(top: 1.0, left: 5),
+                                    child: Text(
+                                      'Rs 440 / MONTH',
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xff333333)),
+                                    ),
                                   ),
                                 ],
                               ),
-
-
                             ],
                           ),
                         );
                       }),
                 ),
 
-
-
                 Row(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(bottom: 2.0,left: 40),
+                      margin: EdgeInsets.only(bottom: 2.0, left: 40),
                       // width: 50,
                       //color: Colors.red,
                       child: FlatButton(
@@ -966,7 +987,8 @@ class _SubscriptionState extends State<Subscription> {
                           children: [
                             Text(
                               "REMOVE",
-                              style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
+                              style: TextStyle(
+                                  fontSize: 12.0, fontFamily: "Open_Sans_Regular"),
                             ),
                             // SizedBox(
                             //   //width: 207.0,
@@ -981,20 +1003,19 @@ class _SubscriptionState extends State<Subscription> {
                         onPressed: () {
                           print('Remove button tapped');
                         },
-
                         textColor: Color(0xffF9F9FB),
-
                         color: Color(0xffDF193E),
                         shape: OutlineInputBorder(
                             borderSide: BorderSide(
-                                style: BorderStyle.solid, width: 1.0, color: Colors.transparent),
+                                style: BorderStyle.solid,
+                                width: 1.0,
+                                color: Colors.transparent),
                             borderRadius: new BorderRadius.circular(15.0)),
                       ),
                     ),
-
                     SizedBox(width: 20),
                     Container(
-                      margin: EdgeInsets.only(bottom: 2.0,right: 50),
+                      margin: EdgeInsets.only(bottom: 2.0, right: 50),
                       //width: 30,
                       //color: Colors.green,
                       child: FlatButton(
@@ -1002,7 +1023,9 @@ class _SubscriptionState extends State<Subscription> {
                           children: [
                             Text(
                               "CANCEL",
-                              style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Open_Sans_Regular'),
                             ),
                             // SizedBox(
                             //  // width: 207.0,
@@ -1024,19 +1047,17 @@ class _SubscriptionState extends State<Subscription> {
                         color: Color(0xff727272),
                         shape: OutlineInputBorder(
                             borderSide: BorderSide(
-                                style: BorderStyle.solid, width: 1.0, color: Colors.transparent),
+                                style: BorderStyle.solid,
+                                width: 1.0,
+                                color: Colors.transparent),
                             borderRadius: new BorderRadius.circular(15.0)),
                       ),
                     ),
                   ],
                 ),
-
-
-
               ],
             ),
           );
         });
   }
-
 }

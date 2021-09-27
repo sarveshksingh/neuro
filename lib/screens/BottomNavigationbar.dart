@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neurosms/screens/AccountScreen.dart';
+import 'package:neurosms/screens/BillingScreen.dart';
+import 'package:neurosms/screens/HomeScreen.dart';
+import 'package:neurosms/screens/SupportScreen.dart';
 
 class BottomNavigationbar extends StatefulWidget {
   int _selectedIndex = 0;
@@ -68,5 +72,17 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
     setState(() {
       widget._selectedIndex = index;
     });
+    _onTap();
+  }
+  final List<Widget> _children = [
+    HomeScreen(),
+    BillingScreen(),
+    AccountScreen(),
+    SupportScreen()
+  ];
+
+  _onTap() { // this has changed
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) => _children[widget._selectedIndex])); // this has changed
   }
 }
