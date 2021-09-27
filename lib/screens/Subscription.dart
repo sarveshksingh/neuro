@@ -30,7 +30,7 @@ class _SubscriptionState extends State<Subscription> {
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          //centerTitle: true,
+          centerTitle: false,
         ),
         body: Column(
           children: <Widget>[

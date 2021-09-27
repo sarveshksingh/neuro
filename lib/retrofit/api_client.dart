@@ -4,6 +4,7 @@ import 'package:neurosms/models/Login.dart';
 import 'package:neurosms/models/MSOResponse.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/models/SubsTransactionHistoryResponse.dart';
+import 'package:neurosms/models/QuickRechargeResponse.dart';
 import 'package:retrofit/retrofit.dart';
 
 import 'apis.dart';
@@ -43,6 +44,17 @@ abstract class ApiClient {
       @Field("paymentMode") paymentMode,
       @Field("fromDate") fromDate,
       @Field("endDate") endDate);
+
+
+  @FormUrlEncoded()
+  @POST(Apis.quickRecharge)
+  Future<QuickRechargeResponse> getQuickRechargeData(
+      @Field("tokenId") tokenId,
+      @Field("subsId") subsId,
+      @Field("encdvcId") encdvcId,
+      );
+
+
 
 /*@POST(Apis.timesheetlist)
   Future<List<Timerecord>> getTimesheetList(

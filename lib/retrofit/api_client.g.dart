@@ -150,6 +150,48 @@ class _ApiClient implements ApiClient {
     return value;
   }
 
+
+
+
+  @override
+  Future<QuickRechargeResponse> getQuickRechargeData(
+      tokenId,
+      subsId,
+      encdvcId,
+      ) async {
+    ArgumentError.checkNotNull(tokenId, 'tokenId');
+    ArgumentError.checkNotNull(subsId, 'subsId');
+    ArgumentError.checkNotNull(encdvcId, 'encdvcId');
+
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {
+      'tokenId': tokenId,
+      'subsId': subsId,
+      'encdvcId': encdvcId,
+
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
+        Apis.quickRecharge,
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            contentType: 'application/x-www-form-urlencoded',
+            baseUrl: baseUrl),
+        data: _data);
+    final value = QuickRechargeResponse.fromJson(_result.data);
+    return value;
+  }
+
+
+
+
+
+
+
 /*@override
   Future<MsoResponse> msoDetails(subDomain) async {
     ArgumentError.checkNotNull(subDomain, 'subDomain');

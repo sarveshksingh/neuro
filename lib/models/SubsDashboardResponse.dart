@@ -87,7 +87,7 @@ class HardwareDetailsList {
     this.vcNumber,
   });
 
-  SubscriberAccountNo subscriberId;
+  String subscriberId;
   int subscriberDeviceMapId;
   String encDvcMapId;
   String stbVcNo;
@@ -101,7 +101,7 @@ class HardwareDetailsList {
 
   factory HardwareDetailsList.fromJson(Map<String, dynamic> json) =>
       HardwareDetailsList(
-        subscriberId: subscriberAccountNoValues.map[json["subscriberId"]],
+        subscriberId: json["subscriberId"],
         subscriberDeviceMapId: json["subscriberDeviceMapId"],
         encDvcMapId: json["encDvcMapId"],
         stbVcNo: json["stbVCNo"],

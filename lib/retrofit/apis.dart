@@ -6,4 +6,5 @@ class Apis {
   static const String forgotPassword = 'Home/userforgotPassword';
   static const String subsDashboard = 'Home/subsDashboard';
   static const String subsTransactnHistory = 'Home/subsTransactnHistory';
+  static const String quickRecharge = 'Home/quickRecharge';
 }

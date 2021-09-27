@@ -1,4 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:neurosms/models/QuickRechargeResponse.dart';
+import 'package:neurosms/retrofit/api_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 class QuickRecharge extends StatefulWidget
 {
@@ -8,6 +13,31 @@ class QuickRecharge extends StatefulWidget
 
 class _QuickRechargeState extends State<QuickRecharge> {
   var checkBoxValue;
+/*
+  List<EList> _paymentmodeList = [];
+  List<EList> _serviceTypeList = [];
+  List<TransactionHistory> _transactionHistoryList = [];
+  static final List<String> _downloadTypeList = <String>['pdf', 'Excel'];
+  var checkBoxValue;
+  String _token,
+      _subsWalletId,
+      _encDvcMapId,
+      totalCount = '',
+      _downloadType = _downloadTypeList.first,
+      fromDate = '',
+      toDate = '';
+  EList _serviceType, _paymentMode;
+  int transactionTypeId = 0;
+
+
+*/
+  List<MostRecentQuickRechargeSubscriptionList> mostRecentQuickRechargeSubscriptionList;
+  List<MostRecentQuickRechargeSubscriptionList> productInfoQuickRechargeSubscription;
+  String _token,
+      _subsId,
+      _encdvcId;
+
+
   @override
   Widget build(BuildContext context) {
     List <String> listItem = ["Delegate","Visitor","Contacts","Home"];
@@ -62,6 +92,20 @@ class _QuickRechargeState extends State<QuickRecharge> {
                       itemCount: listItem.length,
                       itemBuilder: (BuildContext ctx, int index){
                         //return new Text(listItem[index]);
+                      /*
+                        String date = transactionHistoryList.elementAt(index).transactionDate;
+                        String serviceName =
+                            transactionHistoryList.elementAt(index).serviceName;
+                        String description =
+                            transactionHistoryList.elementAt(index).description;
+                        int refrenceId =
+                            transactionHistoryList.elementAt(index).transactionId;
+                        String paymentMode =
+                            transactionHistoryList.elementAt(index).paymentMode;
+                        double debit = transactionHistoryList.elementAt(index).debit;
+                        double credit = transactionHistoryList.elementAt(index).credit;
+                        */
+
                         int ind = index;
                         return new Card(
 
@@ -348,6 +392,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                 itemCount: listItem.length,
                                 itemBuilder: (BuildContext ctx, int index){
                                   //return new Text(listItem[index]);
+
+
                                   int ind = index;
                                   return new Card(
                                     child: Column(
@@ -755,4 +801,68 @@ class _QuickRechargeState extends State<QuickRecharge> {
 
 
   }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+  }
+
+  _loadUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _token = (prefs.getString('token') ?? null);
+    _subsId = (prefs.getString('subsId') ?? null);
+    _encdvcId = (prefs.getString('encdvcId') ?? '');
+    if (_token != null) {
+      _buildBody(context, _token, _subsId, _encdvcId);
+    }
+  }
+
+  Future<FutureBuilder<QuickRechargeResponse>> _buildBody(
+      BuildContext context,
+      String token,
+      String subsId,
+      String encdvcId
+      ) async {
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    return FutureBuilder<QuickRechargeResponse>(
+      future: client
+          .getQuickRechargeData(token, subsId,encdvcId )
+          .then((respose) {
+        //setState(() => _isLoading = false);
+        setState(() {
+          if (respose.status == 1) {
+
+            mostRecentQuickRechargeSubscriptionList = respose.rechargeInfo.mostRecentQuickRechargeSubscriptionList;
+            productInfoQuickRechargeSubscription = respose.rechargeInfo.productInfoQuickRechargeSubscription;
+
+            // int count = respose.transactionInfo.totalCount;
+            // totalCount = 'Total Records: ' + "$count";
+            // _serviceTypeList = respose.transactionInfo.serviceTypeList;
+            // _serviceType = _serviceTypeList.first;
+            // _paymentmodeList = respose.transactionInfo.paymentmodeList;
+            // _paymentMode = _paymentmodeList.first;
+            // _transactionHistoryList =
+            //     respose.transactionInfo.transactionHistory;
+            // _buildTransactionHistoryListView(context, _transactionHistoryList);
+
+
+            // Toast.show("Data Received", context,
+            //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          } else
+            /*if (respose.Error_Code == "400")*/ {
+            Toast.show("Oops something went wrong", context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          }
+        });
+      }).catchError((err) {
+        print(err);
+      }),
+    );
+  }
+
+
+
 }
