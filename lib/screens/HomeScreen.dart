@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
               brightness: Brightness.light,
               elevation: 0.0,
               title: new Text('Dashboard'))),
-      backgroundColor: Color(0xffffffff),
+      backgroundColor: Color(0xffDF1D3B),
+
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
@@ -345,6 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
         String statusValue =
             _hardwareDetailsList.elementAt(index).hardwareStatusValue;
         String encDvcMapId = _hardwareDetailsList.elementAt(index).encDvcMapId;
+        String subsId = _hardwareDetailsList.elementAt(index).subscriberId;
         return Card(
             elevation: 8.0,
             margin: EdgeInsets.only(
@@ -402,6 +404,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 /* Toast.show("Transaction Click", context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM);*/
+
                                 prefs.setString('encDvcMapId', encDvcMapId);
                                 Navigator.push(
                                   context,
@@ -488,10 +491,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: new InkWell(
-                                  onTap: () {
-                                    Toast.show("Transaction Click", context,
-                                        duration: Toast.LENGTH_SHORT,
-                                        gravity: Toast.BOTTOM);
+                                  onTap: () async {
+                                    SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                    /* Toast.show("Transaction Click", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM);*/
+
+                                    prefs.setString('encDvcMapId', encDvcMapId);
+                                    prefs.setString('subsId', subsId);
                                     Navigator.push(
                                     context,
                                     MaterialPageRoute(
