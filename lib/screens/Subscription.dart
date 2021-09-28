@@ -32,7 +32,8 @@ class _SubscriptionState extends State<Subscription> {
           ),
           centerTitle: false,
         ),
-        body: Column(
+        body: SingleChildScrollView(
+            child: Column(
           children: <Widget>[
             SizedBox(height: 12.0),
             Align(
@@ -265,9 +266,9 @@ class _SubscriptionState extends State<Subscription> {
                                       fontSize: 13,
                                       fontFamily: 'Open_Sans_Regular'),
                                 )),
-                                SizedBox(
-                                  width: 207.0,
-                                ),
+                                // SizedBox(
+                                //   width: 207.0,
+                                // ),
                                 Image.asset(
                                   'assets/images/pluse.png',
                                   width: 20.0,
@@ -303,9 +304,9 @@ class _SubscriptionState extends State<Subscription> {
                                       fontSize: 13,
                                       fontFamily: 'Open_Sans_Regular'),
                                 )),
-                                SizedBox(
+                                /*SizedBox(
                                   width: 193.0,
-                                ),
+                                ),*/
                                 Image.asset(
                                   'assets/images/pluse.png',
                                   width: 20.0,
@@ -337,11 +338,12 @@ class _SubscriptionState extends State<Subscription> {
                                     child: Text(
                                   "A-LA Carte",
                                   style: TextStyle(
-                                      fontSize: 13.0, fontFamily: "Open_Sans_Regular"),
+                                      fontSize: 13.0,
+                                      fontFamily: "Open_Sans_Regular"),
                                 )),
-                                SizedBox(
+                                /*SizedBox(
                                   width: 228.0,
-                                ),
+                                ),*/
                                 Image.asset(
                                   'assets/images/pluse.png',
                                   width: 20.0,
@@ -681,7 +683,7 @@ class _SubscriptionState extends State<Subscription> {
               ),
             ),
           ],
-        ),
+        )),
       ),
     );
   }
@@ -750,7 +752,8 @@ class _SubscriptionState extends State<Subscription> {
                             Text(
                               "REMOVE",
                               style: TextStyle(
-                                  fontSize: 12.0, fontFamily: "Open_Sans_Regular"),
+                                  fontSize: 12.0,
+                                  fontFamily: "Open_Sans_Regular"),
                             ),
                             // SizedBox(
                             //   //width: 207.0,
@@ -786,7 +789,8 @@ class _SubscriptionState extends State<Subscription> {
                             Text(
                               "CANCEL",
                               style: TextStyle(
-                                  fontSize: 12.0, fontFamily: "Open_Sans_Regular"),
+                                  fontSize: 12.0,
+                                  fontFamily: "Open_Sans_Regular"),
                             ),
                             // SizedBox(
                             //  // width: 207.0,
@@ -988,7 +992,8 @@ class _SubscriptionState extends State<Subscription> {
                             Text(
                               "REMOVE",
                               style: TextStyle(
-                                  fontSize: 12.0, fontFamily: "Open_Sans_Regular"),
+                                  fontSize: 12.0,
+                                  fontFamily: "Open_Sans_Regular"),
                             ),
                             // SizedBox(
                             //   //width: 207.0,

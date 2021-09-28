@@ -48,7 +48,8 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
           ),
           centerTitle: false,
         ),
-        body: Column(
+        body: SingleChildScrollView(
+            child: Column(
           children: <Widget>[
             //Container data
 
@@ -463,16 +464,22 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
             // List view container Code
 
             Container(
-              height: 420,
+                /*height: 420,
               child: Expanded(
                 child: Container(
                     margin: EdgeInsets.only(top: 10),
                     child: _buildTransactionHistoryListView(
                         context, _transactionHistoryList)),
-              ),
-            ),
+              ),*/
+                child: LimitedBox(
+                    maxHeight: 400,
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      Flexible(
+                          child: _buildTransactionHistoryListView(
+                              context, _transactionHistoryList))
+                    ]))),
           ],
-        ),
+        )),
       ),
     );
   }
@@ -480,6 +487,7 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
   Widget _buildTransactionHistoryListView(
       BuildContext context, List<TransactionHistory> transactionHistoryList) {
     return ListView.builder(
+        shrinkWrap: true,
         itemCount: transactionHistoryList.length,
         itemBuilder: (BuildContext ctx, int index) {
           String date = transactionHistoryList.elementAt(index).transactionDate;

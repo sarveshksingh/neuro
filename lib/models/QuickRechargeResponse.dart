@@ -250,13 +250,13 @@ class MostRecentQuickRechargeSubscriptionList {
   double monthlyPrice;
   bool isTaxIncluded;
   DaysLeft daysLeft;
-  int refundAmount;
+  double refundAmount;
   int promotionId;
   String promotionType;
   String promotionText;
   int expDaysVal;
   bool isIgst;
-  int igst;
+  double igst;
   double cgst;
   double sgst;
 
@@ -397,7 +397,7 @@ class RechargeBasics {
   String stbNo;
   String vcNo;
   double subscriberWalletBalance;
-  int subscriberCreditLimit;
+  double subscriberCreditLimit;
   String franchiseeName;
   double franchiseeWalletBalance;
   int totalSubscriptionCost;
@@ -490,7 +490,7 @@ class SubscriberInfoQuickRechargeSubscription {
   });
 
   double subscriberWalletBalance;
-  int subscriberCreditLimitLeft;
+  double subscriberCreditLimitLeft;
 
   factory SubscriberInfoQuickRechargeSubscription.fromJson(Map<String, dynamic> json) => SubscriberInfoQuickRechargeSubscription(
     subscriberWalletBalance: json["subscriberWalletBalance"].toDouble(),
@@ -512,7 +512,7 @@ class TaxInfo {
 
   int taxCatId;
   String taxName;
-  int taxValue;
+  double taxValue;
 
   factory TaxInfo.fromJson(Map<String, dynamic> json) => TaxInfo(
     taxCatId: json["taxCatId"],
