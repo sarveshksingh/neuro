@@ -239,17 +239,17 @@ class MostRecentQuickRechargeSubscriptionList {
   DateTime startDate;
   DateTime endDate;
   int productTypeId;
-  ProductType productType;
+  String productType;
   int productSubscriptionId;
   int subsTypeId;
   int subsVal;
-  SubscriptionTypeName subscriptionTypeName;
+  String subscriptionTypeName;
   double price;
-  Logo logo;
+  String logo;
   bool isActive;
   double monthlyPrice;
   bool isTaxIncluded;
-  DaysLeft daysLeft;
+  String daysLeft;
   double refundAmount;
   int promotionId;
   String promotionType;
@@ -267,17 +267,17 @@ class MostRecentQuickRechargeSubscriptionList {
     startDate: DateTime.parse(json["startDate"]),
     endDate: DateTime.parse(json["endDate"]),
     productTypeId: json["productTypeId"],
-    productType: productTypeValues.map[json["productType"]],
+    productType: json["productType"],
     productSubscriptionId: json["productSubscriptionId"] == null ? null : json["productSubscriptionId"],
     subsTypeId: json["subsTypeId"],
     subsVal: json["subsVal"],
-    subscriptionTypeName: subscriptionTypeNameValues.map[json["subscriptionTypeName"]],
+    subscriptionTypeName: json["subscriptionTypeName"],
     price: json["price"].toDouble(),
-    logo: logoValues.map[json["logo"]],
+    logo: json["logo"],
     isActive: json["isActive"] == null ? null : json["isActive"],
     monthlyPrice: json["monthlyPrice"].toDouble(),
     isTaxIncluded: json["isTaxIncluded"],
-    daysLeft: daysLeftValues.map[json["daysLeft"]],
+    daysLeft: json["daysLeft"],
     refundAmount: json["refundAmount"] == null ? null : json["refundAmount"],
     promotionId: json["promotionId"],
     promotionType: json["promotionType"],
@@ -296,17 +296,17 @@ class MostRecentQuickRechargeSubscriptionList {
     "startDate": startDate.toIso8601String(),
     "endDate": endDate.toIso8601String(),
     "productTypeId": productTypeId,
-    "productType": productTypeValues.reverse[productType],
+    "productType": productType,
     "productSubscriptionId": productSubscriptionId == null ? null : productSubscriptionId,
     "subsTypeId": subsTypeId,
     "subsVal": subsVal,
-    "subscriptionTypeName": subscriptionTypeNameValues.reverse[subscriptionTypeName],
+    "subscriptionTypeName": subscriptionTypeName,
     "price": price,
-    "logo": logoValues.reverse[logo],
+    "logo": logo,
     "isActive": isActive == null ? null : isActive,
     "monthlyPrice": monthlyPrice,
     "isTaxIncluded": isTaxIncluded,
-    "daysLeft": daysLeftValues.reverse[daysLeft],
+    "daysLeft": daysLeft,
     "refundAmount": refundAmount == null ? null : refundAmount,
     "promotionId": promotionId,
     "promotionType": promotionType,
@@ -318,7 +318,7 @@ class MostRecentQuickRechargeSubscriptionList {
     "sgst": sgst == null ? null : sgst,
   };
 }
-
+/*
 enum DaysLeft { EXPIRES_IN_7_DAY_S, EXPIRES_IN_37_DAY_S }
 
 final daysLeftValues = EnumValues({
@@ -346,7 +346,7 @@ enum SubscriptionTypeName { MONTHLY_1 }
 final subscriptionTypeNameValues = EnumValues({
   "Monthly @ 1": SubscriptionTypeName.MONTHLY_1
 });
-
+*/
 class RechargeBasics {
   RechargeBasics({
     this.subscriberId,

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:neurosms/models/QuickRechargeResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,9 +33,9 @@ class _QuickRechargeState extends State<QuickRecharge> {
 
 */
   List<MostRecentQuickRechargeSubscriptionList>
-      mostRecentQuickRechargeSubscriptionList;
+      mostRecentQuickRechargeSubscriptionList = [];
   List<MostRecentQuickRechargeSubscriptionList>
-      productInfoQuickRechargeSubscription;
+      productInfoQuickRechargeSubscription = [];
   String _token, _subsId, _encdvcId;
 
   @override
@@ -47,7 +48,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
         appBar: AppBar(
           title: Text(
             'QuickRecharge',
-            textDirection: TextDirection.ltr,
+           // textDirection: TextDirection.ltr,
             style: TextStyle(
               color: Color(0xffFFFFFF),
             ),
@@ -74,7 +75,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                       fontSize: 14,
                       color: Color(0xff333333),
                       fontFamily: 'Roboto_Bold'),
-                  textDirection: TextDirection.ltr,
+                 // textDirection: TextDirection.ltr,
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -343,7 +344,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   fontSize: 14,
                                   color: Color(0xff333333),
                                   fontFamily: 'Roboto_Bold'),
-                              textDirection: TextDirection.ltr,
+                              //textDirection: TextDirection.ltr,
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -520,7 +521,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                           ),
                         ),*/
                         LimitedBox(
-                            maxHeight: 150,
+                            maxHeight: 205,
                             child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -885,19 +886,39 @@ class _QuickRechargeState extends State<QuickRecharge> {
         itemCount: mostRecentQuickRechargeSubscriptionList.length,
         itemBuilder: (BuildContext ctx, int index) {
           //return new Text(listItem[index]);
-          /*
-                        String date = transactionHistoryList.elementAt(index).transactionDate;
-                        String serviceName =
-                            transactionHistoryList.elementAt(index).serviceName;
-                        String description =
-                            transactionHistoryList.elementAt(index).description;
-                        int refrenceId =
-                            transactionHistoryList.elementAt(index).transactionId;
-                        String paymentMode =
-                            transactionHistoryList.elementAt(index).paymentMode;
-                        double debit = transactionHistoryList.elementAt(index).debit;
-                        double credit = transactionHistoryList.elementAt(index).credit;
-                        */
+
+          String productName = mostRecentQuickRechargeSubscriptionList.elementAt(index).productName;
+          String subscriptionTypeName = mostRecentQuickRechargeSubscriptionList.elementAt(index).subscriptionTypeName;
+          bool status = mostRecentQuickRechargeSubscriptionList.elementAt(index).isActive;
+          String statusValue = '';
+          double amount = mostRecentQuickRechargeSubscriptionList.elementAt(index).monthlyPrice;
+          // String expiryDay = mostRecentQuickRechargeSubscriptionList.elementAt(index).daysLeft as String;
+          // double amount = mostRecentQuickRechargeSubscriptionList.elementAt(index).price;
+          // String startDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).startDate as String;
+          // String endDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate as String;
+          DateTime startDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).startDate;
+          DateTime endDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate;
+          DateTime now = DateTime.now();
+
+
+          String startFormattedDate = DateFormat('dd-MMM-yyyy').format(startDate);
+          String enddtFormattedDate = DateFormat('dd-MMM-yyyy').format(endDate);
+          // final difference = endDate.difference(now).inDays;
+          // String expire = 'Expires in ' + difference.toString() + ' days';
+          bool isActive = mostRecentQuickRechargeSubscriptionList.elementAt(index).isActive;
+          String alert = isActive ? 'Active' : 'In Active';
+
+
+          if(status)
+            {
+              statusValue = "Active";
+            }
+          else
+            {
+              statusValue = "InActive";
+            }
+
+
 
           int ind = index;
           return new Card(
@@ -940,12 +961,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         // SizedBox(width: 10,),
                         Container(
                           child: Text(
-                            'Basic',
+                            productName,
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Color(0xff333333),
                                 fontFamily: 'Roboto_Medium'),
-                            textDirection: TextDirection.ltr,
+                            //textDirection: TextDirection.ltr,
                             textAlign: TextAlign.left,
                           ),
                         )
@@ -962,12 +983,14 @@ class _QuickRechargeState extends State<QuickRecharge> {
 
                         Container(
                           child: Text(
-                            'Active',
+                            statusValue,
                             style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xff227700),
+                                color:statusValue == 'Active'
+                                    ? Color(0xff227700)
+                                    : Color(0xffDF1D3B),
                                 fontFamily: 'Roboto_Regular'),
-                            textDirection: TextDirection.ltr,
+                           // textDirection: TextDirection.ltr,
                             textAlign: TextAlign.left,
                           ),
                         )
@@ -983,12 +1006,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         //SizedBox(width: 10),
                         Container(
                           child: Text(
-                            '16-Sept-2021',
+                            startFormattedDate,
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Color(0xff333333),
                                 fontFamily: 'Roboto_Regular'),
-                            textDirection: TextDirection.ltr,
+                            //textDirection: TextDirection.ltr,
                             textAlign: TextAlign.left,
                           ),
                         )
@@ -996,7 +1019,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                     ),
                   ],
                 ),
-
+/*
                 Column(
                   children: <Widget>[
                     Container(
@@ -1009,12 +1032,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         // SizedBox(width: 20,),
                         Container(
                           child: Text(
-                            '20 Days ago',
+                            subscriptionTypeName,
                             style: TextStyle(
                                 fontSize: 10,
                                 color: Color(0xff808080),
                                 fontFamily: 'Roboto_Medium'),
-                            textDirection: TextDirection.ltr,
+                           // textDirection: TextDirection.ltr,
                             textAlign: TextAlign.left,
                           ),
                         )
@@ -1022,7 +1045,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                     ),
                   ],
                 ),
-
+*/
                 // For Second Column
                 Column(
                   children: <Widget>[
@@ -1036,12 +1059,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         // SizedBox(width: 10),
                         Container(
                           child: Text(
-                            '\u{20B9} ${222.45}',
+                            '\u{20B9} ${amount}',
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Color(0xff333333),
                                 fontFamily: 'Roboto_Regular'),
-                            textDirection: TextDirection.ltr,
+                           // textDirection: TextDirection.ltr,
                             textAlign: TextAlign.left,
                           ),
                         )
@@ -1061,12 +1084,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         // SizedBox(width: 10),
                         Container(
                           child: Text(
-                            '16-Oct-2021',
+                            enddtFormattedDate,
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Color(0xff333333),
                                 fontFamily: 'Roboto_Regular'),
-                            textDirection: TextDirection.ltr,
+                            //textDirection: TextDirection.ltr,
                             textAlign: TextAlign.left,
                           ),
                         )
@@ -1087,6 +1110,10 @@ class _QuickRechargeState extends State<QuickRecharge> {
         });
   }
 
+
+
+
+
   Widget _rechargeSubscriptionListView(
       BuildContext context,
       List<MostRecentQuickRechargeSubscriptionList>
@@ -1096,6 +1123,41 @@ class _QuickRechargeState extends State<QuickRecharge> {
         itemCount: productInfoQuickRechargeSubscription.length,
         itemBuilder: (BuildContext ctx, int index) {
           //return new Text(listItem[index]);
+
+          String productType = productInfoQuickRechargeSubscription.elementAt(index).productType;
+          String productName = productInfoQuickRechargeSubscription.elementAt(index).productName;
+          bool status = productInfoQuickRechargeSubscription.elementAt(index).isActive;
+
+          double amount = productInfoQuickRechargeSubscription.elementAt(index).price;
+          double monthlyPrice = productInfoQuickRechargeSubscription.elementAt(index).monthlyPrice;
+
+          bool isTaxIncluded = productInfoQuickRechargeSubscription.elementAt(index).isTaxIncluded;
+          String subscriptionTypeName = productInfoQuickRechargeSubscription.elementAt(index).subscriptionTypeName;
+         // String strsubscriptionTypeName = subscriptionTypeName.toString();
+          String taxIncludeValue = "";
+          DateTime startDate = productInfoQuickRechargeSubscription.elementAt(index).startDate;
+          DateTime endDate = productInfoQuickRechargeSubscription.elementAt(index).endDate;
+          DateTime now = DateTime.now();
+
+
+          String startFormattedDate = DateFormat('dd-MMM-yyyy').format(startDate);
+          String endtFormattedDate = DateFormat('dd-MMM-yyyy').format(endDate);
+          final difference = endDate.difference(now).inDays;
+          String expire = 'Expires in ' + difference.toString() + ' days';
+          //bool isActive = productInfoQuickRechargeSubscription.elementAt(index).isActive;
+         // String alert = isActive ? 'Active' : 'In Active';
+
+          if(isTaxIncluded)
+          {
+            taxIncludeValue = "";
+          }
+          else
+          {
+            taxIncludeValue = "";
+          }
+
+
+
 
           int ind = index;
           return new Card(
@@ -1109,12 +1171,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         margin: EdgeInsets.only(left: 10.0, top: 10),
                         color: Color(0xffDADADA),
                         child: Text(
-                          "BASIC PACKAGE",
+                          productType,
                           style: TextStyle(
                               fontSize: 16,
                               color: Color(0xff333333),
                               fontFamily: 'Roboto_Bold'),
-                          textDirection: TextDirection.ltr,
+                          //textDirection: TextDirection.ltr,
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -1123,17 +1185,19 @@ class _QuickRechargeState extends State<QuickRecharge> {
                       margin: EdgeInsets.only(right: 0.0, top: 10),
                       color: Color(0xffDADADA),
                       child: Text(
-                        '\u{20B9} ${50}',
+                        '\u{20B9} ${monthlyPrice}',
                         style: TextStyle(
                             fontSize: 16,
                             color: Color(0xff333333),
                             fontFamily: 'Roboto_Bold'),
-                        textDirection: TextDirection.ltr,
+                       // textDirection: TextDirection.ltr,
                         textAlign: TextAlign.left,
                       ),
                     ),
                   ],
                 ),
+
+                /*
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -1142,18 +1206,20 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         margin: EdgeInsets.only(left: 10.0, top: 10),
                         color: Colors.white,
                         child: Text(
-                          'BASICK PACKAGE TAX INCLUDE',
+                          taxIncludeValue,
                           style: TextStyle(
                               fontSize: 12,
                               color: Color(0xff333333),
                               fontFamily: 'Roboto_Regular'),
-                          textDirection: TextDirection.ltr,
+                         // textDirection: TextDirection.ltr,
                           textAlign: TextAlign.left,
                         ),
                       ),
                     ),
                   ],
                 ),
+
+                */
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -1162,12 +1228,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         margin: EdgeInsets.only(left: 10.0, top: 10),
                         color: Colors.white,
                         child: Text(
-                          'Monthly @ 1',
+                          subscriptionTypeName,
                           style: TextStyle(
                               fontSize: 12,
                               color: Color(0xff333333),
                               fontFamily: 'Roboto_Regular'),
-                          textDirection: TextDirection.ltr,
+                          //textDirection: TextDirection.ltr,
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -1176,12 +1242,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                       margin: EdgeInsets.only(left: 10.0, top: 10),
                       color: Colors.white,
                       child: Text(
-                        '\u{20B9} ${50}',
+                        '\u{20B9} ${amount}',
                         style: TextStyle(
                             fontSize: 12,
                             color: Color(0xff333333),
                             fontFamily: 'Roboto_regular'),
-                        textDirection: TextDirection.ltr,
+                        //textDirection: TextDirection.ltr,
                         textAlign: TextAlign.left,
                       ),
                     ),
@@ -1196,12 +1262,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                             EdgeInsets.only(left: 10.0, top: 10, bottom: 10),
                         color: Colors.white,
                         child: Text(
-                          '16-Oct-2021',
+                          startFormattedDate,
                           style: TextStyle(
                               fontSize: 12,
                               color: Color(0xff333333),
                               fontFamily: 'Roboto_Regular'),
-                          textDirection: TextDirection.ltr,
+                          //textDirection: TextDirection.ltr,
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -1210,12 +1276,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
                       margin: EdgeInsets.only(left: 10.0, top: 10, bottom: 10),
                       color: Colors.white,
                       child: Text(
-                        '15-Nov-2021',
+                        endtFormattedDate,
                         style: TextStyle(
                             fontSize: 12,
                             color: Color(0xff333333),
                             fontFamily: 'Roboto_Regular'),
-                        textDirection: TextDirection.ltr,
+                       // textDirection: TextDirection.ltr,
                         textAlign: TextAlign.left,
                       ),
                     ),
