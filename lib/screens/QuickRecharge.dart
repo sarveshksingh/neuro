@@ -36,6 +36,9 @@ class _QuickRechargeState extends State<QuickRecharge> {
       mostRecentQuickRechargeSubscriptionList = [];
   List<MostRecentQuickRechargeSubscriptionList>
       productInfoQuickRechargeSubscription = [];
+  List<MostRecentQuickRechargeSubscriptionList> basicList = [];
+  List<MostRecentQuickRechargeSubscriptionList> addOnList = [];
+  List<MostRecentQuickRechargeSubscriptionList> alaCarteList = [];
   String _token, _subsId, _encdvcId;
 
   @override
@@ -48,7 +51,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
         appBar: AppBar(
           title: Text(
             'QuickRecharge',
-           // textDirection: TextDirection.ltr,
+            // textDirection: TextDirection.ltr,
             style: TextStyle(
               color: Color(0xffFFFFFF),
             ),
@@ -75,230 +78,13 @@ class _QuickRechargeState extends State<QuickRecharge> {
                       fontSize: 14,
                       color: Color(0xff333333),
                       fontFamily: 'Roboto_Bold'),
-                 // textDirection: TextDirection.ltr,
+                  // textDirection: TextDirection.ltr,
                   textAlign: TextAlign.left,
                 ),
               ),
             ),
-            /*Container(
-              //color: Colors.red,
-              height: 200,
-              child: Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: ListView.builder(
-                      itemCount: listItem.length,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        //return new Text(listItem[index]);
-                        */ /*
-                        String date = transactionHistoryList.elementAt(index).transactionDate;
-                        String serviceName =
-                            transactionHistoryList.elementAt(index).serviceName;
-                        String description =
-                            transactionHistoryList.elementAt(index).description;
-                        int refrenceId =
-                            transactionHistoryList.elementAt(index).transactionId;
-                        String paymentMode =
-                            transactionHistoryList.elementAt(index).paymentMode;
-                        double debit = transactionHistoryList.elementAt(index).debit;
-                        double credit = transactionHistoryList.elementAt(index).credit;
-                        */ /*
-
-                        int ind = index;
-                        return new Card(
-                          child: Row(
-                            children: [
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: 25.0, top: 20.0, bottom: 20.0),
-                                    child: Row(children: [
-                                      Container(
-                                        child: Icon(Icons.network_cell),
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      // Container(
-                                      //   child: Text('Hello'),
-                                      // )
-                                    ]),
-                                  ),
-                                ],
-                              ),
-
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  */ /* ListTile(
-                leading: Icon(Icons.wifi),
-                title: Text(listItem[index],style: TextStyle(fontSize: 18,color: Colors.grey),),
-
-              ),*/ /*
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(left: 15.0, top: 20.0),
-                                    child: Row(children: [
-                                      // Container(
-                                      //   child: Icon(Icons.network_cell),
-                                      // ),
-                                      // SizedBox(width: 10,),
-                                      Container(
-                                        child: Text(
-                                          'Basic',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff333333),
-                                              fontFamily: 'Roboto_Medium'),
-                                          textDirection: TextDirection.ltr,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 15.0, top: 5),
-                                    child: Row(children: [
-                                      // Container(
-                                      //   child: Icon(Icons.network_cell),
-                                      //
-                                      // ),
-                                      //SizedBox(width: 10),
-
-                                      Container(
-                                        child: Text(
-                                          'Active',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff227700),
-                                              fontFamily: 'Roboto_Regular'),
-                                          textDirection: TextDirection.ltr,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: 15.0, top: 5, bottom: 20),
-                                    child: Row(children: [
-                                      // Container(
-                                      //   child: Icon(Icons.network_cell),
-                                      //
-                                      // ),
-                                      //SizedBox(width: 10),
-                                      Container(
-                                        child: Text(
-                                          '16-Sept-2021',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff333333),
-                                              fontFamily: 'Roboto_Regular'),
-                                          textDirection: TextDirection.ltr,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                ],
-                              ),
-
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: 5.0, top: 20.0, bottom: 20.0),
-                                    child: Row(children: [
-                                      // Container(
-                                      //   child: Icon(Icons.network_cell),
-                                      // ),
-                                      // SizedBox(width: 20,),
-                                      Container(
-                                        child: Text(
-                                          '20 Days ago',
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              color: Color(0xff808080),
-                                              fontFamily: 'Roboto_Medium'),
-                                          textDirection: TextDirection.ltr,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                ],
-                              ),
-
-                              // For Second Column
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(left: 50.0, top: 20.0),
-                                    child: Row(children: [
-                                      // Container(
-                                      //   child: Icon(Icons.network_cell),
-                                      //
-                                      // ),
-                                      // SizedBox(width: 10),
-                                      Container(
-                                        child: Text(
-                                          '\u{20B9} ${222.45}',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff333333),
-                                              fontFamily: 'Roboto_Regular'),
-                                          textDirection: TextDirection.ltr,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(left: 50.0, top: 5.0),
-                                    child: Row(children: [
-                                      // Container(
-                                      //   child: Icon(Icons.network_cell),
-                                      //   // child: Checkbox(
-                                      //   //
-                                      //   //   activeColor: Colors.green,
-                                      //   // ),
-                                      //
-                                      // ),
-                                      // SizedBox(width: 10),
-                                      Container(
-                                        child: Text(
-                                          '16-Oct-2021',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Color(0xff333333),
-                                              fontFamily: 'Roboto_Regular'),
-                                          textDirection: TextDirection.ltr,
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      )
-                                    ]),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          color: Colors.white,
-                          shadowColor: Colors.lightBlue,
-                          elevation: 5.0,
-                          //margin: EdgeInsets.all(15.0),
-                          margin: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
-                        );
-                      }),
-                ),
-              ),
-            ),*/
             LimitedBox(
-                maxHeight: 150,
+                maxHeight: 135,
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Flexible(
                       child: _mostRescentSubscriptionListView(
@@ -309,13 +95,6 @@ class _QuickRechargeState extends State<QuickRecharge> {
               margin: EdgeInsets.only(
                   left: 15.0, right: 15.0, top: 5.0, bottom: 15.0),
               decoration: BoxDecoration(
-                /*
-                border: Border.all(
-                  color: Color(0xFFF05A22),
-                  style: BorderStyle.solid,
-                  width: 1.0,
-                ),
-                 */
                 // color: Colors.red,
                 color: Color(0xffFFEFEE),
                 borderRadius: BorderRadius.circular(10.0),
@@ -326,7 +105,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                     // margin: EdgeInsets.only(left: 15.0,right: 15.0,bottom: 0.0),
 
                     margin: EdgeInsets.only(left: 0.0, right: 0.0, bottom: 0.0),
-                    height: 230.0,
+                    //height: 230.0,
                     color: Color(0xffFFEFEE),
                     //color: Colors.red,
 
@@ -349,186 +128,83 @@ class _QuickRechargeState extends State<QuickRecharge> {
                             ),
                           ),
                         ),
-                        /*Expanded(
+                        Align(
+                          alignment: Alignment.centerLeft,
                           child: Container(
-                            margin: EdgeInsets.only(top: 2),
-                            child: ListView.builder(
-                                itemCount: listItem.length,
-                                itemBuilder: (BuildContext ctx, int index) {
-                                  //return new Text(listItem[index]);
-
-                                  int ind = index;
-                                  return new Card(
-                                    child: Column(
-                                      //crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 10.0, top: 10),
-                                                color: Color(0xffDADADA),
-                                                child: Text(
-                                                  "BASIC PACKAGE",
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Color(0xff333333),
-                                                      fontFamily:
-                                                          'Roboto_Bold'),
-                                                  textDirection:
-                                                      TextDirection.ltr,
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  right: 0.0, top: 10),
-                                              color: Color(0xffDADADA),
-                                              child: Text(
-                                                '\u{20B9} ${50}',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Color(0xff333333),
-                                                    fontFamily: 'Roboto_Bold'),
-                                                textDirection:
-                                                    TextDirection.ltr,
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 6,
-                                              child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 10.0, top: 10),
-                                                color: Colors.white,
-                                                child: Text(
-                                                  'BASICK PACKAGE TAX INCLUDE',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Color(0xff333333),
-                                                      fontFamily:
-                                                          'Roboto_Regular'),
-                                                  textDirection:
-                                                      TextDirection.ltr,
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 6,
-                                              child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 10.0, top: 10),
-                                                color: Colors.white,
-                                                child: Text(
-                                                  'Monthly @ 1',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Color(0xff333333),
-                                                      fontFamily:
-                                                          'Roboto_Regular'),
-                                                  textDirection:
-                                                      TextDirection.ltr,
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 10.0, top: 10),
-                                              color: Colors.white,
-                                              child: Text(
-                                                '\u{20B9} ${50}',
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Color(0xff333333),
-                                                    fontFamily:
-                                                        'Roboto_regular'),
-                                                textDirection:
-                                                    TextDirection.ltr,
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 6,
-                                              child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 10.0,
-                                                    top: 10,
-                                                    bottom: 10),
-                                                color: Colors.white,
-                                                child: Text(
-                                                  '16-Oct-2021',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Color(0xff333333),
-                                                      fontFamily:
-                                                          'Roboto_Regular'),
-                                                  textDirection:
-                                                      TextDirection.ltr,
-                                                  textAlign: TextAlign.left,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 10.0,
-                                                  top: 10,
-                                                  bottom: 10),
-                                              color: Colors.white,
-                                              child: Text(
-                                                '15-Nov-2021',
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Color(0xff333333),
-                                                    fontFamily:
-                                                        'Roboto_Regular'),
-                                                textDirection:
-                                                    TextDirection.ltr,
-                                                textAlign: TextAlign.left,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-
-                                    color: Colors.white,
-                                    shadowColor: Colors.white,
-                                    elevation: 5.0,
-                                    //margin: EdgeInsets.all(15.0),
-                                    margin: EdgeInsets.only(
-                                        left: 0.0,
-                                        right: 0.0,
-                                        top: 5.0,
-                                        bottom: 5.0),
-                                  );
-                                }),
+                            color: Colors.transparent,
+                            margin: const EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              "Basic",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff333333),
+                                  fontFamily: 'Roboto_Bold'),
+                              // textDirection: TextDirection.ltr,
+                              textAlign: TextAlign.left,
+                            ),
                           ),
-                        ),*/
+                        ),
                         LimitedBox(
-                            maxHeight: 205,
+                            maxHeight: 135,
                             child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Flexible(
-                                      child: _rechargeSubscriptionListView(
+                                      child: _basicRechargeSubscriptionListView(
                                           context,
-                                          productInfoQuickRechargeSubscription))
+                                          basicList))
+                                ])),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            color: Colors.transparent,
+                            margin: const EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              "Add-On Package",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff333333),
+                                  fontFamily: 'Roboto_Bold'),
+                              // textDirection: TextDirection.ltr,
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ),
+                        LimitedBox(
+                            maxHeight: 135,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flexible(
+                                      child: _addOnRechargeSubscriptionListView(
+                                          context,
+                                          addOnList))
+                                ])),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            color: Colors.transparent,
+                            margin: const EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              "A-La-Carte",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff333333),
+                                  fontFamily: 'Roboto_Bold'),
+                              // textDirection: TextDirection.ltr,
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ),
+                        LimitedBox(
+                            maxHeight: 135,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flexible(
+                                      child: _aLaCarteRechargeSubscriptionListView(
+                                          context,
+                                          alaCarteList))
                                 ])),
                       ],
                     ),
@@ -537,14 +213,6 @@ class _QuickRechargeState extends State<QuickRecharge> {
                     margin: EdgeInsets.only(left: 0.0, right: 0.0, bottom: 0.0),
                     height: 260.0,
                     decoration: BoxDecoration(
-                      /*
-                       border: Border.all(
-                       color: Color(0xFFF05A22),
-                        style: BorderStyle.solid,
-                        width: 1.0,
-                       ),
-                       */
-
                       color: Color(0xffFFFFFF),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -723,9 +391,6 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                     fontFamily: "Roboto_Medium",
                                     color: Color(0xff333333)),
                               ),
-                              SizedBox(
-                                  //width: 220.0,
-                                  ),
                               Text(
                                 '\u{20B9} ${0.00}',
                                 style: TextStyle(
@@ -736,10 +401,6 @@ class _QuickRechargeState extends State<QuickRecharge> {
                             ],
                           ),
                         ),
-/*
-
-
-*/
                         Container(
                           margin: EdgeInsets.only(left: 5.0),
                           child: Row(
@@ -850,8 +511,35 @@ class _QuickRechargeState extends State<QuickRecharge> {
             productInfoQuickRechargeSubscription =
                 respose.rechargeInfo.productInfoQuickRechargeSubscription;
 
-            _mostRescentSubscriptionListView(context, mostRecentQuickRechargeSubscriptionList);
-            _rechargeSubscriptionListView(context, productInfoQuickRechargeSubscription);
+            _mostRescentSubscriptionListView(
+                context, mostRecentQuickRechargeSubscriptionList);
+            for (var i = 0;
+                i < productInfoQuickRechargeSubscription.length;
+                i++) {
+              if (productInfoQuickRechargeSubscription
+                      .elementAt(i)
+                      .productTypeId ==
+                  1) {
+                basicList
+                    .add(productInfoQuickRechargeSubscription.elementAt(i));
+              } else if (productInfoQuickRechargeSubscription
+                      .elementAt(i)
+                      .productTypeId ==
+                  2) {
+                addOnList
+                    .add(productInfoQuickRechargeSubscription.elementAt(i));
+              } else if (productInfoQuickRechargeSubscription
+                      .elementAt(i)
+                      .productTypeId ==
+                  3) {
+                alaCarteList
+                    .add(productInfoQuickRechargeSubscription.elementAt(i));
+              }
+            }
+
+            _basicRechargeSubscriptionListView(context, basicList);
+            _addOnRechargeSubscriptionListView(context, addOnList);
+            _aLaCarteRechargeSubscriptionListView(context, alaCarteList);
 
             // int count = respose.transactionInfo.totalCount;
             // totalCount = 'Total Records: ' + "$count";
@@ -887,48 +575,221 @@ class _QuickRechargeState extends State<QuickRecharge> {
         itemBuilder: (BuildContext ctx, int index) {
           //return new Text(listItem[index]);
 
-          String productName = mostRecentQuickRechargeSubscriptionList.elementAt(index).productName;
-          String subscriptionTypeName = mostRecentQuickRechargeSubscriptionList.elementAt(index).subscriptionTypeName;
-          bool status = mostRecentQuickRechargeSubscriptionList.elementAt(index).isActive;
+          String productName = mostRecentQuickRechargeSubscriptionList
+              .elementAt(index)
+              .productName;
+          String subscriptionTypeName = mostRecentQuickRechargeSubscriptionList
+              .elementAt(index)
+              .subscriptionTypeName;
+          bool status =
+              mostRecentQuickRechargeSubscriptionList.elementAt(index).isActive;
           String statusValue = '';
-          double amount = mostRecentQuickRechargeSubscriptionList.elementAt(index).monthlyPrice;
+          double amount = mostRecentQuickRechargeSubscriptionList
+              .elementAt(index)
+              .monthlyPrice;
           // String expiryDay = mostRecentQuickRechargeSubscriptionList.elementAt(index).daysLeft as String;
           // double amount = mostRecentQuickRechargeSubscriptionList.elementAt(index).price;
           // String startDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).startDate as String;
           // String endDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate as String;
-          DateTime startDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).startDate;
-          DateTime endDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate;
+          DateTime startDate = mostRecentQuickRechargeSubscriptionList
+              .elementAt(index)
+              .startDate;
+          DateTime endDate =
+              mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate;
           DateTime now = DateTime.now();
 
-
-          String startFormattedDate = DateFormat('dd-MMM-yyyy').format(startDate);
+          String startFormattedDate =
+              DateFormat('dd-MMM-yyyy').format(startDate);
           String enddtFormattedDate = DateFormat('dd-MMM-yyyy').format(endDate);
           // final difference = endDate.difference(now).inDays;
           // String expire = 'Expires in ' + difference.toString() + ' days';
-          bool isActive = mostRecentQuickRechargeSubscriptionList.elementAt(index).isActive;
+          bool isActive =
+              mostRecentQuickRechargeSubscriptionList.elementAt(index).isActive;
           String alert = isActive ? 'Active' : 'In Active';
 
-
-          if(status)
-            {
-              statusValue = "Active";
-            }
-          else
-            {
-              statusValue = "InActive";
-            }
-
-
+          if (status) {
+            statusValue = "Active";
+          } else {
+            statusValue = "InActive";
+          }
 
           int ind = index;
           return new Card(
-            child: Row(
-              children: [
-                Column(
-                  children: <Widget>[
+            child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Container(
+                        margin:
+                            EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+                        child: Row(children: [
+                          Container(
+                            child: Icon(Icons.network_cell),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          // Container(
+                          //   child: Text('Hello'),
+                          // )
+                        ]),
+                      ),
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(left: 15.0, top: 5.0),
+                            child: Row(children: [
+                              Container(
+                                child: Text(
+                                  productName,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Medium'),
+                                  //textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              )
+                            ]),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 15.0, top: 5),
+                            child: Row(children: [
+                              Expanded(
+                                child: Text(
+                                  statusValue,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: statusValue == 'Active'
+                                          ? Color(0xff227700)
+                                          : Color(0xffDF1D3B),
+                                      fontFamily: 'Roboto_Regular'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 10.0),
+                                child: Text(
+                                  '\u{20B9} ${amount}',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Regular'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              )
+                            ]),
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.only(left: 15.0, top: 5, bottom: 5),
+                            child: Row(children: [
+                              Expanded(
+                                child: Text(
+                                  startFormattedDate,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Regular'),
+                                  //textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 10.0),
+                                child: Text(
+                                  enddtFormattedDate,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Regular'),
+                                  //textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              )
+                            ]),
+                          ),
+                        ],
+                      )),
+                    ],
+                  )
+                ]),
+
+            color: Colors.white,
+            shadowColor: Colors.lightBlue,
+            elevation: 5.0,
+            //margin: EdgeInsets.all(15.0),
+            margin:
+                EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
+          );
+        });
+  }
+
+  Widget _basicRechargeSubscriptionListView(
+      BuildContext context,
+      List<MostRecentQuickRechargeSubscriptionList>
+      basicList) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: basicList.length,
+        itemBuilder: (BuildContext ctx, int index) {
+          //return new Text(listItem[index]);
+
+          String productType =
+              basicList.elementAt(index).productType;
+          String productName =
+              basicList.elementAt(index).productName;
+          bool status =
+              basicList.elementAt(index).isActive;
+
+          double amount =
+              basicList.elementAt(index).price;
+          double monthlyPrice = basicList
+              .elementAt(index)
+              .monthlyPrice;
+
+          bool isTaxIncluded = basicList
+              .elementAt(index)
+              .isTaxIncluded;
+          String subscriptionTypeName = basicList
+              .elementAt(index)
+              .subscriptionTypeName;
+          // String strsubscriptionTypeName = subscriptionTypeName.toString();
+          String taxIncludeValue = "";
+          DateTime startDate =
+              basicList.elementAt(index).startDate;
+          DateTime endDate =
+              basicList.elementAt(index).endDate;
+          DateTime now = DateTime.now();
+
+          String startFormattedDate =
+              DateFormat('dd-MMM-yyyy').format(startDate);
+          String endtFormattedDate = DateFormat('dd-MMM-yyyy').format(endDate);
+          final difference = endDate.difference(now).inDays;
+          String expire = 'Expires in ' + difference.toString() + ' days';
+          //bool isActive = productInfoQuickRechargeSubscription.elementAt(index).isActive;
+          // String alert = isActive ? 'Active' : 'In Active';
+
+          if (isTaxIncluded) {
+            taxIncludeValue = "";
+          } else {
+            taxIncludeValue = "";
+          }
+
+          int ind = index;
+          return new Card(
+            child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Row(children: [
                     Container(
                       margin:
-                          EdgeInsets.only(left: 25.0, top: 20.0, bottom: 20.0),
+                          EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
                       child: Row(children: [
                         Container(
                           child: Icon(Icons.network_cell),
@@ -941,355 +802,497 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         // )
                       ]),
                     ),
-                  ],
-                ),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    /* ListTile(
-                leading: Icon(Icons.wifi),
-                title: Text(listItem[index],style: TextStyle(fontSize: 18,color: Colors.grey),),
-
-              ),*/
-                    Container(
-                      margin: EdgeInsets.only(left: 15.0, top: 20.0),
-                      child: Row(children: [
-                        // Container(
-                        //   child: Icon(Icons.network_cell),
-                        // ),
-                        // SizedBox(width: 10,),
-                        Container(
-                          child: Text(
-                            productName,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff333333),
-                                fontFamily: 'Roboto_Medium'),
-                            //textDirection: TextDirection.ltr,
-                            textAlign: TextAlign.left,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10.0, top: 5),
+                                  color: Color(0xffDADADA),
+                                  child: Text(
+                                    productType,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Bold'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5, right: 10),
+                                color: Color(0xffDADADA),
+                                child: Text(
+                                  '\u{20B9} ${monthlyPrice}',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Bold'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
                           ),
-                        )
-                      ]),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 15.0, top: 5),
-                      child: Row(children: [
-                        // Container(
-                        //   child: Icon(Icons.network_cell),
-                        //
-                        // ),
-                        //SizedBox(width: 10),
-
-                        Container(
-                          child: Text(
-                            statusValue,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color:statusValue == 'Active'
-                                    ? Color(0xff227700)
-                                    : Color(0xffDF1D3B),
-                                fontFamily: 'Roboto_Regular'),
-                           // textDirection: TextDirection.ltr,
-                            textAlign: TextAlign.left,
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10.0, top: 5),
+                                  color: Colors.white,
+                                  child: Text(
+                                    subscriptionTypeName,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Regular'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10.0, top: 5, right: 10),
+                                color: Colors.white,
+                                child: Text(
+                                  '\u{20B9} ${amount}',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_regular'),
+                                  //textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
                           ),
-                        )
-                      ]),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 15.0, top: 5, bottom: 20),
-                      child: Row(children: [
-                        // Container(
-                        //   child: Icon(Icons.network_cell),
-                        //
-                        // ),
-                        //SizedBox(width: 10),
-                        Container(
-                          child: Text(
-                            startFormattedDate,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff333333),
-                                fontFamily: 'Roboto_Regular'),
-                            //textDirection: TextDirection.ltr,
-                            textAlign: TextAlign.left,
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      left: 10.0, top: 5, bottom: 5),
+                                  color: Colors.white,
+                                  child: Text(
+                                    startFormattedDate,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Regular'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 10.0, top: 5, bottom: 5, right: 10),
+                                color: Colors.white,
+                                child: Text(
+                                  endtFormattedDate,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Regular'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
                           ),
-                        )
-                      ]),
-                    ),
-                  ],
-                ),
-/*
-                Column(
-                  children: <Widget>[
-                    Container(
-                      margin:
-                          EdgeInsets.only(left: 5.0, top: 20.0, bottom: 20.0),
-                      child: Row(children: [
-                        // Container(
-                        //   child: Icon(Icons.network_cell),
-                        // ),
-                        // SizedBox(width: 20,),
-                        Container(
-                          child: Text(
-                            subscriptionTypeName,
-                            style: TextStyle(
-                                fontSize: 10,
-                                color: Color(0xff808080),
-                                fontFamily: 'Roboto_Medium'),
-                           // textDirection: TextDirection.ltr,
-                            textAlign: TextAlign.left,
-                          ),
-                        )
-                      ]),
-                    ),
-                  ],
-                ),
-*/
-                // For Second Column
-                Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 50.0, top: 20.0),
-                      child: Row(children: [
-                        // Container(
-                        //   child: Icon(Icons.network_cell),
-                        //
-                        // ),
-                        // SizedBox(width: 10),
-                        Container(
-                          child: Text(
-                            '\u{20B9} ${amount}',
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff333333),
-                                fontFamily: 'Roboto_Regular'),
-                           // textDirection: TextDirection.ltr,
-                            textAlign: TextAlign.left,
-                          ),
-                        )
-                      ]),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 50.0, top: 5.0),
-                      child: Row(children: [
-                        // Container(
-                        //   child: Icon(Icons.network_cell),
-                        //   // child: Checkbox(
-                        //   //
-                        //   //   activeColor: Colors.green,
-                        //   // ),
-                        //
-                        // ),
-                        // SizedBox(width: 10),
-                        Container(
-                          child: Text(
-                            enddtFormattedDate,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff333333),
-                                fontFamily: 'Roboto_Regular'),
-                            //textDirection: TextDirection.ltr,
-                            textAlign: TextAlign.left,
-                          ),
-                        )
-                      ]),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
+                        ],
+                      ),
+                    )
+                  ])
+                ]),
             color: Colors.white,
-            shadowColor: Colors.lightBlue,
+            shadowColor: Colors.white,
             elevation: 5.0,
             //margin: EdgeInsets.all(15.0),
             margin:
-                EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
+                EdgeInsets.only(left: 0.0, right: 0.0, top: 5.0, bottom: 5.0),
           );
         });
   }
 
-
-
-
-
-  Widget _rechargeSubscriptionListView(
+  Widget _addOnRechargeSubscriptionListView(
       BuildContext context,
       List<MostRecentQuickRechargeSubscriptionList>
-          productInfoQuickRechargeSubscription) {
+      addOnList) {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: productInfoQuickRechargeSubscription.length,
+        itemCount: addOnList.length,
         itemBuilder: (BuildContext ctx, int index) {
           //return new Text(listItem[index]);
 
-          String productType = productInfoQuickRechargeSubscription.elementAt(index).productType;
-          String productName = productInfoQuickRechargeSubscription.elementAt(index).productName;
-          bool status = productInfoQuickRechargeSubscription.elementAt(index).isActive;
+          String productType =
+              addOnList.elementAt(index).productType;
+          String productName =
+              addOnList.elementAt(index).productName;
+          bool status =
+              addOnList.elementAt(index).isActive;
 
-          double amount = productInfoQuickRechargeSubscription.elementAt(index).price;
-          double monthlyPrice = productInfoQuickRechargeSubscription.elementAt(index).monthlyPrice;
+          double amount =
+              addOnList.elementAt(index).price;
+          double monthlyPrice = addOnList
+              .elementAt(index)
+              .monthlyPrice;
 
-          bool isTaxIncluded = productInfoQuickRechargeSubscription.elementAt(index).isTaxIncluded;
-          String subscriptionTypeName = productInfoQuickRechargeSubscription.elementAt(index).subscriptionTypeName;
-         // String strsubscriptionTypeName = subscriptionTypeName.toString();
+          bool isTaxIncluded = addOnList
+              .elementAt(index)
+              .isTaxIncluded;
+          String subscriptionTypeName = addOnList
+              .elementAt(index)
+              .subscriptionTypeName;
+          // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate = productInfoQuickRechargeSubscription.elementAt(index).startDate;
-          DateTime endDate = productInfoQuickRechargeSubscription.elementAt(index).endDate;
+          DateTime startDate =
+              addOnList.elementAt(index).startDate;
+          DateTime endDate =
+              addOnList.elementAt(index).endDate;
           DateTime now = DateTime.now();
 
-
-          String startFormattedDate = DateFormat('dd-MMM-yyyy').format(startDate);
+          String startFormattedDate =
+              DateFormat('dd-MMM-yyyy').format(startDate);
           String endtFormattedDate = DateFormat('dd-MMM-yyyy').format(endDate);
           final difference = endDate.difference(now).inDays;
           String expire = 'Expires in ' + difference.toString() + ' days';
           //bool isActive = productInfoQuickRechargeSubscription.elementAt(index).isActive;
-         // String alert = isActive ? 'Active' : 'In Active';
+          // String alert = isActive ? 'Active' : 'In Active';
 
-          if(isTaxIncluded)
-          {
+          if (isTaxIncluded) {
+            taxIncludeValue = "";
+          } else {
             taxIncludeValue = "";
           }
-          else
-          {
-            taxIncludeValue = "";
-          }
-
-
-
 
           int ind = index;
           return new Card(
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10.0, top: 10),
-                        color: Color(0xffDADADA),
-                        child: Text(
-                          productType,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Color(0xff333333),
-                              fontFamily: 'Roboto_Bold'),
-                          //textDirection: TextDirection.ltr,
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ),
+                //crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Row(children: [
                     Container(
-                      margin: EdgeInsets.only(right: 0.0, top: 10),
-                      color: Color(0xffDADADA),
-                      child: Text(
-                        '\u{20B9} ${monthlyPrice}',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xff333333),
-                            fontFamily: 'Roboto_Bold'),
-                       // textDirection: TextDirection.ltr,
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                  ],
-                ),
-
-                /*
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 6,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10.0, top: 10),
-                        color: Colors.white,
-                        child: Text(
-                          taxIncludeValue,
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xff333333),
-                              fontFamily: 'Roboto_Regular'),
-                         // textDirection: TextDirection.ltr,
-                          textAlign: TextAlign.left,
+                      margin:
+                          EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+                      child: Row(children: [
+                        Container(
+                          child: Icon(Icons.network_cell),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                */
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 6,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10.0, top: 10),
-                        color: Colors.white,
-                        child: Text(
-                          subscriptionTypeName,
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xff333333),
-                              fontFamily: 'Roboto_Regular'),
-                          //textDirection: TextDirection.ltr,
-                          textAlign: TextAlign.left,
+                        SizedBox(
+                          width: 20,
                         ),
-                      ),
+                        // Container(
+                        //   child: Text('Hello'),
+                        // )
+                      ]),
                     ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10.0, top: 5),
+                                  color: Color(0xffDADADA),
+                                  child: Text(
+                                    productType,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Bold'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5, right: 10),
+                                color: Color(0xffDADADA),
+                                child: Text(
+                                  '\u{20B9} ${monthlyPrice}',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Bold'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10.0, top: 5),
+                                  color: Colors.white,
+                                  child: Text(
+                                    subscriptionTypeName,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Regular'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10.0, top: 5, right: 10),
+                                color: Colors.white,
+                                child: Text(
+                                  '\u{20B9} ${amount}',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_regular'),
+                                  //textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      left: 10.0, top: 5, bottom: 5),
+                                  color: Colors.white,
+                                  child: Text(
+                                    startFormattedDate,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Regular'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 10.0, top: 5, bottom: 5, right: 10),
+                                color: Colors.white,
+                                child: Text(
+                                  endtFormattedDate,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Regular'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ])
+                ]),
+            color: Colors.white,
+            shadowColor: Colors.white,
+            elevation: 5.0,
+            //margin: EdgeInsets.all(15.0),
+            margin:
+                EdgeInsets.only(left: 0.0, right: 0.0, top: 5.0, bottom: 5.0),
+          );
+        });
+  }
+
+  Widget _aLaCarteRechargeSubscriptionListView(
+      BuildContext context,
+      List<MostRecentQuickRechargeSubscriptionList>
+      alaCarteList) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: alaCarteList.length,
+        itemBuilder: (BuildContext ctx, int index) {
+          //return new Text(listItem[index]);
+
+          String productType =
+              alaCarteList.elementAt(index).productType;
+          String productName =
+              alaCarteList.elementAt(index).productName;
+          bool status =
+              alaCarteList.elementAt(index).isActive;
+
+          double amount =
+              alaCarteList.elementAt(index).price;
+          double monthlyPrice = alaCarteList
+              .elementAt(index)
+              .monthlyPrice;
+
+          bool isTaxIncluded = alaCarteList
+              .elementAt(index)
+              .isTaxIncluded;
+          String subscriptionTypeName = alaCarteList
+              .elementAt(index)
+              .subscriptionTypeName;
+          // String strsubscriptionTypeName = subscriptionTypeName.toString();
+          String taxIncludeValue = "";
+          DateTime startDate =
+              alaCarteList.elementAt(index).startDate;
+          DateTime endDate =
+              alaCarteList.elementAt(index).endDate;
+          DateTime now = DateTime.now();
+
+          String startFormattedDate =
+              DateFormat('dd-MMM-yyyy').format(startDate);
+          String endtFormattedDate = DateFormat('dd-MMM-yyyy').format(endDate);
+          final difference = endDate.difference(now).inDays;
+          String expire = 'Expires in ' + difference.toString() + ' days';
+          //bool isActive = productInfoQuickRechargeSubscription.elementAt(index).isActive;
+          // String alert = isActive ? 'Active' : 'In Active';
+
+          if (isTaxIncluded) {
+            taxIncludeValue = "";
+          } else {
+            taxIncludeValue = "";
+          }
+
+          int ind = index;
+          return new Card(
+            child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Row(children: [
                     Container(
-                      margin: EdgeInsets.only(left: 10.0, top: 10),
-                      color: Colors.white,
-                      child: Text(
-                        '\u{20B9} ${amount}',
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff333333),
-                            fontFamily: 'Roboto_regular'),
-                        //textDirection: TextDirection.ltr,
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 6,
-                      child: Container(
-                        margin:
-                            EdgeInsets.only(left: 10.0, top: 10, bottom: 10),
-                        color: Colors.white,
-                        child: Text(
-                          startFormattedDate,
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xff333333),
-                              fontFamily: 'Roboto_Regular'),
-                          //textDirection: TextDirection.ltr,
-                          textAlign: TextAlign.left,
+                      margin:
+                          EdgeInsets.only(left: 15.0, top: 5.0, bottom: 5.0),
+                      child: Row(children: [
+                        Container(
+                          child: Icon(Icons.network_cell),
                         ),
-                      ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        // Container(
+                        //   child: Text('Hello'),
+                        // )
+                      ]),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 10.0, top: 10, bottom: 10),
-                      color: Colors.white,
-                      child: Text(
-                        endtFormattedDate,
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff333333),
-                            fontFamily: 'Roboto_Regular'),
-                       // textDirection: TextDirection.ltr,
-                        textAlign: TextAlign.left,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10.0, top: 5),
+                                  color: Color(0xffDADADA),
+                                  child: Text(
+                                    productType,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Bold'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only( top: 5, right: 10),
+                                color: Color(0xffDADADA),
+                                child: Text(
+                                  '\u{20B9} ${monthlyPrice}',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Bold'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  margin: EdgeInsets.only(left: 10.0, top: 5),
+                                  color: Colors.white,
+                                  child: Text(
+                                    subscriptionTypeName,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Regular'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10.0, top: 5, right: 10),
+                                color: Colors.white,
+                                child: Text(
+                                  '\u{20B9} ${amount}',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_regular'),
+                                  //textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      left: 10.0, top: 5, bottom: 5),
+                                  color: Colors.white,
+                                  child: Text(
+                                    startFormattedDate,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff333333),
+                                        fontFamily: 'Roboto_Regular'),
+                                    //textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 10.0, top: 5, bottom: 5, right: 10),
+                                color: Colors.white,
+                                child: Text(
+                                  endtFormattedDate,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff333333),
+                                      fontFamily: 'Roboto_Regular'),
+                                  // textDirection: TextDirection.ltr,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-
+                    )
+                  ])
+                ]),
             color: Colors.white,
             shadowColor: Colors.white,
             elevation: 5.0,
