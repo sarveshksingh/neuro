@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:neurosms/models/ChangePasswordResponse.dart';
 import 'package:neurosms/models/ForgotPassword.dart';
 import 'package:neurosms/models/Login.dart';
 import 'package:neurosms/models/MSOResponse.dart';
@@ -54,7 +55,13 @@ abstract class ApiClient {
       @Field("encdvcId") encdvcId,
       );
 
-
+  @FormUrlEncoded()
+  @POST(Apis.changePassword)
+  Future<ChangePasswordResponse> getChangePassword(
+      @Field("tokenId") tokenId,
+      @Field("password") password,
+      @Field("confpassword") confpassword,
+      );
 
 /*@POST(Apis.timesheetlist)
   Future<List<Timerecord>> getTimesheetList(

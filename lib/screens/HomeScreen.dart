@@ -595,6 +595,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           //child: Image.asset('assets/images/bank.png')
                         ),
                       ),
+
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(left: 5.0),
@@ -620,6 +621,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
+
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(right: 10.0),

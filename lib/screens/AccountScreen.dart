@@ -1,11 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:neurosms/retrofit/api_client.dart';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neurosms/models/ChangePasswordResponse.dart';
+import 'package:toast/toast.dart';
 
 import 'AppDrawer.dart';
 import 'BottomNavigationbar.dart';
+
 
 class AccountScreen extends StatefulWidget {
   static const String routeName = '/account';
@@ -19,6 +24,9 @@ class _AccountScreenState extends State<AccountScreen> {
   final formKey = new GlobalKey<FormState>();
   String _newpassword, _confirmpassword;
   double currentBalance = 0;
+
+  String _token,_password,_confpassword;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +75,27 @@ class _AccountScreenState extends State<AccountScreen> {
       bottomNavigationBar: BottomNavigationbar(_selectedIndex),
     );
   }
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+  }
+
+  _loadUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _token = (prefs.getString('token') ?? null);
+    //_subsId = (prefs.getString('subsId') ?? null);
+    //_encdvcId = (prefs.getString('encDvcMapId') ?? '');
+
+
+  }
+
+
+
+
 
   Widget _buildAccountCard() => new Container(
       child: new Card(
@@ -357,12 +386,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                     // _isLoading =
                                     // true);
                                     form.save());
-                                // _buildBody(
-                                //     context,
-                                //     _username,
-                                //     _password);
-                                Navigator.pop(context);
-                                showResetPasswordConfirmBottomSheet();
+                                 Navigator.pop(context);
+                                _buildBody(
+                                    context,
+                                    _token,
+                                    _newpassword,_confirmpassword);
+
+                               // showResetPasswordConfirmBottomSheet();
                               }
                             },
                             textColor: Color(0xffF9F9FB),
@@ -469,12 +499,11 @@ class _AccountScreenState extends State<AccountScreen> {
                                     child: FlatButton(
                                       onPressed: () {
                                         Navigator.pop(context);
-                                        // Navigator
-                                        //     .pushNamedAndRemoveUntil(
-                                        //     context,
-                                        //     Routes.login,
-                                        //     ModalRoute.withName(
-                                        //         Routes.login));
+                                        _logoutPressed();
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context, Routes.login, ModalRoute.withName(Routes.login));
+
+
                                       },
                                       child: Text(
                                         'OK',
@@ -910,6 +939,54 @@ class _AccountScreenState extends State<AccountScreen> {
           );
         });
   }
+
+  FutureBuilder<ChangePasswordResponse> _buildBody(
+      BuildContext context, String token, String password, String confirmpassword) {
+    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    return FutureBuilder<ChangePasswordResponse>(
+      future: client.getChangePassword(token, password,confirmpassword).then((respose) {
+        setState(() => _isLoading = false);
+        setState(() async {
+          if (respose.status == 1) {
+            //loadProgress();
+             showResetPasswordConfirmBottomSheet();
+
+            /*pref.setString("Branch", respose.Branch);
+            pref.setString("Name", respose.Name);
+            pref.setString("Image_Path", respose.Image_Path);
+            pref.setString("User_ID", respose.User_ID);
+            pref.setString("Deligated_ByName", respose.Deligated_ByName);
+            pref.setString("Deligated_By", respose.Deligated_By);
+            pref.setString("Department", respose.Department);
+            pref.setString("M_app_key", respose.M_App_Key);*/
+            // Navigator.pushNamedAndRemoveUntil(
+            //     context, Routes.home, ModalRoute.withName(Routes.home));
+            //return _buildPosts(context, respose);
+          } else
+            /*if (respose.Error_Code == "400")*/ {
+            Toast.show("Oops something went wrong", context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          }
+        });
+      }).catchError((err) {
+        print(err);
+      }),
+    );
+  }
+
+  Future<bool> _logoutPressed() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool('Login', false);
+    pref.setString("token", null);
+    pref.setString("Name", null);
+    // pref.setString("Image_Path", null);
+    pref.setString("User_ID", null);
+    // pref.setString("Deligated_ByName", null);
+    // pref.setString("Deligated_By", null);
+    // pref.setString("Department", null);
+    // pref.setString("M_app_key", null);
+  }
+
 }
 
 class SwitchScreen extends StatefulWidget {

@@ -190,6 +190,44 @@ class _ApiClient implements ApiClient {
 
 
 
+  @override
+  Future<ChangePasswordResponse> getChangePassword(
+      tokenId,
+      password,
+      confpassword,
+      ) async {
+    ArgumentError.checkNotNull(tokenId, 'tokenId');
+    ArgumentError.checkNotNull(password, 'password');
+    ArgumentError.checkNotNull(confpassword, 'confpassword');
+
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {
+      'tokenId': tokenId,
+      'password': password,
+      'confpassword': confpassword,
+
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
+        Apis.changePassword,
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            contentType: 'application/x-www-form-urlencoded',
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ChangePasswordResponse.fromJson(_result.data);
+    return value;
+  }
+
+
+
+
+
+
 
 
 /*@override

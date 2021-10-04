@@ -14,24 +14,7 @@ class QuickRecharge extends StatefulWidget {
 class _QuickRechargeState extends State<QuickRecharge> {
   var checkBoxValue;
 
-/*
-  List<EList> _paymentmodeList = [];
-  List<EList> _serviceTypeList = [];
-  List<TransactionHistory> _transactionHistoryList = [];
-  static final List<String> _downloadTypeList = <String>['pdf', 'Excel'];
-  var checkBoxValue;
-  String _token,
-      _subsWalletId,
-      _encDvcMapId,
-      totalCount = '',
-      _downloadType = _downloadTypeList.first,
-      fromDate = '',
-      toDate = '';
-  EList _serviceType, _paymentMode;
-  int transactionTypeId = 0;
 
-
-*/
   List<MostRecentQuickRechargeSubscriptionList>
       mostRecentQuickRechargeSubscriptionList = [];
   List<MostRecentQuickRechargeSubscriptionList>
