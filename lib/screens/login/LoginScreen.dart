@@ -42,6 +42,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
+  bool passwordVisible;
+  bool isRememberPasswordClicked;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password, imgPath = '';
@@ -50,6 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    passwordVisible = true;
+    isRememberPasswordClicked = false;
     super.initState();
     _loadUserInfo();
   }
@@ -202,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           bottom: 0),
                                       //padding: EdgeInsets.symmetric(horizontal: 15),
                                       child: TextFormField(
-                                        obscureText: true,
+                                        obscureText: passwordVisible,
                                         onSaved: (val) => _password = val,
                                         validator: (value) {
                                           if (value.trim().isEmpty) {
@@ -228,22 +232,107 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   color: Color(
                                                       0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
-                                            suffixIcon: Padding(
+                                            /*
+                                            suffixIcon: IconButton(
                                               padding:
                                                   const EdgeInsetsDirectional
                                                           .only(
                                                       start: 16.0,
                                                       end: 16.0,
                                                       top: 8.0),
-                                              child: SvgPicture.asset(
+                                              icon: SvgPicture.asset(
                                                   'assets/images/visibility.svg',
                                                   color: Color(
-                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
+                                                      0xffDF1D3B)),
+
+                                              onPressed: ()
+                                              {
+                                                setState(() {
+                                                  passwordVisible = false;
+                                                });
+                                                print("eye button clicked");
+                                              },
+                                            ),
+
+                                             */
+                                            suffixIcon: GestureDetector(
+                                              onLongPress: () {
+                                                setState(() {
+                                                  passwordVisible = false;
+                                                });
+                                              },
+
+                                              onLongPressUp: () {
+                                                setState(() {
+                                                  passwordVisible = true;
+                                                });
+                                              },
+                                              child: Icon(
+                                                  passwordVisible ? Icons.visibility : Icons.visibility_off),
+
                                             ),
                                             labelText: 'Password',
                                             hintText: 'Enter secure password'),
                                       ),
                                     ),
+
+                                    Padding(padding: EdgeInsets.only(left: 20.0,top: 5.0),
+                                      child: Row(
+
+                                        children: [
+                                          FlatButton(
+                                            padding: EdgeInsets.only(left:8.0),
+                                            child: Row(
+                                              children: < Widget > [
+                                                Icon(Icons.check_box_outline_blank,color: Colors.red,),
+                                                Text(
+                                                  'Remember Password',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                            onPressed: ()
+                                            {
+                                              print("Remember button clicked");
+                                            },
+
+                                          ),
+
+                                          FlatButton(
+                                            padding: EdgeInsets.only(left:65.0),
+                                            child: Row(
+                                              children: < Widget > [
+                                                Text(
+                                                  'Forgot Password?',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    decoration: TextDecoration.underline
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                            onPressed: ()
+                                            {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          GetPasswordScreen()));
+                                            },
+                                          )
+                                        ],
+                                      )
+                                    ),
+
+
+                                    /*
+
                                     FlatButton(
                                         onPressed: () {
                                           //TODO FORGOT PASSWORD SCREEN GOES HERE
@@ -270,6 +359,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     TextDecoration.underline),
                                           ),
                                         )),
+
+                                  */
                                     Expanded(
                                         child: Center(
                                             child: Container(
