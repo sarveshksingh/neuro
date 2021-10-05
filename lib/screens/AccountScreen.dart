@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:neurosms/models/BaseModel.dart';
+import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,9 +10,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neurosms/models/ChangePasswordResponse.dart';
 import 'package:toast/toast.dart';
 
+import 'Common.dart';
 import 'Subscriber/AppDrawer.dart';
 import 'Subscriber/BottomNavigationbar.dart';
-
 
 class AccountScreen extends StatefulWidget {
   static const String routeName = '/account';
@@ -25,7 +27,7 @@ class _AccountScreenState extends State<AccountScreen> {
   String _newpassword, _confirmpassword;
   double currentBalance = 0;
 
-  String _token,_password,_confpassword;
+  String _token, _password, _confpassword;
   bool _isLoading = false;
 
   @override
@@ -76,8 +78,6 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-
-
   @override
   void initState() {
     super.initState();
@@ -89,13 +89,7 @@ class _AccountScreenState extends State<AccountScreen> {
     _token = (prefs.getString('token') ?? null);
     //_subsId = (prefs.getString('subsId') ?? null);
     //_encdvcId = (prefs.getString('encDvcMapId') ?? '');
-
-
   }
-
-
-
-
 
   Widget _buildAccountCard() => new Container(
       child: new Card(
@@ -386,13 +380,11 @@ class _AccountScreenState extends State<AccountScreen> {
                                     // _isLoading =
                                     // true);
                                     form.save());
-                                 Navigator.pop(context);
-                                _buildBody(
-                                    context,
-                                    _token,
-                                    _newpassword,_confirmpassword);
+                                Navigator.pop(context);
+                                _buildBody(context, _token, _newpassword,
+                                    _confirmpassword);
 
-                               // showResetPasswordConfirmBottomSheet();
+                                // showResetPasswordConfirmBottomSheet();
                               }
                             },
                             textColor: Color(0xffF9F9FB),
@@ -499,11 +491,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     child: FlatButton(
                                       onPressed: () {
                                         Navigator.pop(context);
-                                        _logoutPressed();
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context, Routes.login, ModalRoute.withName(Routes.login));
-
-
+                                        Common().logoutPressed(context);
                                       },
                                       child: Text(
                                         'OK',
@@ -940,18 +928,21 @@ class _AccountScreenState extends State<AccountScreen> {
         });
   }
 
-  FutureBuilder<ChangePasswordResponse> _buildBody(
-      BuildContext context, String token, String password, String confirmpassword) {
-    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-    return FutureBuilder<ChangePasswordResponse>(
-      future: client.getChangePassword(token, password,confirmpassword).then((respose) {
-        setState(() => _isLoading = false);
-        setState(() async {
-          if (respose.status == 1) {
-            //loadProgress();
-             showResetPasswordConfirmBottomSheet();
+  Future<BaseModel<ChangePasswordResponse>> _buildBody(BuildContext context,
+      String token, String password, String confirmpassword) async {
+    ChangePasswordResponse response;
+    final apiClient =
+        ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    try {
+      Common().showAlertDialog(context);
+      response =
+          await apiClient.getChangePassword(token, password, confirmpassword);
+      setState(() async {
+        if (response.status == 1) {
+          //loadProgress();
+          showResetPasswordConfirmBottomSheet();
 
-            /*pref.setString("Branch", respose.Branch);
+          /*pref.setString("Branch", respose.Branch);
             pref.setString("Name", respose.Name);
             pref.setString("Image_Path", respose.Image_Path);
             pref.setString("User_ID", respose.User_ID);
@@ -959,19 +950,20 @@ class _AccountScreenState extends State<AccountScreen> {
             pref.setString("Deligated_By", respose.Deligated_By);
             pref.setString("Department", respose.Department);
             pref.setString("M_app_key", respose.M_App_Key);*/
-            // Navigator.pushNamedAndRemoveUntil(
-            //     context, Routes.home, ModalRoute.withName(Routes.home));
-            //return _buildPosts(context, respose);
-          } else
-            /*if (respose.Error_Code == "400")*/ {
-            Toast.show("Oops something went wrong", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          }
-        });
-      }).catchError((err) {
-        print(err);
-      }),
-    );
+          // Navigator.pushNamedAndRemoveUntil(
+          //     context, Routes.home, ModalRoute.withName(Routes.home));
+          //return _buildPosts(context, respose);
+        }
+      });
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      Toast.show("Token expired", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      Navigator.pop(context);
+      Common().logoutPressed(context);
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 
   Future<bool> _logoutPressed() async {
@@ -986,7 +978,6 @@ class _AccountScreenState extends State<AccountScreen> {
     // pref.setString("Department", null);
     // pref.setString("M_app_key", null);
   }
-
 }
 
 class SwitchScreen extends StatefulWidget {

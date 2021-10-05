@@ -286,60 +286,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<FutureBuilder<SubsDashboardResponse>> _buildBody(
-      BuildContext context, String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-    return FutureBuilder<SubsDashboardResponse>(
-      future: client.getSubsDashboard(token).then((respose) {
-        //setState(() => _isLoading = false);
-        setState(() {
-          if (respose.status == 1) {
-            logoPath = respose.logoPath;
-            prefs.setString('User_ID', respose.dashboardinfo.userDetail.userId);
-
-            prefs.setString('subsWalletId',
-                respose.dashboardinfo.subscriberProfile.walletId);
-            userName = respose.dashboardinfo.subscriberProfile.subscriberName;
-            prefs.setString('Name', userName);
-            companyName =
-                respose.dashboardinfo.subscriberProfile.mainAccountName;
-            contactNumber = respose.dashboardinfo.subscriberProfile
-                .subscriberProfileAddress.phoneNo;
-            email = respose.dashboardinfo.subscriberProfile.subscriberEmail;
-            currentBalance = respose
-                .dashboardinfo.subscriberProfile.subscriberTotalWalletBalance;
-            prefs.setDouble('balance', currentBalance);
-            Toast.show("Get Dashboard Data successfully", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-            _hardwareDetailsList = respose.dashboardinfo.hardwareDetailsList;
-            _buildListView(context, _hardwareDetailsList);
-            //loadProgress();
-            /*SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setBool('Login', true);
-            pref.setString("Branch", respose.Branch);
-            pref.setString("Name", respose.Name);
-            pref.setString("Image_Path", respose.Image_Path);
-            pref.setString("User_ID", respose.User_ID);
-            pref.setString("Deligated_ByName", respose.Deligated_ByName);
-            pref.setString("Deligated_By", respose.Deligated_By);
-            pref.setString("Department", respose.Department);
-            pref.setString("M_app_key", respose.M_App_Key);*/
-            // Navigator.pushNamedAndRemoveUntil(
-            //     context, Routes.home, ModalRoute.withName(Routes.home));
-            //return _buildPosts(context, respose);
-          } else
-          /*if (respose.Error_Code == "400")*/ {
-            Toast.show("Oops something went wrong", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          }
-        });
-      }).catchError((err) {
-        print(err);
-      }),
-    );
-  }
-
   Widget _buildListView(
       BuildContext context, List<HardwareDetailsList> _hardwareDetailsList) {
     return ListView.builder(

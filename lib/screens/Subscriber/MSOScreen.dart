@@ -3,11 +3,15 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:neurosms/models/BaseModel.dart';
 import 'package:neurosms/models/MSOResponse.dart';
+import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+
+import '../Common.dart';
 
 class MSOScreen extends StatefulWidget {
   static const String routeName = '/mso';
@@ -190,37 +194,39 @@ class _MSOScreenState extends State<MSOScreen> {
                 ])));
   }
 
-  FutureBuilder<MsoResponse> _buildBody(
-      BuildContext context, String subDomain) {
-    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-    return FutureBuilder<MsoResponse>(
-      future: client.msoDetails(subDomain).then((respose) {
-        setState(() => _isLoading = false);
-        setState(() async {
-          if (respose.status == 1) {
-            loadProgress();
-            SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setBool('MSO', true);
-            pref.setString("logoPath", respose.logoPath);
-            pref.setString(
-                "msologo", respose.logoPath + respose.msoDetails.profilePic);
-            /*pref.setString("Image_Path", respose.Image_Path);
+  Future<BaseModel<MsoResponse>> _buildBody(
+      BuildContext context, String subDomain) async {
+    MsoResponse response;
+    final apiClient =
+        ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    try {
+      Common().showAlertDialog(context);
+      response = await apiClient.msoDetails(subDomain);
+      setState(() async {
+        if (response.status == 1) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setBool('MSO', true);
+          pref.setString("logoPath", response.logoPath);
+          pref.setString(
+              "msologo", response.logoPath + response.msoDetails.profilePic);
+          /*pref.setString("Image_Path", respose.Image_Path);
             pref.setString("User_ID", respose.User_ID);
             pref.setString("Deligated_ByName", respose.Deligated_ByName);
             pref.setString("Deligated_By", respose.Deligated_By);
             pref.setString("Department", respose.Department);
             pref.setString("M_app_key", respose.M_App_Key);*/
-            Navigator.pushNamedAndRemoveUntil(
-                context, Routes.login, ModalRoute.withName(Routes.login));
-            //return _buildPosts(context, respose);
-          } else {
-            Toast.show("Oops something went wrong", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          }
-        });
-      }).catchError((err) {
-        print(err);
-      }),
-    );
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.login, ModalRoute.withName(Routes.login));
+        }
+      });
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      Toast.show("Token expired", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      Navigator.pop(context);
+      Common().logoutPressed(context);
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }
