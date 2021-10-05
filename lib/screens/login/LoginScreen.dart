@@ -4,13 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neurosms/models/BaseModel.dart';
 import 'package:neurosms/models/Login.dart';
+import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
-import '../GetPasswordScreen.dart';
+import '../Common.dart';
+import '../Subscriber/GetPasswordScreen.dart';
 
 /*class EmailFieldValidator {
   static String validate(String value) {
@@ -49,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _username, _password, imgPath = '';
 
   bool visible = true;
+  bool value = true;
 
   @override
   void initState() {
@@ -261,75 +265,79 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   passwordVisible = false;
                                                 });
                                               },
-
                                               onLongPressUp: () {
                                                 setState(() {
                                                   passwordVisible = true;
                                                 });
                                               },
-                                              child: Icon(
-                                                  passwordVisible ? Icons.visibility : Icons.visibility_off),
-
+                                              child: Icon(passwordVisible
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off),
                                             ),
                                             labelText: 'Password',
                                             hintText: 'Enter secure password'),
                                       ),
                                     ),
 
-                                    Padding(padding: EdgeInsets.only(left: 20.0,top: 5.0),
-                                      child: Row(
-
-                                        children: [
-                                          FlatButton(
-                                            padding: EdgeInsets.only(left:8.0),
-                                            child: Row(
-                                              children: < Widget > [
-                                                Icon(Icons.check_box_outline_blank,color: Colors.red,),
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 15.0, top: 5.0, right: 15.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Row(children: [
+                                                Checkbox(
+                                                  value: this.value,
+                                                  onChanged: (bool value) {
+                                                    setState(() {
+                                                      this.value = value;
+                                                    });
+                                                  },
+                                                ),
                                                 Text(
                                                   'Remember Password',
+                                                  maxLines: 4,
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
+                                                    color: Color(0xff333333),
+                                                    fontSize: 14,
+                                                    fontFamily: 'Roboto_Bold',
+                                                    //fontWeight: FontWeight.bold
                                                   ),
-                                                ),
-
-                                              ],
+                                                )
+                                              ]),
                                             ),
-                                            onPressed: ()
-                                            {
-                                              print("Remember button clicked");
-                                            },
-
-                                          ),
-
-                                          FlatButton(
-                                            padding: EdgeInsets.only(left:65.0),
-                                            child: Row(
-                                              children: < Widget > [
-                                                Text(
-                                                  'Forgot Password?',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 15,
-                                                    decoration: TextDecoration.underline
+                                            FlatButton(
+                                              padding:
+                                                  EdgeInsets.only(left: 65.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text(
+                                                    'Forgot Password?',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff333333),
+                                                        fontSize: 14,
+                                                        fontFamily:
+                                                            'Roboto_Bold',
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline),
                                                   ),
-                                                ),
-
-                                              ],
-                                            ),
-                                            onPressed: ()
-                                            {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (_) =>
-                                                          GetPasswordScreen()));
-                                            },
-                                          )
-                                        ],
-                                      )
-                                    ),
-
+                                                ],
+                                              ),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (_) =>
+                                                            GetPasswordScreen()));
+                                              },
+                                            )
+                                          ],
+                                        )),
 
                                     /*
 
@@ -594,18 +602,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ])));
   }
 
-  FutureBuilder<Login> _buildBody(
-      BuildContext context, String username, String password) {
-    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-    return FutureBuilder<Login>(
-      future: client.loginUser(username, password).then((respose) {
-        setState(() => _isLoading = false);
+  Future<BaseModel<Login>> _buildBody(
+      BuildContext context, String username, String password) async {
+    Login response;
+    final apiClient = ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    try {
+      Common().showAlertDialog(context);
+      response = await apiClient.loginUser(username, password);
+      Navigator.pop(context);
         setState(() async {
-          if (respose.status == 1) {
+          if (response.status == 1) {
             loadProgress();
             SharedPreferences pref = await SharedPreferences.getInstance();
             pref.setBool('Login', true);
-            pref.setString('token', respose.tokenId);
+            pref.setString('token', response.tokenId);
             /*pref.setString("Branch", respose.Branch);
             pref.setString("Name", respose.Name);
             pref.setString("Image_Path", respose.Image_Path);
@@ -616,16 +626,12 @@ class _LoginScreenState extends State<LoginScreen> {
             pref.setString("M_app_key", respose.M_App_Key);*/
             Navigator.pushNamedAndRemoveUntil(
                 context, Routes.home, ModalRoute.withName(Routes.home));
-            //return _buildPosts(context, respose);
-          } else
-          /*if (respose.Error_Code == "400")*/ {
-            Toast.show("Oops something went wrong", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
           }
         });
-      }).catchError((err) {
-        print(err);
-      }),
-    );
+      }catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }

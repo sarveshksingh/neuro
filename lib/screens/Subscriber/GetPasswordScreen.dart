@@ -2,10 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neurosms/models/BaseModel.dart';
 import 'package:neurosms/models/ForgotPassword.dart';
+import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:toast/toast.dart';
+
+import '../Common.dart';
 
 class GetPasswordScreen extends StatefulWidget {
   static const String routeName = '/forgot';
@@ -22,18 +26,6 @@ class _GetScreenState extends State<GetPasswordScreen> {
   String _msoname;
 
   bool visible = true;
-
-  loadProgress() {
-    if (visible == true) {
-      setState(() {
-        visible = false;
-      });
-    } else {
-      setState(() {
-        visible = true;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +88,11 @@ class _GetScreenState extends State<GetPasswordScreen> {
                               child: Text(
                                 'Forgot password',
                                 style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 20,
-                                    fontFamily: 'OpenSans-Bold',
-                                    //fontStyle: FontStyle.normal,
-                                    //fontWeight: FontWeight.bold
+                                  color: Colors.black87,
+                                  fontSize: 20,
+                                  fontFamily: 'OpenSans-Bold',
+                                  //fontStyle: FontStyle.normal,
+                                  //fontWeight: FontWeight.bold
                                 ),
                               )),
                         ),
@@ -135,7 +127,9 @@ class _GetScreenState extends State<GetPasswordScreen> {
                                                       end: 16.0,
                                                       top: 16.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/user.svg', color: Color(0xffDF1D3B)), // myIcon is a 48px-wide widget.
+                                                  'assets/images/user.svg',
+                                                  color: Color(
+                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             suffixIcon: Padding(
                                               padding:
@@ -145,7 +139,9 @@ class _GetScreenState extends State<GetPasswordScreen> {
                                                       end: 16.0,
                                                       top: 8.0),
                                               child: SvgPicture.asset(
-                                                  'assets/images/tick.svg', color: Color(0xffDF1D3B)), // myIcon is a 48px-wide widget.
+                                                  'assets/images/tick.svg',
+                                                  color: Color(
+                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
                                             ),
                                             labelText: 'Enter User Name',
                                             hintText: 'Enter valid User Name'),
@@ -178,7 +174,6 @@ class _GetScreenState extends State<GetPasswordScreen> {
                                                             //     MaterialPageRoute(
                                                             //         builder: (_) =>
                                                             //             PasswordSuccessScreen()));
-                                                            loadProgress();
                                                             final form = formKey
                                                                 .currentState;
 
@@ -220,16 +215,18 @@ class _GetScreenState extends State<GetPasswordScreen> {
                 ])));
   }
 
-  FutureBuilder<ForgotPassword> _buildBody(
-      BuildContext context, String subDomain) {
-    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-    return FutureBuilder<ForgotPassword>(
-      future: client.forgotPassword(subDomain).then((respose) {
-        setState(() => _isLoading = false);
-        setState(() async {
-          if (respose.status == 1) {
-            loadProgress();
-            /*SharedPreferences pref = await SharedPreferences.getInstance();
+  Future<BaseModel<ForgotPassword>> _buildBody(
+      BuildContext context, String subDomain) async {
+    ForgotPassword response;
+    final apiClient =
+        ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    try {
+      Common().showAlertDialog(context);
+      response = await apiClient.forgotPassword(subDomain);
+      Navigator.pop(context);
+      setState(() async {
+        if (response.status == 1) {
+          /*SharedPreferences pref = await SharedPreferences.getInstance();
             pref.setBool('Login', true);
             pref.setString("Branch", respose.Branch);
             pref.setString("Name", respose.Name);
@@ -239,20 +236,22 @@ class _GetScreenState extends State<GetPasswordScreen> {
             pref.setString("Deligated_By", respose.Deligated_By);
             pref.setString("Department", respose.Department);
             pref.setString("M_app_key", respose.M_App_Key);*/
-            // Navigator.pushNamedAndRemoveUntil(
-            //     context, Routes.login, ModalRoute.withName(Routes.login));
-            Navigator.push(context,
-                MaterialPageRoute(builder: (_) => PasswordSuccessScreen()));
-            //return _buildPosts(context, respose);
-          } else {
-            Toast.show("Oops something went wrong", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          }
-        });
-      }).catchError((err) {
-        print(err);
-      }),
-    );
+          // Navigator.pushNamedAndRemoveUntil(
+          //     context, Routes.login, ModalRoute.withName(Routes.login));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => PasswordSuccessScreen()));
+          //return _buildPosts(context, respose);
+        } else {
+          Toast.show("Oops something went wrong", context,
+              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+        }
+      });
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      Navigator.pop(context);
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }
 

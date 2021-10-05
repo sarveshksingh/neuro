@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:neurosms/screens/AccountScreen.dart';
-import 'package:neurosms/screens/SupportScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Common.dart';
 import 'BillingScreen.dart';
+import 'SupportScreen.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -110,9 +111,9 @@ class _AppDrawerState extends State<AppDrawer> {
               icon: 'assets/images/logout_nav.svg',
               text: 'Logout',
               onTap: () {
-                _logoutPressed();
-                Navigator.pushNamedAndRemoveUntil(
-                    context, Routes.login, ModalRoute.withName(Routes.login));
+                Common().logoutPressed(context);
+                // Navigator.pushNamedAndRemoveUntil(
+                //     context, Routes.login, ModalRoute.withName(Routes.login));
               }),
           /*ListTile(
             title: Text('0.0.1'),

@@ -1,10 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:neurosms/models/BaseModel.dart';
 import 'package:neurosms/models/QuickRechargeResponse.dart';
+import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+
+import '../Common.dart';
 
 class QuickRecharge extends StatefulWidget {
   @override
@@ -14,7 +18,6 @@ class QuickRecharge extends StatefulWidget {
 class _QuickRechargeState extends State<QuickRecharge> {
   var checkBoxValue;
 
-
   List<MostRecentQuickRechargeSubscriptionList>
       mostRecentQuickRechargeSubscriptionList = [];
   List<MostRecentQuickRechargeSubscriptionList>
@@ -23,6 +26,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
   List<MostRecentQuickRechargeSubscriptionList> addOnList = [];
   List<MostRecentQuickRechargeSubscriptionList> alaCarteList = [];
   String _token, _subsId, _encdvcId;
+  double basicTotal = 0.0, addOnTotal = 0.0, alaCarteTotal = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -111,13 +115,13 @@ class _QuickRechargeState extends State<QuickRecharge> {
                             ),
                           ),
                         ),
-                        Align(
+                        /*Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
                             color: Colors.transparent,
                             margin: const EdgeInsets.only(left: 15.0),
                             child: Text(
-                              "Basic",
+                              "Basic" + basicTotal.toString(),
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Color(0xff333333),
@@ -126,7 +130,47 @@ class _QuickRechargeState extends State<QuickRecharge> {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                        ),
+                        ),*/
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Container(
+                                      // margin:
+                                      //     EdgeInsets.only(left: 10.0, top: 5),
+                                      color: Color(0xffDADADA),
+                                      child: Container(
+                                          margin: EdgeInsets.only(left: 10.0),
+                                          child: Text(
+                                            'Basic',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xff333333),
+                                                fontFamily: 'Roboto_Bold'),
+                                            //textDirection: TextDirection.ltr,
+                                            textAlign: TextAlign.left,
+                                          )),
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Color(0xffDADADA),
+                                    child: Container(
+                                        margin: EdgeInsets.only(right: 10.0),
+                                        child: Text(
+                                          '\u{20B9} ${basicTotal.toString()}',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xff333333),
+                                              fontFamily: 'Roboto_Bold'),
+                                          // textDirection: TextDirection.ltr,
+                                          textAlign: TextAlign.left,
+                                        )),
+                                  ),
+                                ],
+                              )
+                            ]),
                         LimitedBox(
                             maxHeight: 135,
                             child: Column(
@@ -134,10 +178,9 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                 children: [
                                   Flexible(
                                       child: _basicRechargeSubscriptionListView(
-                                          context,
-                                          basicList))
+                                          context, basicList))
                                 ])),
-                        Align(
+                        /*Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
                             color: Colors.transparent,
@@ -152,7 +195,47 @@ class _QuickRechargeState extends State<QuickRecharge> {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                        ),
+                        ),*/
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Container(
+                                      // margin:
+                                      //     EdgeInsets.only(left: 10.0, top: 5),
+                                      color: Color(0xffDADADA),
+                                      child: Container(
+                                          margin: EdgeInsets.only(left: 10.0),
+                                          child: Text(
+                                            'Add-On Package',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xff333333),
+                                                fontFamily: 'Roboto_Bold'),
+                                            //textDirection: TextDirection.ltr,
+                                            textAlign: TextAlign.left,
+                                          )),
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Color(0xffDADADA),
+                                    child: Container(
+                                        margin: EdgeInsets.only(right: 10.0),
+                                        child: Text(
+                                          '\u{20B9} ${addOnTotal.toString()}',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xff333333),
+                                              fontFamily: 'Roboto_Bold'),
+                                          // textDirection: TextDirection.ltr,
+                                          textAlign: TextAlign.left,
+                                        )),
+                                  ),
+                                ],
+                              )
+                            ]),
                         LimitedBox(
                             maxHeight: 135,
                             child: Column(
@@ -160,10 +243,9 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                 children: [
                                   Flexible(
                                       child: _addOnRechargeSubscriptionListView(
-                                          context,
-                                          addOnList))
+                                          context, addOnList))
                                 ])),
-                        Align(
+                        /* Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
                             color: Colors.transparent,
@@ -178,16 +260,54 @@ class _QuickRechargeState extends State<QuickRecharge> {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                        ),
+                        ),*/
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Container(
+                                      color: Color(0xffDADADA),
+                                      child: Container(
+                                          margin: EdgeInsets.only(left: 10.0),
+                                          child: Text(
+                                            'A-La-Carte',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xff333333),
+                                                fontFamily: 'Roboto_Bold'),
+                                            //textDirection: TextDirection.ltr,
+                                            textAlign: TextAlign.left,
+                                          )),
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Color(0xffDADADA),
+                                    child: Container(
+                                        margin: EdgeInsets.only(right: 10.0),
+                                        child: Text(
+                                          '\u{20B9} ${alaCarteTotal.toString()}',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color(0xff333333),
+                                              fontFamily: 'Roboto_Bold'),
+                                          // textDirection: TextDirection.ltr,
+                                          textAlign: TextAlign.left,
+                                        )),
+                                  ),
+                                ],
+                              )
+                            ]),
                         LimitedBox(
                             maxHeight: 135,
                             child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Flexible(
-                                      child: _aLaCarteRechargeSubscriptionListView(
-                                          context,
-                                          alaCarteList))
+                                      child:
+                                          _aLaCarteRechargeSubscriptionListView(
+                                              context, alaCarteList))
                                 ])),
                       ],
                     ),
@@ -479,73 +599,77 @@ class _QuickRechargeState extends State<QuickRecharge> {
     }
   }
 
-  Future<FutureBuilder<QuickRechargeResponse>> _buildBody(BuildContext context,
+  Future<BaseModel<QuickRechargeResponse>> _buildBody(BuildContext context,
       String token, String subsId, String encdvcId) async {
     //SharedPreferences prefs = await SharedPreferences.getInstance();
+    QuickRechargeResponse response;
     final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-    return FutureBuilder<QuickRechargeResponse>(
-      future:
-          client.getQuickRechargeData(token, subsId, encdvcId).then((respose) {
-        //setState(() => _isLoading = false);
-        setState(() {
-          if (respose.status == 1) {
-            mostRecentQuickRechargeSubscriptionList =
-                respose.rechargeInfo.mostRecentQuickRechargeSubscriptionList;
-            productInfoQuickRechargeSubscription =
-                respose.rechargeInfo.productInfoQuickRechargeSubscription;
+    try {
+      Common().showAlertDialog(context);
+      response = await client.getQuickRechargeData(token, subsId, encdvcId);
+      Navigator.pop(context);
+      setState(() {
+        if (response.status == 1) {
+          mostRecentQuickRechargeSubscriptionList =
+              response.rechargeInfo.mostRecentQuickRechargeSubscriptionList;
+          productInfoQuickRechargeSubscription =
+              response.rechargeInfo.productInfoQuickRechargeSubscription;
 
-            _mostRescentSubscriptionListView(
-                context, mostRecentQuickRechargeSubscriptionList);
-            for (var i = 0;
-                i < productInfoQuickRechargeSubscription.length;
-                i++) {
-              if (productInfoQuickRechargeSubscription
-                      .elementAt(i)
-                      .productTypeId ==
-                  1) {
-                basicList
-                    .add(productInfoQuickRechargeSubscription.elementAt(i));
-              } else if (productInfoQuickRechargeSubscription
-                      .elementAt(i)
-                      .productTypeId ==
-                  2) {
-                addOnList
-                    .add(productInfoQuickRechargeSubscription.elementAt(i));
-              } else if (productInfoQuickRechargeSubscription
-                      .elementAt(i)
-                      .productTypeId ==
-                  3) {
-                alaCarteList
-                    .add(productInfoQuickRechargeSubscription.elementAt(i));
-              }
+          _mostRescentSubscriptionListView(
+              context, mostRecentQuickRechargeSubscriptionList);
+          for (var i = 0;
+              i < productInfoQuickRechargeSubscription.length;
+              i++) {
+            if (productInfoQuickRechargeSubscription
+                    .elementAt(i)
+                    .productTypeId ==
+                1) {
+              basicList.add(productInfoQuickRechargeSubscription.elementAt(i));
+              basicTotal = basicTotal +
+                  productInfoQuickRechargeSubscription.elementAt(i).price;
+            } else if (productInfoQuickRechargeSubscription
+                    .elementAt(i)
+                    .productTypeId ==
+                2) {
+              addOnList.add(productInfoQuickRechargeSubscription.elementAt(i));
+              addOnTotal = addOnTotal +
+                  productInfoQuickRechargeSubscription.elementAt(i).price;
+            } else if (productInfoQuickRechargeSubscription
+                    .elementAt(i)
+                    .productTypeId ==
+                3) {
+              alaCarteList
+                  .add(productInfoQuickRechargeSubscription.elementAt(i));
+              alaCarteTotal = alaCarteTotal +
+                  productInfoQuickRechargeSubscription.elementAt(i).price;
             }
-
-            _basicRechargeSubscriptionListView(context, basicList);
-            _addOnRechargeSubscriptionListView(context, addOnList);
-            _aLaCarteRechargeSubscriptionListView(context, alaCarteList);
-
-            // int count = respose.transactionInfo.totalCount;
-            // totalCount = 'Total Records: ' + "$count";
-            // _serviceTypeList = respose.transactionInfo.serviceTypeList;
-            // _serviceType = _serviceTypeList.first;
-            // _paymentmodeList = respose.transactionInfo.paymentmodeList;
-            // _paymentMode = _paymentmodeList.first;
-            // _transactionHistoryList =
-            //     respose.transactionInfo.transactionHistory;
-            // _buildTransactionHistoryListView(context, _transactionHistoryList);
-
-            // Toast.show("Data Received", context,
-            //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          } else
-          /*if (respose.Error_Code == "400")*/ {
-            Toast.show("Oops something went wrong", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
           }
-        });
-      }).catchError((err) {
-        print(err);
-      }),
-    );
+
+          _basicRechargeSubscriptionListView(context, basicList);
+          _addOnRechargeSubscriptionListView(context, addOnList);
+          _aLaCarteRechargeSubscriptionListView(context, alaCarteList);
+
+          // int count = respose.transactionInfo.totalCount;
+          // totalCount = 'Total Records: ' + "$count";
+          // _serviceTypeList = respose.transactionInfo.serviceTypeList;
+          // _serviceType = _serviceTypeList.first;
+          // _paymentmodeList = respose.transactionInfo.paymentmodeList;
+          // _paymentMode = _paymentmodeList.first;
+          // _transactionHistoryList =
+          //     respose.transactionInfo.transactionHistory;
+          // _buildTransactionHistoryListView(context, _transactionHistoryList);
+
+          // Toast.show("Data Received", context,
+          //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+        }
+      });
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      Navigator.pop(context);
+      //_logoutPressed();
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 
   Widget _mostRescentSubscriptionListView(
@@ -713,41 +837,28 @@ class _QuickRechargeState extends State<QuickRecharge> {
         });
   }
 
-  Widget _basicRechargeSubscriptionListView(
-      BuildContext context,
-      List<MostRecentQuickRechargeSubscriptionList>
-      basicList) {
+  Widget _basicRechargeSubscriptionListView(BuildContext context,
+      List<MostRecentQuickRechargeSubscriptionList> basicList) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: basicList.length,
         itemBuilder: (BuildContext ctx, int index) {
           //return new Text(listItem[index]);
 
-          String productType =
-              basicList.elementAt(index).productType;
-          String productName =
-              basicList.elementAt(index).productName;
-          bool status =
-              basicList.elementAt(index).isActive;
+          String productType = basicList.elementAt(index).broadcasterName;
+          String productName = basicList.elementAt(index).productName;
+          bool status = basicList.elementAt(index).isActive;
 
-          double amount =
-              basicList.elementAt(index).price;
-          double monthlyPrice = basicList
-              .elementAt(index)
-              .monthlyPrice;
+          double amount = basicList.elementAt(index).price;
+          double monthlyPrice = basicList.elementAt(index).monthlyPrice;
 
-          bool isTaxIncluded = basicList
-              .elementAt(index)
-              .isTaxIncluded;
-          String subscriptionTypeName = basicList
-              .elementAt(index)
-              .subscriptionTypeName;
+          bool isTaxIncluded = basicList.elementAt(index).isTaxIncluded;
+          String subscriptionTypeName =
+              basicList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate =
-              basicList.elementAt(index).startDate;
-          DateTime endDate =
-              basicList.elementAt(index).endDate;
+          DateTime startDate = basicList.elementAt(index).startDate;
+          DateTime endDate = basicList.elementAt(index).endDate;
           DateTime now = DateTime.now();
 
           String startFormattedDate =
@@ -800,7 +911,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Color(0xff333333),
-                                        fontFamily: 'Roboto_Bold'),
+                                        fontFamily: 'Roboto_Regular'),
                                     //textDirection: TextDirection.ltr,
                                     textAlign: TextAlign.left,
                                   ),
@@ -840,7 +951,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 10.0, top: 5, right: 10),
+                                margin: EdgeInsets.only(
+                                    left: 10.0, top: 5, right: 10),
                                 color: Colors.white,
                                 child: Text(
                                   '\u{20B9} ${amount}',
@@ -904,41 +1016,28 @@ class _QuickRechargeState extends State<QuickRecharge> {
         });
   }
 
-  Widget _addOnRechargeSubscriptionListView(
-      BuildContext context,
-      List<MostRecentQuickRechargeSubscriptionList>
-      addOnList) {
+  Widget _addOnRechargeSubscriptionListView(BuildContext context,
+      List<MostRecentQuickRechargeSubscriptionList> addOnList) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: addOnList.length,
         itemBuilder: (BuildContext ctx, int index) {
           //return new Text(listItem[index]);
 
-          String productType =
-              addOnList.elementAt(index).productType;
-          String productName =
-              addOnList.elementAt(index).productName;
-          bool status =
-              addOnList.elementAt(index).isActive;
+          String productType = addOnList.elementAt(index).broadcasterName;
+          String productName = addOnList.elementAt(index).productName;
+          bool status = addOnList.elementAt(index).isActive;
 
-          double amount =
-              addOnList.elementAt(index).price;
-          double monthlyPrice = addOnList
-              .elementAt(index)
-              .monthlyPrice;
+          double amount = addOnList.elementAt(index).price;
+          double monthlyPrice = addOnList.elementAt(index).monthlyPrice;
 
-          bool isTaxIncluded = addOnList
-              .elementAt(index)
-              .isTaxIncluded;
-          String subscriptionTypeName = addOnList
-              .elementAt(index)
-              .subscriptionTypeName;
+          bool isTaxIncluded = addOnList.elementAt(index).isTaxIncluded;
+          String subscriptionTypeName =
+              addOnList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate =
-              addOnList.elementAt(index).startDate;
-          DateTime endDate =
-              addOnList.elementAt(index).endDate;
+          DateTime startDate = addOnList.elementAt(index).startDate;
+          DateTime endDate = addOnList.elementAt(index).endDate;
           DateTime now = DateTime.now();
 
           String startFormattedDate =
@@ -991,7 +1090,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Color(0xff333333),
-                                        fontFamily: 'Roboto_Bold'),
+                                        fontFamily: 'Roboto_Regular'),
                                     //textDirection: TextDirection.ltr,
                                     textAlign: TextAlign.left,
                                   ),
@@ -1031,7 +1130,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 10.0, top: 5, right: 10),
+                                margin: EdgeInsets.only(
+                                    left: 10.0, top: 5, right: 10),
                                 color: Colors.white,
                                 child: Text(
                                   '\u{20B9} ${amount}',
@@ -1095,41 +1195,28 @@ class _QuickRechargeState extends State<QuickRecharge> {
         });
   }
 
-  Widget _aLaCarteRechargeSubscriptionListView(
-      BuildContext context,
-      List<MostRecentQuickRechargeSubscriptionList>
-      alaCarteList) {
+  Widget _aLaCarteRechargeSubscriptionListView(BuildContext context,
+      List<MostRecentQuickRechargeSubscriptionList> alaCarteList) {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: alaCarteList.length,
         itemBuilder: (BuildContext ctx, int index) {
           //return new Text(listItem[index]);
 
-          String productType =
-              alaCarteList.elementAt(index).productType;
-          String productName =
-              alaCarteList.elementAt(index).productName;
-          bool status =
-              alaCarteList.elementAt(index).isActive;
+          String productType = alaCarteList.elementAt(index).broadcasterName;
+          String productName = alaCarteList.elementAt(index).productName;
+          bool status = alaCarteList.elementAt(index).isActive;
 
-          double amount =
-              alaCarteList.elementAt(index).price;
-          double monthlyPrice = alaCarteList
-              .elementAt(index)
-              .monthlyPrice;
+          double amount = alaCarteList.elementAt(index).price;
+          double monthlyPrice = alaCarteList.elementAt(index).monthlyPrice;
 
-          bool isTaxIncluded = alaCarteList
-              .elementAt(index)
-              .isTaxIncluded;
-          String subscriptionTypeName = alaCarteList
-              .elementAt(index)
-              .subscriptionTypeName;
+          bool isTaxIncluded = alaCarteList.elementAt(index).isTaxIncluded;
+          String subscriptionTypeName =
+              alaCarteList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate =
-              alaCarteList.elementAt(index).startDate;
-          DateTime endDate =
-              alaCarteList.elementAt(index).endDate;
+          DateTime startDate = alaCarteList.elementAt(index).startDate;
+          DateTime endDate = alaCarteList.elementAt(index).endDate;
           DateTime now = DateTime.now();
 
           String startFormattedDate =
@@ -1182,14 +1269,14 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Color(0xff333333),
-                                        fontFamily: 'Roboto_Bold'),
+                                        fontFamily: 'Roboto_Regular'),
                                     //textDirection: TextDirection.ltr,
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only( top: 5, right: 10),
+                                margin: EdgeInsets.only(top: 5, right: 10),
                                 color: Color(0xffDADADA),
                                 child: Text(
                                   '\u{20B9} ${monthlyPrice}',
@@ -1222,7 +1309,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 10.0, top: 5, right: 10),
+                                margin: EdgeInsets.only(
+                                    left: 10.0, top: 5, right: 10),
                                 color: Colors.white,
                                 child: Text(
                                   '\u{20B9} ${amount}',

@@ -1,10 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:neurosms/models/BaseModel.dart';
+import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/models/SubsTransactionHistoryResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+
+import '../Common.dart';
 
 class TransactionHistoryScreen extends StatefulWidget {
   static const String routeName = '/transaction';
@@ -849,7 +853,7 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
     }
   }
 
-  Future<FutureBuilder<SubsTransactionHistoryResponse>> _buildBody(
+  Future<BaseModel<SubsTransactionHistoryResponse>> _buildBody(
       BuildContext context,
       String token,
       String subsWalletId,
@@ -858,36 +862,43 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
       int paymentMode,
       String from,
       String to) async {
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
-    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
-    return FutureBuilder<SubsTransactionHistoryResponse>(
-      future: client
-          .getSubsTransactnHistory(token, subsWalletId, '', '', encDvcMapId,
-              transactionTypeId, serviceTypeId, paymentMode, from, to)
-          .then((respose) {
-        //setState(() => _isLoading = false);
-        setState(() {
-          if (respose.status == 1) {
-            int count = respose.transactionInfo.totalCount;
-            totalCount = 'Total Records: ' + "$count";
-            _serviceTypeList = respose.transactionInfo.serviceTypeList;
-            _serviceType = _serviceTypeList.first;
-            _paymentmodeList = respose.transactionInfo.paymentmodeList;
-            _paymentMode = _paymentmodeList.first;
-            _transactionHistoryList =
-                respose.transactionInfo.transactionHistory;
-            _buildTransactionHistoryListView(context, _transactionHistoryList);
-            // Toast.show("Data Received", context,
-            //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          } else
-          /*if (respose.Error_Code == "400")*/ {
-            Toast.show("Oops something went wrong", context,
-                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-          }
-        });
-      }).catchError((err) {
-        print(err);
-      }),
-    );
+    SubsTransactionHistoryResponse response;
+    final apiClient =
+        ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    try {
+      Common().showAlertDialog(context);
+      response = await apiClient.getSubsTransactnHistory(
+          token,
+          subsWalletId,
+          '',
+          '',
+          encDvcMapId,
+          transactionTypeId,
+          serviceTypeId,
+          paymentMode,
+          from,
+          to);
+      Navigator.pop(context);
+      setState(() {
+        if (response.status == 1) {
+          int count = response.transactionInfo.totalCount;
+          totalCount = 'Total Records: ' + "$count";
+          _serviceTypeList = response.transactionInfo.serviceTypeList;
+          _serviceType = _serviceTypeList.first;
+          _paymentmodeList = response.transactionInfo.paymentmodeList;
+          _paymentMode = _paymentmodeList.first;
+          _transactionHistoryList = response.transactionInfo.transactionHistory;
+          _buildTransactionHistoryListView(context, _transactionHistoryList);
+          // Toast.show("Data Received", context,
+          //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+        }
+      });
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      Navigator.pop(context);
+      //_logoutPressed();
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
   }
 }

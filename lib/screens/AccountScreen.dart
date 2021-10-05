@@ -8,8 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neurosms/models/ChangePasswordResponse.dart';
 import 'package:toast/toast.dart';
 
-import 'AppDrawer.dart';
-import 'BottomNavigationbar.dart';
+import 'Subscriber/AppDrawer.dart';
+import 'Subscriber/BottomNavigationbar.dart';
 
 
 class AccountScreen extends StatefulWidget {

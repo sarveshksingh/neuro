@@ -2,16 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:neurosms/models/BaseModel.dart';
+import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
-import 'package:neurosms/screens/BottomNavigationbar.dart';
-import 'package:neurosms/screens/QuickRecharge.dart';
-import 'package:neurosms/screens/Subscription.dart';
-import 'package:neurosms/screens/TransactionHistoryScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
+import '../Common.dart';
 import 'AppDrawer.dart';
+import 'BottomNavigationbar.dart';
+import 'QuickRecharge.dart';
+import 'Subscription.dart';
+import 'TransactionHistoryScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home';
@@ -278,7 +281,8 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       Navigator.pushNamedAndRemoveUntil(
           context, Routes.home, ModalRoute.withName(Routes.home));*/
-      _buildBody(context, _token);
+      //_buildBody(context, _token);
+      getSubsDashboardData(context, _token);
     }
   }
 
@@ -493,7 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: new InkWell(
                                   onTap: () async {
                                     SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
+                                        await SharedPreferences.getInstance();
                                     /* Toast.show("Transaction Click", context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM);*/
@@ -501,11 +505,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     prefs.setString('encDvcMapId', encDvcMapId);
                                     prefs.setString('subsId', subsId);
                                     Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => QuickRecharge()
-                                        ),
-                                  );
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              QuickRecharge()),
+                                    );
                                   },
                                   child: Row(children: [
                                     Container(
@@ -595,7 +599,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           //child: Image.asset('assets/images/bank.png')
                         ),
                       ),
-
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(left: 5.0),
@@ -621,7 +624,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(right: 10.0),
@@ -658,4 +660,63 @@ class _HomeScreenState extends State<HomeScreen> {
       itemCount: hardsubscriptionList.length, //posts.data.length,
     );
   }
+
+  Future<BaseModel<SubsDashboardResponse>> getSubsDashboardData(
+      BuildContext context, String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SubsDashboardResponse response;
+    final apiClient =
+        ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    try {
+      Common().showAlertDialog(context);
+      response = await apiClient.getSubsDashboard(token);
+      Navigator.pop(context);
+      setState(() {
+        if (response.status == 1) {
+          logoPath = response.logoPath;
+          prefs.setString('User_ID', response.dashboardinfo.userDetail.userId);
+
+          prefs.setString('subsWalletId',
+              response.dashboardinfo.subscriberProfile.walletId);
+          userName = response.dashboardinfo.subscriberProfile.subscriberName;
+          prefs.setString('Name', userName);
+          companyName =
+              response.dashboardinfo.subscriberProfile.mainAccountName;
+          contactNumber = response
+              .dashboardinfo.subscriberProfile.subscriberProfileAddress.phoneNo;
+          email = response.dashboardinfo.subscriberProfile.subscriberEmail;
+          currentBalance = response
+              .dashboardinfo.subscriberProfile.subscriberTotalWalletBalance;
+          prefs.setDouble('balance', currentBalance);
+          Toast.show("Get Dashboard Data successfully", context,
+              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          _hardwareDetailsList = response.dashboardinfo.hardwareDetailsList;
+          _buildListView(context, _hardwareDetailsList);
+          //loadProgress();
+          /*SharedPreferences pref = await SharedPreferences.getInstance();
+            pref.setBool('Login', true);
+            pref.setString("Branch", respose.Branch);
+            pref.setString("Name", respose.Name);
+            pref.setString("Image_Path", respose.Image_Path);
+            pref.setString("User_ID", respose.User_ID);
+            pref.setString("Deligated_ByName", respose.Deligated_ByName);
+            pref.setString("Deligated_By", respose.Deligated_By);
+            pref.setString("Department", respose.Department);
+            pref.setString("M_app_key", respose.M_App_Key);*/
+          // Navigator.pushNamedAndRemoveUntil(
+          //     context, Routes.home, ModalRoute.withName(Routes.home));
+          //return _buildPosts(context, respose);
+        }
+      });
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      Toast.show("Token expired", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      Navigator.pop(context);
+      Common().logoutPressed(context);
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
+
 }
