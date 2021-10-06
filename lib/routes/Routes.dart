@@ -1,9 +1,9 @@
-import 'package:neurosms/screens/AccountScreen.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/GetPasswordScreen.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/HomeScreen.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/MSOScreen.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/Subscription.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/TransactionHistoryScreen.dart';
+ import 'package:neurosms/screens/AccountScreen.dart';
+import 'package:neurosms/screens/Subscriber/GetPasswordScreen.dart';
+import 'package:neurosms/screens/Subscriber/HomeScreen.dart';
+import 'package:neurosms/screens/Subscriber/MSOScreen.dart';
+import 'package:neurosms/screens/Subscriber/Subscription.dart';
+import 'package:neurosms/screens/Subscriber/TransactionHistoryScreen.dart';
 import 'package:neurosms/screens/login/LoginScreen.dart';
 
 class Routes {

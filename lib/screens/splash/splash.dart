@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:neurosms/routes/Routes.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/MSOScreen.dart';
+import 'package:neurosms/screens/Subscriber/MSOScreen.dart';
 import 'package:neurosms/screens/login/LoginScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

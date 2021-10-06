@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neurosms/routes/Routes.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/HomeScreen.dart';
+import 'package:neurosms/screens/Subscriber/HomeScreen.dart';
 import 'package:neurosms/screens/login/LoginScreen.dart';
 import 'package:neurosms/screens/splash/splash.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

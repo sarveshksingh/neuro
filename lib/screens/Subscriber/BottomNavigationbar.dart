@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neurosms/screens/AccountScreen.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/BillingScreen.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/HomeScreen.dart';
-import 'file:///D:/Sarvesh/Flutter/neurosms/lib/screens/Subscriber/SupportScreen.dart';
+import 'package:neurosms/screens/Subscriber/BillingScreen.dart';
+import 'package:neurosms/screens/Subscriber/HomeScreen.dart';
+import 'package:neurosms/screens/Subscriber/SupportScreen.dart';
 
 class BottomNavigationbar extends StatefulWidget {
   int _selectedIndex = 0;
