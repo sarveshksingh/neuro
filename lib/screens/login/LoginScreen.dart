@@ -20,7 +20,6 @@ import '../Subscriber/GetPasswordScreen.dart';
     return value.isEmpty ? 'Email can\'t be empty' : null;
   }
 }
-
 class PasswordFieldValidator {
   static String validate(String value) {
     return value.isEmpty ? 'Password can\'t be empty' : null;
@@ -84,12 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //backgroundColor: Colors.redAccent,
-        /*appBar: AppBar(
+      //backgroundColor: Colors.redAccent,
+      /*appBar: AppBar(
         title: Text("Login Page"),
       ),*/
-        //body:
-        /*SingleChildScrollView(
+      //body:
+      /*SingleChildScrollView(
             child:*/
         body: Container(
             decoration: BoxDecoration(
@@ -107,13 +106,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(
                       child: Container(
                           child: Padding(
-                    padding: const EdgeInsets.only(top: 120.0),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 200,
-                        height: 100,
-                        /*child: Text(
+                            padding: const EdgeInsets.only(top: 120.0),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: 200,
+                                height: 100,
+                                /*child: Text(
                           'NEUROSMS',
                           style: TextStyle(
                               color: Colors.white,
@@ -121,122 +120,122 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.bold),
                         ),*/
-                        decoration: BoxDecoration(
-                          //color: Colors.red,
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              //image: AssetImage('assets/images/bank.png')
-                              //image: SvgPicture.asset('assets/images/bank.svg')
-                              image: NetworkImage(imgPath)),
-                          //borderRadius: BorderRadius.circular(50.0)
-                        ),
-                        //child: Image.asset('assets/images/bank.png')
-                      ),
-                    ),
-                  ))),
+                                decoration: BoxDecoration(
+                                  //color: Colors.red,
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      //image: AssetImage('assets/images/bank.png')
+                                      //image: SvgPicture.asset('assets/images/bank.svg')
+                                      image: NetworkImage(imgPath)),
+                                  //borderRadius: BorderRadius.circular(50.0)
+                                ),
+                                //child: Image.asset('assets/images/bank.png')
+                              ),
+                            ),
+                          ))),
                   Expanded(
                       child: Container(
                           child: Card(
-                    elevation: 8.0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40))),
-                    margin: EdgeInsets.only(top: 10.0),
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                            child: new Form(
-                                key: formKey,
-                                child: new Column(
-                                  children: <Widget>[
-                                    //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                    Padding(
-                                      //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                      padding: EdgeInsets.only(
-                                          left: 15.0,
-                                          right: 15.0,
-                                          top: 32.0,
-                                          bottom: 0),
-                                      child: TextFormField(
-                                        onSaved: (val) => _username = val,
-                                        validator: (value) {
-                                          if (value.trim().isEmpty) {
-                                            return 'Please enter your email address';
-                                          }
-                                          // Check if the entered email has the right format
-                                          /*if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                            elevation: 8.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(40),
+                                    topRight: Radius.circular(40))),
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Column(
+                              children: <Widget>[
+                                Expanded(
+                                    child: new Form(
+                                        key: formKey,
+                                        child: new Column(
+                                          children: <Widget>[
+                                            //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                            Padding(
+                                              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                              padding: EdgeInsets.only(
+                                                  left: 15.0,
+                                                  right: 15.0,
+                                                  top: 32.0,
+                                                  bottom: 0),
+                                              child: TextFormField(
+                                                onSaved: (val) => _username = val,
+                                                validator: (value) {
+                                                  if (value.trim().isEmpty) {
+                                                    return 'Please enter your email address';
+                                                  }
+                                                  // Check if the entered email has the right format
+                                                  /*if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
                                       return 'Please enter a valid email address';
                                     }*/
-                                          // Return null if the entered email is valid
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                            //border: OutlineInputBorder(),
-                                            prefixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
+                                                  // Return null if the entered email is valid
+                                                  return null;
+                                                },
+                                                decoration: InputDecoration(
+                                                  //border: OutlineInputBorder(),
+                                                    prefixIcon: Padding(
+                                                      padding:
+                                                      const EdgeInsetsDirectional
                                                           .only(
-                                                      start: 16.0,
-                                                      end: 16.0,
-                                                      top: 8.0),
-                                              child: SvgPicture.asset(
-                                                  'assets/images/user.svg',
-                                                  color: Color(
-                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
-                                            ),
-                                            suffixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
+                                                          start: 16.0,
+                                                          end: 16.0,
+                                                          top: 8.0),
+                                                      child: SvgPicture.asset(
+                                                          'assets/images/user.svg',
+                                                          color: Color(
+                                                              0xffDF1D3B)), // myIcon is a 48px-wide widget.
+                                                    ),
+                                                    suffixIcon: Padding(
+                                                      padding:
+                                                      const EdgeInsetsDirectional
                                                           .only(
-                                                      start: 16.0,
-                                                      end: 16.0,
-                                                      top: 8.0),
-                                              child: SvgPicture.asset(
-                                                  'assets/images/tick.svg',
-                                                  color: Color(
-                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
+                                                          start: 16.0,
+                                                          end: 16.0,
+                                                          top: 8.0),
+                                                      child: SvgPicture.asset(
+                                                          'assets/images/tick.svg',
+                                                          color: Color(
+                                                              0xffDF1D3B)), // myIcon is a 48px-wide widget.
+                                                    ),
+                                                    labelText: 'Email',
+                                                    hintText:
+                                                    'Enter valid email id as abc@gmail.com'),
+                                              ),
                                             ),
-                                            labelText: 'Email',
-                                            hintText:
-                                                'Enter valid email id as abc@gmail.com'),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 15.0,
-                                          right: 15.0,
-                                          top: 15.0,
-                                          bottom: 0),
-                                      //padding: EdgeInsets.symmetric(horizontal: 15),
-                                      child: TextFormField(
-                                        obscureText: passwordVisible,
-                                        onSaved: (val) => _password = val,
-                                        validator: (value) {
-                                          if (value.trim().isEmpty) {
-                                            return 'This field is required';
-                                          }
-                                          if (value.trim().length < 8) {
-                                            return 'Password must be at least 8 characters in length';
-                                          }
-                                          // Return null if the entered password is valid
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                            //border: OutlineInputBorder(),
-                                            prefixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15.0,
+                                                  right: 15.0,
+                                                  top: 15.0,
+                                                  bottom: 0),
+                                              //padding: EdgeInsets.symmetric(horizontal: 15),
+                                              child: TextFormField(
+                                                obscureText: passwordVisible,
+                                                onSaved: (val) => _password = val,
+                                                validator: (value) {
+                                                  if (value.trim().isEmpty) {
+                                                    return 'This field is required';
+                                                  }
+                                                  if (value.trim().length < 8) {
+                                                    return 'Password must be at least 8 characters in length';
+                                                  }
+                                                  // Return null if the entered password is valid
+                                                  return null;
+                                                },
+                                                decoration: InputDecoration(
+                                                  //border: OutlineInputBorder(),
+                                                    prefixIcon: Padding(
+                                                      padding:
+                                                      const EdgeInsetsDirectional
                                                           .only(
-                                                      start: 16.0,
-                                                      end: 16.0,
-                                                      top: 8.0),
-                                              child: SvgPicture.asset(
-                                                  'assets/images/lock.svg',
-                                                  color: Color(
-                                                      0xffDF1D3B)), // myIcon is a 48px-wide widget.
-                                            ),
-                                            /*
+                                                          start: 16.0,
+                                                          end: 16.0,
+                                                          top: 8.0),
+                                                      child: SvgPicture.asset(
+                                                          'assets/images/lock.svg',
+                                                          color: Color(
+                                                              0xffDF1D3B)), // myIcon is a 48px-wide widget.
+                                                    ),
+                                                    /*
                                             suffixIcon: IconButton(
                                               padding:
                                                   const EdgeInsetsDirectional
@@ -248,7 +247,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   'assets/images/visibility.svg',
                                                   color: Color(
                                                       0xffDF1D3B)),
-
                                               onPressed: ()
                                               {
                                                 setState(() {
@@ -257,90 +255,88 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 print("eye button clicked");
                                               },
                                             ),
-
                                              */
-                                            suffixIcon: GestureDetector(
-                                              onLongPress: () {
-                                                setState(() {
-                                                  passwordVisible = false;
-                                                });
-                                              },
-                                              onLongPressUp: () {
-                                                setState(() {
-                                                  passwordVisible = true;
-                                                });
-                                              },
-                                              child: Icon(passwordVisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off),
-                                            ),
-                                            labelText: 'Password',
-                                            hintText: 'Enter secure password'),
-                                      ),
-                                    ),
-
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 15.0, top: 5.0, right: 15.0),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Row(children: [
-                                                Checkbox(
-                                                  value: this.value,
-                                                  onChanged: (bool value) {
-                                                    setState(() {
-                                                      this.value = value;
-                                                    });
-                                                  },
-                                                ),
-                                                Text(
-                                                  'Remember Password',
-                                                  maxLines: 4,
-                                                  textAlign: TextAlign.left,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    color: Color(0xff333333),
-                                                    fontSize: 14,
-                                                    fontFamily: 'Roboto_Bold',
-                                                    //fontWeight: FontWeight.bold
-                                                  ),
-                                                )
-                                              ]),
-                                            ),
-                                            FlatButton(
-                                              padding:
-                                                  EdgeInsets.only(left: 65.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Text(
-                                                    'Forgot Password?',
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xff333333),
-                                                        fontSize: 14,
-                                                        fontFamily:
-                                                            'Roboto_Bold',
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline),
-                                                  ),
-                                                ],
+                                                    suffixIcon: GestureDetector(
+                                                      onLongPress: () {
+                                                        setState(() {
+                                                          passwordVisible = false;
+                                                        });
+                                                      },
+                                                      onLongPressUp: () {
+                                                        setState(() {
+                                                          passwordVisible = true;
+                                                        });
+                                                      },
+                                                      child: Icon(passwordVisible
+                                                          ? Icons.visibility
+                                                          : Icons.visibility_off),
+                                                    ),
+                                                    labelText: 'Password',
+                                                    hintText: 'Enter secure password'),
                                               ),
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (_) =>
-                                                            GetPasswordScreen()));
-                                              },
-                                            )
-                                          ],
-                                        )),
+                                            ),
 
-                                    /*
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 15.0, top: 5.0, right: 15.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(children: [
+                                                        Checkbox(
+                                                          value: this.value,
+                                                          onChanged: (bool value) {
+                                                            setState(() {
+                                                              this.value = value;
+                                                            });
+                                                          },
+                                                        ),
+                                                        Text(
+                                                          'Remember Password',
+                                                          maxLines: 4,
+                                                          textAlign: TextAlign.left,
+                                                          overflow:
+                                                          TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            color: Color(0xff333333),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Roboto_Bold',
+                                                            //fontWeight: FontWeight.bold
+                                                          ),
+                                                        )
+                                                      ]),
+                                                    ),
+                                                    FlatButton(
+                                                      padding:
+                                                      EdgeInsets.only(left: 65.0),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Text(
+                                                            'Forgot Password?',
+                                                            style: TextStyle(
+                                                                color:
+                                                                Color(0xff333333),
+                                                                fontSize: 14,
+                                                                fontFamily:
+                                                                'Roboto_Bold',
+                                                                decoration:
+                                                                TextDecoration
+                                                                    .underline),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (_) =>
+                                                                    GetPasswordScreen()));
+                                                      },
+                                                    )
+                                                  ],
+                                                )),
 
+                                            /*
                                     FlatButton(
                                         onPressed: () {
                                           //TODO FORGOT PASSWORD SCREEN GOES HERE
@@ -367,73 +363,72 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     TextDecoration.underline),
                                           ),
                                         )),
-
                                   */
-                                    Expanded(
-                                        child: Center(
-                                            child: Container(
-                                                margin: EdgeInsets.only(
-                                                    left: 15.0, right: 15.0),
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.red,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                child: new Column(
-                                                    //mainAxisSize: MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .stretch,
-                                                    children: <Widget>[
-                                                      Container(
-                                                        child: FlatButton(
-                                                          onPressed: () {
-                                                            /*Navigator.push(
+                                            Expanded(
+                                                child: Center(
+                                                    child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 15.0, right: 15.0),
+                                                        height: 50,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.red,
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                                20)),
+                                                        child: new Column(
+                                                          //mainAxisSize: MainAxisSize.min,
+                                                            crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .stretch,
+                                                            children: <Widget>[
+                                                              Container(
+                                                                child: FlatButton(
+                                                                  onPressed: () {
+                                                                    /*Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (_) =>
                                                             HomeScreen()));*/
-                                                            loadProgress();
-                                                            final form = formKey
-                                                                .currentState;
+                                                                    loadProgress();
+                                                                    final form = formKey
+                                                                        .currentState;
 
-                                                            if (form
-                                                                .validate()) {
-                                                              setState(() =>
-                                                                  _isLoading =
+                                                                    if (form
+                                                                        .validate()) {
+                                                                      setState(() =>
+                                                                      _isLoading =
                                                                       true);
-                                                              form.save();
-                                                              _buildBody(
-                                                                  context,
-                                                                  _username,
-                                                                  _password);
-                                                              // Navigator.pushNamedAndRemoveUntil(
-                                                              //     context, Routes.login, ModalRoute.withName(Routes.login));
-                                                            }
-                                                          },
-                                                          child: Text(
-                                                            'LOG IN',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 16),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ]))))
-                                  ],
-                                ))),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 25.0),
-                              child: Text(
-                                  'NEURO SMS 2021 Copyright Neuro Informstics Pvt. Ltd'),
-                            ))
-                      ],
-                    ),
-                  ))),
+                                                                      form.save();
+                                                                      _buildBody(
+                                                                          context,
+                                                                          _username,
+                                                                          _password);
+                                                                      // Navigator.pushNamedAndRemoveUntil(
+                                                                      //     context, Routes.login, ModalRoute.withName(Routes.login));
+                                                                    }
+                                                                  },
+                                                                  child: Text(
+                                                                    'LOG IN',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize: 16),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ]))))
+                                          ],
+                                        ))),
+                                Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 25.0),
+                                      child: Text(
+                                          'NEURO SMS 2021 Copyright Neuro Informstics Pvt. Ltd'),
+                                    ))
+                              ],
+                            ),
+                          ))),
                   /*Container(
                   child: Padding(
                 padding: const EdgeInsets.only(left: 15.0, top: 150.0),
@@ -569,7 +564,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           HomeScreen()));*/ /*
                                               loadProgress();
                                               final form = formKey.currentState;
-
                                               if (form.validate()) {
                                                 setState(
                                                     () => _isLoading = true);
@@ -610,13 +604,13 @@ class _LoginScreenState extends State<LoginScreen> {
       Common().showAlertDialog(context);
       response = await apiClient.loginUser(username, password);
       Navigator.pop(context);
-        setState(() async {
-          if (response.status == 1) {
-            loadProgress();
-            SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setBool('Login', true);
-            pref.setString('token', response.tokenId);
-            /*pref.setString("Branch", respose.Branch);
+      setState(() async {
+        if (response.status == 1) {
+          loadProgress();
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setBool('Login', true);
+          pref.setString('token', response.tokenId);
+          /*pref.setString("Branch", respose.Branch);
             pref.setString("Name", respose.Name);
             pref.setString("Image_Path", respose.Image_Path);
             pref.setString("User_ID", respose.User_ID);
@@ -624,11 +618,11 @@ class _LoginScreenState extends State<LoginScreen> {
             pref.setString("Deligated_By", respose.Deligated_By);
             pref.setString("Department", respose.Department);
             pref.setString("M_app_key", respose.M_App_Key);*/
-            Navigator.pushNamedAndRemoveUntil(
-                context, Routes.home, ModalRoute.withName(Routes.home));
-          }
-        });
-      }catch (error, stacktrace) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.home, ModalRoute.withName(Routes.home));
+        }
+      });
+    }catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
