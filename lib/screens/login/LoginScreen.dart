@@ -50,6 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password, imgPath = '';
+  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   bool visible = true;
   bool value = true;
@@ -57,15 +59,38 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     passwordVisible = true;
-    isRememberPasswordClicked = false;
+    //isRememberPasswordClicked = false;
     super.initState();
     _loadUserInfo();
+
+  }
+
+  _saveValue(bool value) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isRememberPasswordClicked', value);
+    if (value)
+      {
+        prefs.setString('username', _username);
+        prefs.setString('password', _password);
+      }
+    else
+      {
+        prefs.setString('username', '');
+        prefs.setString('password', '');
+      }
+
   }
 
   _loadUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       imgPath = (prefs.getString('msologo') ?? null);
+      value = (prefs.getBool('isRememberPasswordClicked') ?? false);
+      _username = (prefs.getString('username') ?? '');
+      _password = (prefs.getString('password') ?? '');
+      _userNameController.text = _username;
+      _passwordController.text = _password;
+
     });
   }
 
@@ -160,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           bottom: 0),
                                       child: TextFormField(
                                         onSaved: (val) => _username = val,
+                                        controller: _userNameController,
                                         validator: (value) {
                                           if (value.trim().isEmpty) {
                                             return 'Please enter your email address';
@@ -212,6 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       child: TextFormField(
                                         obscureText: passwordVisible,
                                         onSaved: (val) => _password = val,
+                                        controller: _passwordController,
                                         validator: (value) {
                                           if (value.trim().isEmpty) {
                                             return 'This field is required';
@@ -285,6 +312,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: Row(
                                           children: [
                                             Expanded(
+
                                               child: Row(children: [
                                                 Checkbox(
                                                   value: this.value,
@@ -404,6 +432,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                   _isLoading =
                                                                       true);
                                                               form.save();
+                                                              _saveValue(value);
                                                               _buildBody(
                                                                   context,
                                                                   _username,
