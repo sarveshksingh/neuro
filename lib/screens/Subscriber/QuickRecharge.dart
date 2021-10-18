@@ -27,7 +27,6 @@ class _QuickRechargeState extends State<QuickRecharge> {
   List<MostRecentQuickRechargeSubscriptionList> alaCarteList = [];
   String _token, _subsId, _encdvcId;
   double basicTotal = 0.0, addOnTotal = 0.0, alaCarteTotal = 0.0;
-
   @override
   Widget build(BuildContext context) {
     List<String> listItem = ["Delegate", "Visitor", "Contacts", "Home"];
@@ -648,7 +647,6 @@ class _QuickRechargeState extends State<QuickRecharge> {
           _basicRechargeSubscriptionListView(context, basicList);
           _addOnRechargeSubscriptionListView(context, addOnList);
           _aLaCarteRechargeSubscriptionListView(context, alaCarteList);
-
           // int count = respose.transactionInfo.totalCount;
           // totalCount = 'Total Records: ' + "$count";
           // _serviceTypeList = respose.transactionInfo.serviceTypeList;

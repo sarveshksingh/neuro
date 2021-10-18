@@ -62,23 +62,18 @@ class _LoginScreenState extends State<LoginScreen> {
     //isRememberPasswordClicked = false;
     super.initState();
     _loadUserInfo();
-
   }
 
-  _saveValue(bool value) async{
+  _saveValue(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isRememberPasswordClicked', value);
-    if (value)
-      {
-        prefs.setString('username', _username);
-        prefs.setString('password', _password);
-      }
-    else
-      {
-        prefs.setString('username', '');
-        prefs.setString('password', '');
-      }
-
+    if (value) {
+      prefs.setString('username', _username);
+      prefs.setString('password', _password);
+    } else {
+      prefs.setString('username', '');
+      prefs.setString('password', '');
+    }
   }
 
   _loadUserInfo() async {
@@ -90,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
       _password = (prefs.getString('password') ?? '');
       _userNameController.text = _username;
       _passwordController.text = _password;
-
     });
   }
 
@@ -312,7 +306,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: Row(
                                           children: [
                                             Expanded(
-
                                               child: Row(children: [
                                                 Checkbox(
                                                   value: this.value,
@@ -634,18 +627,19 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<BaseModel<Login>> _buildBody(
       BuildContext context, String username, String password) async {
     Login response;
-    final apiClient = ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    final apiClient =
+        ApiClient(Dio(BaseOptions(contentType: "application/json")));
     try {
       Common().showAlertDialog(context);
       response = await apiClient.loginUser(username, password);
       Navigator.pop(context);
-        setState(() async {
-          if (response.status == 1) {
-            loadProgress();
-            SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setBool('Login', true);
-            pref.setString('token', response.tokenId);
-            /*pref.setString("Branch", respose.Branch);
+      setState(() async {
+        if (response.status == 1) {
+          loadProgress();
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setBool('Login', true);
+          pref.setString('token', response.tokenId);
+          /*pref.setString("Branch", respose.Branch);
             pref.setString("Name", respose.Name);
             pref.setString("Image_Path", respose.Image_Path);
             pref.setString("User_ID", respose.User_ID);
@@ -653,11 +647,11 @@ class _LoginScreenState extends State<LoginScreen> {
             pref.setString("Deligated_By", respose.Deligated_By);
             pref.setString("Department", respose.Department);
             pref.setString("M_app_key", respose.M_App_Key);*/
-            Navigator.pushNamedAndRemoveUntil(
-                context, Routes.home, ModalRoute.withName(Routes.home));
-          }
-        });
-      }catch (error, stacktrace) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.home, ModalRoute.withName(Routes.home));
+        }
+      });
+    } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
