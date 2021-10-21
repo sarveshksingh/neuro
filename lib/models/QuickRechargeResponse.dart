@@ -236,11 +236,11 @@ class MostRecentQuickRechargeSubscriptionList {
   int productId;
   String productName;
   String broadcasterName;
-  DateTime startDate;
-  DateTime endDate;
+  String startDate;
+  String endDate;
   int productTypeId;
   String productType;
-  int productSubscriptionId;
+  int productSubscriptionId =0;
   int subsTypeId;
   int subsVal;
   String subscriptionTypeName;
@@ -264,8 +264,8 @@ class MostRecentQuickRechargeSubscriptionList {
     productId: json["productId"],
     productName: json["productName"],
     broadcasterName: json["broadcasterName"],
-    startDate: DateTime.parse(json["startDate"]),
-    endDate: DateTime.parse(json["endDate"]),
+    startDate: json["startDate"],
+    endDate: json["endDate"],
     productTypeId: json["productTypeId"],
     productType: json["productType"],
     productSubscriptionId: json["productSubscriptionId"] == null ? null : json["productSubscriptionId"],
@@ -293,8 +293,8 @@ class MostRecentQuickRechargeSubscriptionList {
     "productId": productId,
     "productName": productName,
     "broadcasterName": broadcasterName,
-    "startDate": startDate.toIso8601String(),
-    "endDate": endDate.toIso8601String(),
+    "startDate": startDate,
+    "endDate": endDate,
     "productTypeId": productTypeId,
     "productType": productType,
     "productSubscriptionId": productSubscriptionId == null ? null : productSubscriptionId,

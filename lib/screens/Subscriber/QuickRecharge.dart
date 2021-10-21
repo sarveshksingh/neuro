@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:neurosms/models/BaseModel.dart';
 import 'package:neurosms/models/QuickRechargeResponse.dart';
+import 'package:neurosms/models/RechargeRenewResponseModel.dart';
+import 'package:neurosms/models/RechargeRequestModel.dart';
 import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -524,6 +528,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   ),
                                   onPressed: () {
                                     print('Submit button Clicked');
+                                    _rechargeRenew(
+                                        context, _token, _subsId, _encdvcId);
                                   },
                                   textColor: Color(0xffFFFFFF),
                                   color: Color(0xffDF193E),
@@ -672,6 +678,153 @@ class _QuickRechargeState extends State<QuickRecharge> {
     return BaseModel()..data = response;
   }
 
+  Future<BaseModel<RechargeRenewResponseModel>> _rechargeRenew(BuildContext context,
+      String token, String subsId, String encdvcId) async {
+    RechargeRenewResponseModel response;
+
+    var rechargeRequest = RechargeRequest();
+    var productObject = ProductObj();
+    List<BasicPack> basicPackList = [];
+    List<BasicPack> addOnPackList = [];
+    List<BasicPack> channelPackList = [];
+    List<BasicPack> discontinuedPackList = [];
+    rechargeRequest.productObj = productObject;
+
+    rechargeRequest.tokenId = token;
+    rechargeRequest.subsId = subsId;
+    rechargeRequest.encdvcId = encdvcId;
+    rechargeRequest.isQuickRecharge = true;
+    rechargeRequest.latestSubsTranId = 0;
+    rechargeRequest.cashReceivedAmount = 0.00;
+    rechargeRequest.walletRechargeStatus = false;
+    rechargeRequest.pageName = "quickRecharge";
+
+    for (var i = 0; i < basicList.length; i++) {
+      MostRecentQuickRechargeSubscriptionList basicItem =
+          basicList.elementAt(i);
+      var basicPack = BasicPack();
+      basicPack.productId = basicItem.productId;
+      basicPack.startDate = basicItem.startDate;
+      basicPack.endDate = basicItem.endDate;
+      basicPack.subsTypeId = basicItem.subsTypeId;
+      basicPack.subsVal = basicItem.subsVal;
+      basicPack.packageType = basicItem.productTypeId;
+      basicPack.isDiscontinued = false;
+      basicPack.prdSubscriptionId = 18258;
+      basicPack.promotionId = basicItem.promotionId;
+      basicPackList.add(basicPack);
+    }
+    rechargeRequest.productObj.basicPacks = basicPackList;
+
+    BasicPack addOnPack = BasicPack();
+    for (var i = 0; i < addOnList.length; i++) {
+      MostRecentQuickRechargeSubscriptionList addOnItem =
+          addOnList.elementAt(i);
+
+      addOnPack.productId = addOnItem.productId;
+      addOnPack.startDate = addOnItem.startDate;
+      addOnPack.endDate = addOnItem.endDate;
+      addOnPack.subsTypeId = addOnItem.subsTypeId;
+      addOnPack.subsVal = addOnItem.subsVal;
+      addOnPack.packageType = addOnItem.productTypeId;
+      addOnPack.isDiscontinued = false;
+      addOnPack.prdSubscriptionId = 18258;
+      addOnPack.promotionId = addOnItem.promotionId;
+      addOnPackList.add(addOnPack);
+    }
+    rechargeRequest.productObj.addOnPacks = addOnPackList;
+
+    BasicPack channelPack = BasicPack();
+    for (var i = 0; i < alaCarteList.length; i++) {
+      MostRecentQuickRechargeSubscriptionList alaCarte =
+          alaCarteList.elementAt(i);
+
+      channelPack.productId = alaCarte.productId;
+      channelPack.startDate = alaCarte.startDate;
+      channelPack.endDate = alaCarte.endDate;
+      channelPack.subsTypeId = alaCarte.subsTypeId;
+      channelPack.subsVal = alaCarte.subsVal;
+      channelPack.packageType = alaCarte.productTypeId;
+      channelPack.isDiscontinued = false;
+      channelPack.prdSubscriptionId = 18258;
+      channelPack.promotionId = alaCarte.promotionId;
+
+      channelPackList.add(channelPack);
+    }
+    rechargeRequest.productObj.channelPacks = channelPackList;
+
+    BasicPack discontinuedPack = BasicPack();
+    /*for (var i = 0; i < basicList.length; i++) {
+      MostRecentQuickRechargeSubscriptionList discontinued =
+          basicList.elementAt(i);
+
+      discontinuedPack.productId = discontinued.productId;
+      discontinuedPack.startDate = discontinued.startDate;
+      discontinuedPack.endDate = discontinued.endDate;
+      discontinuedPack.subsTypeId = discontinued.subsTypeId;
+      discontinuedPack.subsVal = discontinued.subsVal;
+      discontinuedPack.packageType = discontinued.productTypeId;
+      discontinuedPack.isDiscontinued = false;
+      discontinuedPack.prdSubscriptionId = discontinued.productSubscriptionId;
+      discontinuedPack.promotionId = discontinued.promotionId;
+
+      discontinuedPackList.add(discontinuedPack);
+    }*/
+    rechargeRequest.productObj.discontinuedPacks = discontinuedPackList;
+
+    // rechargeRequest.productObj.basicPacks = [];
+    // rechargeRequest.productObj.addOnPacks = [];
+    // rechargeRequest.productObj.channelPacks = [];
+    // rechargeRequest.productObj.discontinuedPacks = [];
+    rechargeRequest.productObj.isCreditLimitUsed = false;
+    rechargeRequest.productObj.isBulkRecharge = false;
+    rechargeRequest.productObj.cashReceived = 0.00;
+
+    /*final queryParameters = {
+      "tokenId": token,
+      "productObj": {
+        "basicPacks": [
+          {
+            "productId": 946,
+            "startDate": "2021-09-06T00:00:00",
+            "endDate": "2021-10-05T00:00:00",
+            "subsTypeId": 2,
+            "subsVal": 1,
+            "packageType": 1,
+            "isDiscontinued": false,
+            "prdSubscriptionId": 18258,
+            "promotionId": 0
+          }
+        ],
+        "addOnPacks": [],
+        "channelPacks": [],
+        "discontinuedPacks": [],
+        "isCreditLimitUsed": false,
+        "isBulkRecharge": false,
+        "cashReceived": 0.00
+      },
+      "subsId": subsId,
+      "encdvcId": encdvcId,
+      "isQuickRecharge": true,
+      "latestSubsTranId": 0,
+      "cashReceivedAmount": 0.00,
+      "walletRechargeStatus": false,
+      "pageName": "quickRecharge"
+    };*/
+    final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
+    try {
+      Common().showAlertDialog(context);
+      response = await client.rechargeRenew(json.encode(rechargeRequest));
+      Navigator.pop(context);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      Navigator.pop(context);
+      //_logoutPressed();
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
+
   Widget _mostRescentSubscriptionListView(
       BuildContext context,
       List<MostRecentQuickRechargeSubscriptionList>
@@ -698,11 +851,11 @@ class _QuickRechargeState extends State<QuickRecharge> {
           // double amount = mostRecentQuickRechargeSubscriptionList.elementAt(index).price;
           // String startDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).startDate as String;
           // String endDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate as String;
-          DateTime startDate = mostRecentQuickRechargeSubscriptionList
+          DateTime startDate = DateTime.parse(mostRecentQuickRechargeSubscriptionList
               .elementAt(index)
-              .startDate;
+              .startDate);
           DateTime endDate =
-              mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate;
+          DateTime.parse(mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
           String startFormattedDate =
@@ -857,8 +1010,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
               basicList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate = basicList.elementAt(index).startDate;
-          DateTime endDate = basicList.elementAt(index).endDate;
+          DateTime startDate = DateTime.parse(basicList.elementAt(index).startDate);
+          DateTime endDate = DateTime.parse(basicList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
           String startFormattedDate =
@@ -1036,8 +1189,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
               addOnList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate = addOnList.elementAt(index).startDate;
-          DateTime endDate = addOnList.elementAt(index).endDate;
+          DateTime startDate = DateTime.parse(addOnList.elementAt(index).startDate);
+          DateTime endDate = DateTime.parse(addOnList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
           String startFormattedDate =
@@ -1215,8 +1368,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
               alaCarteList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate = alaCarteList.elementAt(index).startDate;
-          DateTime endDate = alaCarteList.elementAt(index).endDate;
+          DateTime startDate = DateTime.parse(alaCarteList.elementAt(index).startDate);
+          DateTime endDate = DateTime.parse(alaCarteList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
           String startFormattedDate =

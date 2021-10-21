@@ -23,7 +23,7 @@ class _ApiClient implements ApiClient {
     final queryParameters = <String, dynamic>{};
     final _data = {'subDomain': subDomain};
     _data.removeWhere((k, v) => v == null);
-    final _result = await _dio.request<Map<String, dynamic>>(Apis.msoDetails,
+    final _result = await _dio.request<Map<String, dynamic>>('Home/msoDetails',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -44,7 +44,7 @@ class _ApiClient implements ApiClient {
     final queryParameters = <String, dynamic>{};
     final _data = {'email': user_ID, 'password': password};
     _data.removeWhere((k, v) => v == null);
-    final _result = await _dio.request<Map<String, dynamic>>(Apis.login,
+    final _result = await _dio.request<Map<String, dynamic>>('Home/Login',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -65,7 +65,7 @@ class _ApiClient implements ApiClient {
     final _data = {'emailId': emailId};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
-        Apis.forgotPassword,
+        'Home/userforgotPassword',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -86,7 +86,7 @@ class _ApiClient implements ApiClient {
     final _data = {'tokenId': tokenId};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
-        Apis.subsDashboard,
+        'Home/subsDashboard',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -120,7 +120,7 @@ class _ApiClient implements ApiClient {
     ArgumentError.checkNotNull(serviceTypeId, 'serviceTypeId');
     ArgumentError.checkNotNull(paymentMode, 'paymentMode');
     ArgumentError.checkNotNull(fromDate, 'fromDate');
-    ArgumentError.checkNotNull(fromDate, 'fromDate');
+    ArgumentError.checkNotNull(endDate, 'endDate');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = {
@@ -137,7 +137,7 @@ class _ApiClient implements ApiClient {
     };
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
-        Apis.subsTransactnHistory,
+        'Home/subsTransactnHistory',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -150,30 +150,18 @@ class _ApiClient implements ApiClient {
     return value;
   }
 
-
-
-
   @override
   Future<QuickRechargeResponse> getQuickRechargeData(
-      tokenId,
-      subsId,
-      encdvcId,
-      ) async {
+      tokenId, subsId, encdvcId) async {
     ArgumentError.checkNotNull(tokenId, 'tokenId');
     ArgumentError.checkNotNull(subsId, 'subsId');
     ArgumentError.checkNotNull(encdvcId, 'encdvcId');
-
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = {
-      'tokenId': tokenId,
-      'subsId': subsId,
-      'encdvcId': encdvcId,
-
-    };
+    final _data = {'tokenId': tokenId, 'subsId': subsId, 'encdvcId': encdvcId};
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
-        Apis.quickRecharge,
+        'Home/quickRecharge',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -186,31 +174,42 @@ class _ApiClient implements ApiClient {
     return value;
   }
 
-
-
-
+  @override
+  Future<RechargeRenewResponseModel> rechargeRenew(dataJson) async {
+    //ArgumentError.checkNotNull(queryParameters, 'queryParameters');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = dataJson;
+    final _result = await _dio.request<Map<String, dynamic>>(
+        Apis.rechargeRenew,
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            contentType: 'application/json',
+            baseUrl: baseUrl),
+        data: _data);
+    final value = RechargeRenewResponseModel.fromJson(_result.data);
+    return value;
+  }
 
   @override
   Future<ChangePasswordResponse> getChangePassword(
-      tokenId,
-      password,
-      confpassword,
-      ) async {
+      tokenId, password, confpassword) async {
     ArgumentError.checkNotNull(tokenId, 'tokenId');
     ArgumentError.checkNotNull(password, 'password');
     ArgumentError.checkNotNull(confpassword, 'confpassword');
-
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = {
       'tokenId': tokenId,
       'password': password,
-      'confpassword': confpassword,
-
+      'confpassword': confpassword
     };
     _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
-        Apis.changePassword,
+        'Home/resetPassword',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -222,70 +221,4 @@ class _ApiClient implements ApiClient {
     final value = ChangePasswordResponse.fromJson(_result.data);
     return value;
   }
-
-
-
-
-
-
-
-
-/*@override
-  Future<MsoResponse> msoDetails(subDomain) async {
-    ArgumentError.checkNotNull(subDomain, 'subDomain');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = {'subDomain': subDomain};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        Apis.msoDetails,
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{"Accept": "application/json",
-              "content-type":"application/json"},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = MsoResponse.fromJson(_result.data);
-    return Future.value(value);
-  }
-
-  @override
-  loginUser(email, password) async {
-    ArgumentError.checkNotNull(email, 'email');
-    ArgumentError.checkNotNull(password, 'password');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = {'email': email, 'Password': password};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        Apis.login,
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = Login.fromJson(_result.data);
-    return Future.value(value);
-  }
-
-  @override
-  forgotPassword(emailId) async {
-    ArgumentError.checkNotNull(emailId, 'emailId');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = {'emailId': emailId};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        Apis.msoDetails,
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = ForgotPassword.fromJson(_result.data);
-    return Future.value(value);
-  }*/
 }

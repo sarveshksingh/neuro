@@ -3,6 +3,7 @@ import 'package:neurosms/models/ChangePasswordResponse.dart';
 import 'package:neurosms/models/ForgotPassword.dart';
 import 'package:neurosms/models/Login.dart';
 import 'package:neurosms/models/MSOResponse.dart';
+import 'package:neurosms/models/RechargeRenewResponseModel.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/models/SubsTransactionHistoryResponse.dart';
 import 'package:neurosms/models/QuickRechargeResponse.dart';
@@ -46,22 +47,26 @@ abstract class ApiClient {
       @Field("fromDate") fromDate,
       @Field("endDate") endDate);
 
-
   @FormUrlEncoded()
   @POST(Apis.quickRecharge)
   Future<QuickRechargeResponse> getQuickRechargeData(
-      @Field("tokenId") tokenId,
-      @Field("subsId") subsId,
-      @Field("encdvcId") encdvcId,
-      );
+    @Field("tokenId") tokenId,
+    @Field("subsId") subsId,
+    @Field("encdvcId") encdvcId,
+  );
+
+  @POST(Apis.rechargeRenew)
+  Future<RechargeRenewResponseModel> rechargeRenew(
+    @Body() queryParameters,
+  );
 
   @FormUrlEncoded()
   @POST(Apis.changePassword)
   Future<ChangePasswordResponse> getChangePassword(
-      @Field("tokenId") tokenId,
-      @Field("password") password,
-      @Field("confpassword") confpassword,
-      );
+    @Field("tokenId") tokenId,
+    @Field("password") password,
+    @Field("confpassword") confpassword,
+  );
 
 /*@POST(Apis.timesheetlist)
   Future<List<Timerecord>> getTimesheetList(
