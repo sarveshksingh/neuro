@@ -1056,7 +1056,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.only(left: 10.0, top: 5),
-                                  color: Color(0xffDADADA),
+                                  //color: Color(0xffDADADA),
                                   child: Text(
                                     productType,
                                     style: TextStyle(
@@ -1068,7 +1068,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   ),
                                 ),
                               ),
-                              Container(
+                              /*Container(
                                 margin: EdgeInsets.only(top: 5, right: 10),
                                 color: Color(0xffDADADA),
                                 child: Text(
@@ -1080,7 +1080,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   // textDirection: TextDirection.ltr,
                                   textAlign: TextAlign.left,
                                 ),
-                              ),
+                              ),*/
                             ],
                           ),
                           Row(
@@ -1235,7 +1235,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.only(left: 10.0, top: 5),
-                                  color: Color(0xffDADADA),
+                                  // color: Color(0xffDADADA),
                                   child: Text(
                                     productType,
                                     style: TextStyle(
@@ -1280,7 +1280,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   ),
                                 ),
                               ),
-                              Container(
+                              /*Container(
                                 margin: EdgeInsets.only(
                                     left: 10.0, top: 5, right: 10),
                                 color: Colors.white,
@@ -1293,7 +1293,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //textDirection: TextDirection.ltr,
                                   textAlign: TextAlign.left,
                                 ),
-                              ),
+                              ),*/
                             ],
                           ),
                           Row(
@@ -1414,7 +1414,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                               Expanded(
                                 child: Container(
                                   margin: EdgeInsets.only(left: 10.0, top: 5),
-                                  color: Color(0xffDADADA),
+                                  // color: Color(0xffDADADA),
                                   child: Text(
                                     productType,
                                     style: TextStyle(
@@ -1459,7 +1459,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   ),
                                 ),
                               ),
-                              Container(
+                              /*Container(
                                 margin: EdgeInsets.only(
                                     left: 10.0, top: 5, right: 10),
                                 color: Colors.white,
@@ -1472,7 +1472,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //textDirection: TextDirection.ltr,
                                   textAlign: TextAlign.left,
                                 ),
-                              ),
+                              ),*/
                             ],
                           ),
                           Row(
