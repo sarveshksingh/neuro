@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:neurosms/routes/Routes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -9,9 +9,9 @@ import 'package:neurosms/models/RechargeRenewResponseModel.dart';
 import 'package:neurosms/models/RechargeRequestModel.dart';
 import 'package:neurosms/models/ServerError.dart';
 import 'package:neurosms/retrofit/api_client.dart';
+import 'package:neurosms/screens/Subscriber/WebView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
-
 import '../Common.dart';
 
 class QuickRecharge extends StatefulWidget {
@@ -29,8 +29,11 @@ class _QuickRechargeState extends State<QuickRecharge> {
   List<MostRecentQuickRechargeSubscriptionList> basicList = [];
   List<MostRecentQuickRechargeSubscriptionList> addOnList = [];
   List<MostRecentQuickRechargeSubscriptionList> alaCarteList = [];
-  String _token, _subsId, _encdvcId;
-  double basicTotal = 0.0, addOnTotal = 0.0, alaCarteTotal = 0.0;
+  String _token, _subsId, _encdvcId, strCgstAmt, strIgstAmt, strSgstAmt,strCgstTaxAmt, strIgstTaxAmt,
+         strSgstTaxAmt, strTotalAmount, strNetpayableAmt;
+  double basicTotal = 0.0, addOnTotal = 0.0, alaCarteTotal = 0.0, walletBalance = 0.0, subTotalAmount = 0.0,
+          cgstAmount = 0.0, igstAmount = 0.0, sgstAmount =0.0, netPayableAmount = 0.0, cgstTax = 0.0,igstTax = 0.0,
+          sgstTax =0.0, totalAmount = 0.0;
   @override
   Widget build(BuildContext context) {
     List<String> listItem = ["Delegate", "Visitor", "Contacts", "Home"];
@@ -346,7 +349,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${0.00}',
+                                '\u{20B9} ${subTotalAmount}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -367,7 +370,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                             // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "CGST (9.00%)",
+                                "CGST (" + strCgstAmt + "%)",
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto_Medium",
@@ -377,7 +380,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${0.00}',
+                                '\u{20B9} ${cgstAmount}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -398,7 +401,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                             // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "SGST (9.00%)",
+                                "SGST (" + strSgstAmt + "%)",
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto_Medium",
@@ -408,7 +411,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${0.00}',
+                                '\u{20B9} ${sgstAmount}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -439,7 +442,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${0.00}',
+                                '\u{20B9} ${totalAmount}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -470,7 +473,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${151.00}',
+                                '\u{20B9} ${walletBalance}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -498,7 +501,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                     color: Color(0xff333333)),
                               ),
                               Text(
-                                '\u{20B9} ${0.00}',
+                                '\u{20B9} ${netPayableAmount}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -599,6 +602,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
     _token = (prefs.getString('token') ?? null);
     _subsId = (prefs.getString('subsId') ?? null);
     _encdvcId = (prefs.getString('encDvcMapId') ?? '');
+     walletBalance = (prefs.getDouble('balance') ?? 0.0);
     if (_token != null) {
       _buildBody(context, _token, _subsId, _encdvcId);
     }
@@ -649,7 +653,23 @@ class _QuickRechargeState extends State<QuickRecharge> {
                   productInfoQuickRechargeSubscription.elementAt(i).price;
             }
           }
-
+          cgstTax = response.rechargeInfo.taxInfo.elementAt(1).taxValue;
+          strCgstTaxAmt = cgstTax.toString();
+          igstTax = response.rechargeInfo.taxInfo.elementAt(0).taxValue;
+          strIgstTaxAmt = igstTax.toString();
+          sgstTax = response.rechargeInfo.taxInfo.elementAt(2).taxValue;
+          strSgstTaxAmt = sgstTax.toString();
+          cgstAmount = subTotalAmount * cgstTax/100;
+          strCgstAmt = cgstAmount.toString();
+          igstAmount = subTotalAmount * igstTax/100;
+          strIgstAmt = igstAmount.toString();
+          sgstAmount = subTotalAmount * sgstTax/100;
+          strSgstAmt = sgstAmount.toString();
+          subTotalAmount = basicTotal + addOnTotal + alaCarteTotal;
+          totalAmount = subTotalAmount + cgstAmount + sgstAmount;
+          strTotalAmount = totalAmount.toString();
+          netPayableAmount = totalAmount - walletBalance;
+          strNetpayableAmt = netPayableAmount.toString();
           _basicRechargeSubscriptionListView(context, basicList);
           _addOnRechargeSubscriptionListView(context, addOnList);
           _aLaCarteRechargeSubscriptionListView(context, alaCarteList);
@@ -814,10 +834,42 @@ class _QuickRechargeState extends State<QuickRecharge> {
       Common().showAlertDialog(context);
       response = await client.rechargeRenew(json.encode(rechargeRequest));
       Navigator.pop(context);
+      /*
+      setState(() async {
+        if (response.status == 10) {
+
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          //pref.setBool('Login', true);
+          pref.setString('paymentUrl', response.returnUrl);
+          /*pref.setString("Branch", respose.Branch);
+            pref.setString("Name", respose.Name);
+            pref.setString("Image_Path", respose.Image_Path);
+            pref.setString("User_ID", respose.User_ID);
+            pref.setString("Deligated_ByName", respose.Deligated_ByName);
+            pref.setString("Deligated_By", respose.Deligated_By);
+            pref.setString("Department", respose.Department);
+            pref.setString("M_app_key", respose.M_App_Key);*/
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.webview, ModalRoute.withName(Routes.webview));
+        }
+      });
+      */
+
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
-      Navigator.pop(context);
-      //_logoutPressed();
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) =>
+                  WebView()));
+
+       //Navigator.pop(context);
+     //  setState(() {
+     //    Navigator.pushNamedAndRemoveUntil(
+     //        context, Routes.webview, ModalRoute.withName(Routes.webview));
+     //  });
+
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
