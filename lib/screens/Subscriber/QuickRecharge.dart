@@ -833,8 +833,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
     try {
       Common().showAlertDialog(context);
       response = await client.rechargeRenew(json.encode(rechargeRequest));
-      Navigator.pop(context);
-      /*
+      //Navigator.pop(context);
       setState(() async {
         if (response.status == 10) {
 
@@ -849,27 +848,27 @@ class _QuickRechargeState extends State<QuickRecharge> {
             pref.setString("Deligated_By", respose.Deligated_By);
             pref.setString("Department", respose.Department);
             pref.setString("M_app_key", respose.M_App_Key);*/
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.webview, ModalRoute.withName(Routes.webview));
+          // Navigator.pushNamedAndRemoveUntil(
+          //     context, Routes.webview, ModalRoute.withName(Routes.webview));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) =>
+                      WebView()));
         }
       });
-      */
+
 
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
-
+      /*
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) =>
                   WebView()));
-
-       //Navigator.pop(context);
-     //  setState(() {
-     //    Navigator.pushNamedAndRemoveUntil(
-     //        context, Routes.webview, ModalRoute.withName(Routes.webview));
-     //  });
-
+       */
+       Navigator.pop(context);
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;

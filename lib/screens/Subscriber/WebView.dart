@@ -51,8 +51,8 @@ class _WebView extends State<WebView>
         body: Stack(
           children: [
             InAppWebView(
-              initialUrl: "http://google.com",
-              //initialUrl: url,
+              //initialUrl: "http://google.com",
+              initialUrl: url,
               initialOptions: InAppWebViewGroupOptions(
                   crossPlatform: InAppWebViewOptions(
                       debuggingEnabled: true,
