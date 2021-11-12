@@ -4,49 +4,38 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WebView extends StatefulWidget {
   static const String routeName = '/webview';
-
+   String url;
+   WebView({Key key, @required this.url}) : super(key: key);
   @override
-  _WebView createState() => _WebView();
+  _WebView createState() => _WebView(this.url);
 }
-class _WebView extends State<WebView>
-{
+
+class _WebView extends State<WebView> {
   double progress = 0;
+  bool isLoading=true;
   String url = "";
+  _WebView(this.url);
   InAppWebViewController _webViewController;
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
 
   @override
-  void initState() {
-    super.initState();
-    _loadUserInfo();
-  }
-
-  _loadUserInfo() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    url = (prefs.getString("paymentUrl") ?? null);
-    // if (_token != null) {
-    //   _buildBody(context, _token, _subsId, _encdvcId);
-    // }
-  }
-
-  @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldkey,
-        appBar: AppBar (
-          title: Text('WebView',textDirection: TextDirection.ltr,style: TextStyle(color: Color(0xffFFFFFF)),),
-          backgroundColor:Color(0xffDF193E),
-          elevation:  0,
+        appBar: AppBar(
+          title: Text(
+            'WebView',
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Color(0xffFFFFFF)),
+          ),
+          backgroundColor: Color(0xffDF193E),
+          elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
-
-          centerTitle: true,
-
+          centerTitle: false,
         ),
-
         body: Stack(
           children: [
             InAppWebView(
@@ -61,16 +50,16 @@ class _WebView extends State<WebView>
               onWebViewCreated: (InAppWebViewController controller) {
                 _webViewController = controller;
               },
-              onLoadStart:
-                  (InAppWebViewController controller, String url) {
+              onLoadStart: (InAppWebViewController controller, String url) {
                 setState(() {
                   this.url = url;
                 });
               },
-              onLoadStop: (InAppWebViewController controller,
-                  String url) async {
+              onLoadStop:
+                  (InAppWebViewController controller, String url) async {
                 setState(() {
                   this.url = url;
+                  isLoading = false;
                 });
               },
               onProgressChanged:
@@ -79,17 +68,10 @@ class _WebView extends State<WebView>
                   this.progress = progress / 100;
                 });
               },
-
-            )
-
-
-
+            ),
+            isLoading ? Center( child: CircularProgressIndicator(),)
+                : Stack(),
           ],
-
-
-        )
-    );
-
+        ));
   }
-
 }

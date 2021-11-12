@@ -29,11 +29,34 @@ class _QuickRechargeState extends State<QuickRecharge> {
   List<MostRecentQuickRechargeSubscriptionList> basicList = [];
   List<MostRecentQuickRechargeSubscriptionList> addOnList = [];
   List<MostRecentQuickRechargeSubscriptionList> alaCarteList = [];
-  String _token, _subsId, _encdvcId, strCgstAmt, strIgstAmt, strSgstAmt,strCgstTaxAmt, strIgstTaxAmt,
-         strSgstTaxAmt, strTotalAmount, strNetpayableAmt;
-  double basicTotal = 0.0, addOnTotal = 0.0, alaCarteTotal = 0.0, walletBalance = 0.0, subTotalAmount = 0.0,
-          cgstAmount = 0.0, igstAmount = 0.0, sgstAmount =0.0, netPayableAmount = 0.0, cgstTax = 0.0,igstTax = 0.0,
-          sgstTax =0.0, totalAmount = 0.0;
+  String _token,
+      _subsId,
+      _encdvcId,
+      strCgst = 'CGST',
+      strCgstAmt,
+      strIgstAmt,
+      strSgstAmt,
+      strCgstTaxAmt,
+      strIgstTaxAmt,
+      strSgstTaxAmt,
+      strTotalAmount,
+      strNetpayableAmt;
+  double basicTotal = 0.0,
+      addOnTotal = 0.0,
+      alaCarteTotal = 0.0,
+      subTotalAmount = 0.0,
+      totalAmount = 0.0,
+      walletBalance = 0.0,
+      netPayableAmount = 0.0,
+      igstAmount = 0.0,
+      cgstAmount = 0.0,
+      sgstAmount = 0.0,
+      cgstTax = 0.0,
+      igstTax = 0.0,
+      sgstTax = 0.0;
+
+  bool sgstVisible = true;
+
   @override
   Widget build(BuildContext context) {
     List<String> listItem = ["Delegate", "Visitor", "Contacts", "Home"];
@@ -370,7 +393,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                             // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "CGST (" + strCgstAmt + "%)",
+                                strCgst + " (" + strCgstAmt + "%)",
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto_Medium",
@@ -396,29 +419,32 @@ class _QuickRechargeState extends State<QuickRecharge> {
                           height: 30,
                           color: Color(0xffFBFBFB),
 
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "SGST (" + strSgstAmt + "%)",
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontFamily: "Roboto_Medium",
-                                    color: Color(0xff333333)),
-                              ),
-                              SizedBox(
-                                  //width: 220.0,
+                          child: Visibility(
+                              visible: sgstVisible,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "SGST (" + strSgstAmt + "%)",
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: "Roboto_Medium",
+                                        color: Color(0xff333333)),
                                   ),
-                              Text(
-                                '\u{20B9} ${sgstAmount}',
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontFamily: "Roboto",
-                                    color: Color(0xff333333)),
-                              ),
-                            ],
-                          ),
+                                  SizedBox(
+                                      //width: 220.0,
+                                      ),
+                                  Text(
+                                    '\u{20B9} ${sgstAmount}',
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: "Roboto",
+                                        color: Color(0xff333333)),
+                                  ),
+                                ],
+                              )),
                         ),
                         Container(
                           //width: 300,
@@ -602,7 +628,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
     _token = (prefs.getString('token') ?? null);
     _subsId = (prefs.getString('subsId') ?? null);
     _encdvcId = (prefs.getString('encDvcMapId') ?? '');
-     walletBalance = (prefs.getDouble('balance') ?? 0.0);
+    walletBalance = (prefs.getDouble('balance') ?? 0.0);
     if (_token != null) {
       _buildBody(context, _token, _subsId, _encdvcId);
     }
@@ -652,19 +678,32 @@ class _QuickRechargeState extends State<QuickRecharge> {
               alaCarteTotal = alaCarteTotal +
                   productInfoQuickRechargeSubscription.elementAt(i).price;
             }
+            if (productInfoQuickRechargeSubscription.elementAt(i).isIgst) {
+              sgstVisible = false;
+              strCgst = 'IGST';
+              cgstAmount = cgstAmount +
+                  productInfoQuickRechargeSubscription.elementAt(i).igst;
+            } else {
+              sgstVisible = true;
+              strCgst = 'CGST';
+              cgstAmount = cgstAmount +
+                  productInfoQuickRechargeSubscription.elementAt(i).cgst;
+              sgstAmount = sgstAmount +
+                  productInfoQuickRechargeSubscription.elementAt(i).sgst;
+            }
           }
-          cgstTax = response.rechargeInfo.taxInfo.elementAt(1).taxValue;
-          strCgstTaxAmt = cgstTax.toString();
-          igstTax = response.rechargeInfo.taxInfo.elementAt(0).taxValue;
-          strIgstTaxAmt = igstTax.toString();
+          if (!sgstVisible)
+            cgstTax = response.rechargeInfo.taxInfo.elementAt(0).taxValue;
+          else
+            cgstTax = response.rechargeInfo.taxInfo.elementAt(1).taxValue;
           sgstTax = response.rechargeInfo.taxInfo.elementAt(2).taxValue;
-          strSgstTaxAmt = sgstTax.toString();
-          cgstAmount = subTotalAmount * cgstTax/100;
-          strCgstAmt = cgstAmount.toString();
-          igstAmount = subTotalAmount * igstTax/100;
-          strIgstAmt = igstAmount.toString();
-          sgstAmount = subTotalAmount * sgstTax/100;
-          strSgstAmt = sgstAmount.toString();
+
+          strCgstTaxAmt = cgstAmount.toString();
+          strSgstTaxAmt = sgstAmount.toString();
+
+          strCgstAmt = cgstTax.toString();
+          strSgstAmt = sgstTax.toString();
+
           subTotalAmount = basicTotal + addOnTotal + alaCarteTotal;
           totalAmount = subTotalAmount + cgstAmount + sgstAmount;
           strTotalAmount = totalAmount.toString();
@@ -673,18 +712,6 @@ class _QuickRechargeState extends State<QuickRecharge> {
           _basicRechargeSubscriptionListView(context, basicList);
           _addOnRechargeSubscriptionListView(context, addOnList);
           _aLaCarteRechargeSubscriptionListView(context, alaCarteList);
-          // int count = respose.transactionInfo.totalCount;
-          // totalCount = 'Total Records: ' + "$count";
-          // _serviceTypeList = respose.transactionInfo.serviceTypeList;
-          // _serviceType = _serviceTypeList.first;
-          // _paymentmodeList = respose.transactionInfo.paymentmodeList;
-          // _paymentMode = _paymentmodeList.first;
-          // _transactionHistoryList =
-          //     respose.transactionInfo.transactionHistory;
-          // _buildTransactionHistoryListView(context, _transactionHistoryList);
-
-          // Toast.show("Data Received", context,
-          //     duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
         }
       });
     } catch (error, stacktrace) {
@@ -696,8 +723,11 @@ class _QuickRechargeState extends State<QuickRecharge> {
     return BaseModel()..data = response;
   }
 
-  Future<BaseModel<RechargeRenewResponseModel>> _rechargeRenew(BuildContext context,
-      String token, String subsId, String encdvcId) async {
+  Future<BaseModel<RechargeRenewResponseModel>> _rechargeRenew(
+      BuildContext context,
+      String token,
+      String subsId,
+      String encdvcId) async {
     RechargeRenewResponseModel response;
 
     var rechargeRequest = RechargeRequest();
@@ -837,27 +867,15 @@ class _QuickRechargeState extends State<QuickRecharge> {
       setState(() async {
         if (response.status == 10) {
           SharedPreferences pref = await SharedPreferences.getInstance();
-          //pref.setBool('Login', true);
-          pref.setString("paymentUrl", response.returnUrl);
-          /*pref.setString("Branch", respose.Branch);
-            pref.setString("Name", respose.Name);
-            pref.setString("Image_Path", respose.Image_Path);
-            pref.setString("User_ID", respose.User_ID);
-            pref.setString("Deligated_ByName", respose.Deligated_ByName);
-            pref.setString("Deligated_By", respose.Deligated_By);
-            pref.setString("Department", respose.Department);
-            pref.setString("M_app_key", respose.M_App_Key);*/
-          // Navigator.pushNamedAndRemoveUntil(
-          //     context, Routes.webview, ModalRoute.withName(Routes.webview));
+          //pref.setString('paymentUrl', response.returnUrl);
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) =>
-                      WebView()));
+                  builder: (_) => WebView(
+                        url: response.returnUrl,
+                      )));
         }
       });
-
-
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       /*
@@ -867,7 +885,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
               builder: (_) =>
                   WebView()));
        */
-       Navigator.pop(context);
+      Navigator.pop(context);
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
@@ -899,11 +917,12 @@ class _QuickRechargeState extends State<QuickRecharge> {
           // double amount = mostRecentQuickRechargeSubscriptionList.elementAt(index).price;
           // String startDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).startDate as String;
           // String endDate = mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate as String;
-          DateTime startDate = DateTime.parse(mostRecentQuickRechargeSubscriptionList
-              .elementAt(index)
-              .startDate);
-          DateTime endDate =
-          DateTime.parse(mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate);
+          DateTime startDate = DateTime.parse(
+              mostRecentQuickRechargeSubscriptionList
+                  .elementAt(index)
+                  .startDate);
+          DateTime endDate = DateTime.parse(
+              mostRecentQuickRechargeSubscriptionList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
           String startFormattedDate =
@@ -1058,7 +1077,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
               basicList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate = DateTime.parse(basicList.elementAt(index).startDate);
+          DateTime startDate =
+              DateTime.parse(basicList.elementAt(index).startDate);
           DateTime endDate = DateTime.parse(basicList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
@@ -1237,7 +1257,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
               addOnList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate = DateTime.parse(addOnList.elementAt(index).startDate);
+          DateTime startDate =
+              DateTime.parse(addOnList.elementAt(index).startDate);
           DateTime endDate = DateTime.parse(addOnList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
@@ -1416,8 +1437,10 @@ class _QuickRechargeState extends State<QuickRecharge> {
               alaCarteList.elementAt(index).subscriptionTypeName;
           // String strsubscriptionTypeName = subscriptionTypeName.toString();
           String taxIncludeValue = "";
-          DateTime startDate = DateTime.parse(alaCarteList.elementAt(index).startDate);
-          DateTime endDate = DateTime.parse(alaCarteList.elementAt(index).endDate);
+          DateTime startDate =
+              DateTime.parse(alaCarteList.elementAt(index).startDate);
+          DateTime endDate =
+              DateTime.parse(alaCarteList.elementAt(index).endDate);
           DateTime now = DateTime.now();
 
           String startFormattedDate =
