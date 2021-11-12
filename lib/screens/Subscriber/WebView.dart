@@ -23,8 +23,7 @@ class _WebView extends State<WebView>
 
   _loadUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    url = (prefs.getString('paymentUrl') ?? null);
-
+    url = (prefs.getString("paymentUrl") ?? null);
     // if (_token != null) {
     //   _buildBody(context, _token, _subsId, _encdvcId);
     // }

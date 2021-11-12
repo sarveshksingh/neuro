@@ -836,10 +836,9 @@ class _QuickRechargeState extends State<QuickRecharge> {
       //Navigator.pop(context);
       setState(() async {
         if (response.status == 10) {
-
           SharedPreferences pref = await SharedPreferences.getInstance();
           //pref.setBool('Login', true);
-          pref.setString('paymentUrl', response.returnUrl);
+          pref.setString("paymentUrl", response.returnUrl);
           /*pref.setString("Branch", respose.Branch);
             pref.setString("Name", respose.Name);
             pref.setString("Image_Path", respose.Image_Path);
