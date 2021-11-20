@@ -544,7 +544,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 )),
                 Container(
                     margin: EdgeInsets.only(top: 40.0),
-                    child: Expanded(
+                    //child: Expanded(
                         child: Text(
                       'It is highly recommended that you setup a two-step verification for your account. enabling 2FA gives you more security and protection against passible phishing, social engineering and password brute-force attacks.',
                       maxLines: 4,
@@ -556,7 +556,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         fontFamily: 'Open_Sans_Regular',
                         //fontWeight: FontWeight.bold
                       ),
-                    ))),
+                    //)
+          )),
                 Expanded(
                     child: Center(
                         child: Container(
