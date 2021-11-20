@@ -530,38 +530,43 @@ class _AccountScreenState extends State<AccountScreen> {
               children: <Widget>[
                 Container(
                     child: Row(
-                  children: [
-                    Text(
-                      'TWO-FACTOR\nAUTHENTICATION (2FA)',
-                      style: TextStyle(
-                        color: Color(0xff333333),
-                        fontSize: 14,
-                        fontFamily: 'Roboto_Bold',
-                        //fontWeight: FontWeight.bold
-                      ),
-                    )
-                  ],
-                )),
+                      children: [
+                        Text(
+                          'TWO-FACTOR\nAUTHENTICATION (2FA)',
+                          style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: 14,
+                            fontFamily: 'Roboto_Bold',
+                            //fontWeight: FontWeight.bold
+                          ),
+                        )
+                      ],
+                    )),
                 Container(
-                    margin: EdgeInsets.only(top: 40.0),
-                    child: Expanded(
-                        child: Text(
-                      'It is highly recommended that you setup a two-step verification for your account. enabling 2FA gives you more security and protection against passible phishing, social engineering and password brute-force attacks.',
-                      maxLines: 4,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Color(0xff333333),
-                        fontSize: 12,
-                        fontFamily: 'Open_Sans_Regular',
-                        //fontWeight: FontWeight.bold
-                      ),
-                    ))),
+                  margin: EdgeInsets.only(top: 40.0),
+                  child: Row (
+                    children: [
+                      Expanded(
+                          child: Text(
+                            'It is highly recommended that you setup a two-step verification for your account. enabling 2FA gives you more security and protection against passible phishing, social engineering and password brute-force attacks.',
+                            maxLines: 4,
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Color(0xff333333),
+                              fontSize: 12,
+                              fontFamily: 'Open_Sans_Regular',
+                              //fontWeight: FontWeight.bold
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
                 Expanded(
                     child: Center(
                         child: Container(
                             decoration: BoxDecoration(
-                                //color: Colors.red,
+                              //color: Colors.red,
                                 gradient: LinearGradient(
                                     colors: [
                                       const Color(0xFFDF193E),
@@ -675,7 +680,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   )
                 ]),
                 Container(
-                    margin: EdgeInsets.only(top: 200.0),
+                    margin: EdgeInsets.only(top: 100.0),
                     decoration: BoxDecoration(
                         //color: Colors.red,
                         gradient: LinearGradient(
@@ -693,20 +698,24 @@ class _AccountScreenState extends State<AccountScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           Container(
-                            child: FlatButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                show2FA3BottomSheet();
-                              },
-                              child: Text(
-                                'NEXT',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Open_Sans_Regular',
+                            child: Column(
+                              children: [
+                                FlatButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    show2FA3BottomSheet();
+                                  },
+                                  child: Text(
+                                    'NEXT',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontFamily: 'Open_Sans_Regular',
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                              ],
+                            )
                           )
                         ])),
                 Container(
@@ -719,19 +728,23 @@ class _AccountScreenState extends State<AccountScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           Container(
-                            child: FlatButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                'CANCEL',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Open_Sans_Regular',
+                            child: Column(
+                              children: [
+                                FlatButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'CANCEL',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontFamily: 'Open_Sans_Regular',
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                              ],
+                            )
                           )
                         ])),
                 // Align(
