@@ -256,15 +256,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ])))));
 
   Widget _buildActivtCard() => new Container(
-      child: Container(
-          //height: 550,
-          margin: EdgeInsets.only(bottom: 12.0),
-          /*child: _buildListView(context, _hardwareDetailsList)),*/
-          child: LimitedBox(
-              maxHeight: 600,
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Flexible(child: _buildListView(context, _hardwareDetailsList))
-              ]))));
+      child: Column(
+        children: [
+          Container(
+            //height: 550,
+              margin: EdgeInsets.only(bottom: 12.0),
+              /*child: _buildListView(context, _hardwareDetailsList)),*/
+              child: Column(
+                children: [
+                  LimitedBox(
+                      maxHeight: 600,
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Expanded(child: _buildListView(context, _hardwareDetailsList))
+                      ]))
+                ],
+              ))
+        ],
+      ));
 
   @override
   void initState() {
@@ -304,192 +312,196 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
                 margin: EdgeInsets.only(
                     left: 20.0, right: 20.0, bottom: 12.0, top: 10.0),
-                child: Expanded(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      Container(
-                          child: Row(children: [
-                        new Text(
-                          statusValue,
-                          style: TextStyle(
-                            color: statusValue == 'Active'
-                                ? Color(0xff227700)
-                                : Color(0xffDF1D3B),
-                            fontSize: 12,
-                            fontFamily: 'Roboto_Regular',
-                          ),
-                        )
-                      ])),
-                      Container(
-                          margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
-                          child: Row(children: [
-                            Container(
-                                //margin: EdgeInsets.only(bottom: 10.0),
-                                child: new Text(
-                              'STB:',
-                              style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: 12,
-                                fontFamily: 'Roboto_Medium',
-                              ),
-                            )),
-                            Container(
-                                margin: EdgeInsets.only(left: 10.0),
-                                child: new Text(
-                                  _hardwareDetailsList.elementAt(index).stbVcNo,
-                                  style: TextStyle(
-                                    color: Color(0xff333333),
-                                    fontSize: 12,
-                                    fontFamily: 'Roboto_Medium',
-                                  ),
-                                ))
-                          ])),
-                      Container(
-                          child: new InkWell(
-                              onTap: () async {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                /* Toast.show("Transaction Click", context,
+                child: Row(
+                  children: [
+                    Flexible(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  child: Row(children: [
+                                    new Text(
+                                      statusValue,
+                                      style: TextStyle(
+                                        color: statusValue == 'Active'
+                                            ? Color(0xff227700)
+                                            : Color(0xffDF1D3B),
+                                        fontSize: 12,
+                                        fontFamily: 'Roboto_Regular',
+                                      ),
+                                    )
+                                  ])),
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                                  child: Row(children: [
+                                    Container(
+                                      //margin: EdgeInsets.only(bottom: 10.0),
+                                        child: new Text(
+                                          'STB:',
+                                          style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 12,
+                                            fontFamily: 'Roboto_Medium',
+                                          ),
+                                        )),
+                                    Container(
+                                        margin: EdgeInsets.only(left: 10.0),
+                                        child: new Text(
+                                          _hardwareDetailsList.elementAt(index).stbVcNo,
+                                          style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 12,
+                                            fontFamily: 'Roboto_Medium',
+                                          ),
+                                        ))
+                                  ])),
+                              Container(
+                                  child: new InkWell(
+                                      onTap: () async {
+                                        SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                        /* Toast.show("Transaction Click", context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM);*/
 
-                                prefs.setString('encDvcMapId', encDvcMapId);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          TransactionHistoryScreen()),
-                                );
-                                /*Navigator.pushNamedAndRemoveUntil(
+                                        prefs.setString('encDvcMapId', encDvcMapId);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TransactionHistoryScreen()),
+                                        );
+                                        /*Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     Routes.transaction,
                                     ModalRoute.withName(Routes.transaction));*/
-                              },
-                              child: Row(children: [
-                                Container(
-                                    //margin: EdgeInsets.only(left: 40.0),
-                                    padding: EdgeInsets.all(5.0),
-                                    child: new Text(
-                                      'VIEW TRANSACTION',
-                                      style: TextStyle(
-                                        color: Color(0xffDF1D3B),
-                                        fontSize: 12,
-                                        fontFamily: 'Lato_Regular',
-                                      ),
-                                    )),
-                                Container(
-                                    margin: EdgeInsets.only(
-                                        left: 10.0, right: 10.0),
-                                    child: SvgPicture.asset(
-                                        'assets/images/next.svg',
-                                        color: Color(0xffDF1D3B))),
-                              ]))),
-                      Container(
-                          child: Row(
-                        children: [
-                          //Expanded(
-                          // child:
-                          Container(
-                              margin: EdgeInsets.only(
-                                  bottom: 10.0, top: 10.0, right: 10.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffDF1D3B)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: new InkWell(
-                                  onTap: () {
-                                    /*Toast.show("Subscription Click", context,
+                                      },
+                                      child: Row(children: [
+                                        Container(
+                                          //margin: EdgeInsets.only(left: 40.0),
+                                            padding: EdgeInsets.all(5.0),
+                                            child: new Text(
+                                              'VIEW TRANSACTION',
+                                              style: TextStyle(
+                                                color: Color(0xffDF1D3B),
+                                                fontSize: 12,
+                                                fontFamily: 'Lato_Regular',
+                                              ),
+                                            )),
+                                        Container(
+                                            margin: EdgeInsets.only(
+                                                left: 10.0, right: 10.0),
+                                            child: SvgPicture.asset(
+                                                'assets/images/next.svg',
+                                                color: Color(0xffDF1D3B))),
+                                      ]))),
+                              Container(
+                                  child: Row(
+                                    children: [
+                                      //Expanded(
+                                      // child:
+                                      Container(
+                                          margin: EdgeInsets.only(
+                                              bottom: 10.0, top: 10.0, right: 10.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: Color(0xffDF1D3B)),
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(5))),
+                                          child: new InkWell(
+                                              onTap: () {
+                                                /*Toast.show("Subscription Click", context,
                                         duration: Toast.LENGTH_SHORT,
                                         gravity: Toast.BOTTOM);*/
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Subscription()),
-                                    );
-                                    /*Navigator.pushNamedAndRemoveUntil(
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => Subscription()),
+                                                );
+                                                /*Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         Routes.subscription,
                                         ModalRoute.withName(
                                             Routes.subscription));*/
-                                  },
-                                  child: Row(children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: 5.0,
-                                            bottom: 10.0,
-                                            top: 10.0,
-                                            right: 5.0),
-                                        child: new Text(
-                                          'SUBSCRIPTION',
-                                          style: TextStyle(
-                                            color: Color(0xffDF1D3B),
-                                            fontSize: 12,
-                                            fontFamily: 'Lato_Regular',
-                                          ),
-                                        )),
-                                    Container(
-                                        margin: EdgeInsets.only(right: 5.0),
-                                        child: SvgPicture.asset(
-                                            'assets/images/group75171.svg',
-                                            color: Color(0xffDF1D3B))),
-                                  ]))),
-                          Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffDF1D3B)),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: new InkWell(
-                                  onTap: () async {
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    /* Toast.show("Transaction Click", context,
+                                              },
+                                              child: Row(children: [
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5.0,
+                                                        bottom: 10.0,
+                                                        top: 10.0,
+                                                        right: 5.0),
+                                                    child: new Text(
+                                                      'SUBSCRIPTION',
+                                                      style: TextStyle(
+                                                        color: Color(0xffDF1D3B),
+                                                        fontSize: 12,
+                                                        fontFamily: 'Lato_Regular',
+                                                      ),
+                                                    )),
+                                                Container(
+                                                    margin: EdgeInsets.only(right: 5.0),
+                                                    child: SvgPicture.asset(
+                                                        'assets/images/group75171.svg',
+                                                        color: Color(0xffDF1D3B))),
+                                              ]))),
+                                      Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: Color(0xffDF1D3B)),
+                                              borderRadius:
+                                              BorderRadius.all(Radius.circular(5))),
+                                          child: new InkWell(
+                                              onTap: () async {
+                                                SharedPreferences prefs =
+                                                await SharedPreferences.getInstance();
+                                                /* Toast.show("Transaction Click", context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM);*/
 
-                                    prefs.setString('encDvcMapId', encDvcMapId);
-                                    prefs.setString('subsId', subsId);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              QuickRecharge()),
-                                    );
-                                  },
-                                  child: Row(children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: 5.0,
-                                            bottom: 10.0,
-                                            top: 10.0,
-                                            right: 5.0),
-                                        child: new Text(
-                                          'QUICK RECHARGE',
-                                          style: TextStyle(
-                                            color: Color(0xffDF1D3B),
-                                            fontSize: 12,
-                                            fontFamily: 'Lato_Regular',
-                                          ),
-                                        )),
-                                    Container(
-                                        margin: EdgeInsets.only(right: 5.0),
-                                        child: SvgPicture.asset(
-                                            'assets/images/group75171.svg',
-                                            color: Color(0xffDF1D3B))),
-                                  ])))
-                        ],
-                      )),
-                      LimitedBox(
-                          maxHeight: 150,
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Flexible(
-                                    child: _buildSubscriptionListView(
-                                        context, _subscriptionList))
-                              ]))
-                    ]))));
+                                                prefs.setString('encDvcMapId', encDvcMapId);
+                                                prefs.setString('subsId', subsId);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          QuickRecharge()),
+                                                );
+                                              },
+                                              child: Row(children: [
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 5.0,
+                                                        bottom: 10.0,
+                                                        top: 10.0,
+                                                        right: 5.0),
+                                                    child: new Text(
+                                                      'QUICK RECHARGE',
+                                                      style: TextStyle(
+                                                        color: Color(0xffDF1D3B),
+                                                        fontSize: 12,
+                                                        fontFamily: 'Lato_Regular',
+                                                      ),
+                                                    )),
+                                                Container(
+                                                    margin: EdgeInsets.only(right: 5.0),
+                                                    child: SvgPicture.asset(
+                                                        'assets/images/group75171.svg',
+                                                        color: Color(0xffDF1D3B))),
+                                              ])))
+                                    ],
+                                  )),
+                              LimitedBox(
+                                  maxHeight: 150,
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Flexible(
+                                            child: _buildSubscriptionListView(
+                                                context, _subscriptionList))
+                                      ]))
+                            ]))
+                  ],
+                )));
       },
       itemCount: _hardwareDetailsList.length, //posts.data.length,
     );
