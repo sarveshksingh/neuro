@@ -51,166 +51,170 @@ class _SubscriptionState extends State<Subscription> {
             ),
             Container(
               height: 250,
-              child: Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: ListView.builder(
-                      itemCount: listItem.length,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        //return new Text(listItem[index]);
-                        int ind = index;
-                        return GestureDetector(
-                          onTap: () {
-                            print("index $ind");
-                            showCustomModelBottomSheetChannel();
-                          },
-                          child: Card(
-                            child: Row(
-                              children: [
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 25.0, top: 20.0, bottom: 20.0),
-                                      child: Row(children: [
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: ListView.builder(
+                          itemCount: listItem.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            //return new Text(listItem[index]);
+                            int ind = index;
+                            return GestureDetector(
+                              onTap: () {
+                                print("index $ind");
+                               // showCustomModelBottomSheetChannel();
+                              },
+                              child: Card(
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      children: <Widget>[
                                         Container(
-                                          child: Icon(Icons.network_cell),
+                                          margin: EdgeInsets.only(
+                                              left: 25.0, top: 20.0, bottom: 20.0),
+                                          child: Row(children: [
+                                            Container(
+                                              child: Icon(Icons.network_cell),
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            // Container(
+                                            //   child: Text('Hello'),
+                                            // )
+                                          ]),
                                         ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        // Container(
-                                        //   child: Text('Hello'),
-                                        // )
-                                      ]),
+                                      ],
                                     ),
-                                  ],
-                                ),
 
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    /* ListTile(
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        /* ListTile(
                 leading: Icon(Icons.wifi),
                 title: Text(listItem[index],style: TextStyle(fontSize: 18,color: Colors.grey),),
 
               ),*/
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 15.0, top: 20.0),
-                                      child: Row(children: [
-                                        // Container(
-                                        //   child: Icon(Icons.network_cell),
-                                        // ),
-                                        // SizedBox(width: 10,),
                                         Container(
-                                          child: Text('Basic'),
-                                        )
-                                      ]),
-                                    ),
-                                    Container(
-                                      margin:
+                                          margin: EdgeInsets.only(
+                                              left: 15.0, top: 20.0),
+                                          child: Row(children: [
+                                            // Container(
+                                            //   child: Icon(Icons.network_cell),
+                                            // ),
+                                            // SizedBox(width: 10,),
+                                            Container(
+                                              child: Text('Basic'),
+                                            )
+                                          ]),
+                                        ),
+                                        Container(
+                                          margin:
                                           EdgeInsets.only(left: 15.0, top: 5),
-                                      child: Row(children: [
-                                        // Container(
-                                        //   child: Icon(Icons.network_cell),
-                                        //
-                                        // ),
-                                        //SizedBox(width: 10),
+                                          child: Row(children: [
+                                            // Container(
+                                            //   child: Icon(Icons.network_cell),
+                                            //
+                                            // ),
+                                            //SizedBox(width: 10),
+                                            Container(
+                                              child: Text(
+                                                'Active',
+                                                style: TextStyle(
+                                                    color: Color(0xff227700)),
+                                              ),
+                                            )
+                                          ]),
+                                        ),
                                         Container(
-                                          child: Text(
-                                            'Active',
-                                            style: TextStyle(
-                                                color: Color(0xff227700)),
-                                          ),
-                                        )
-                                      ]),
+                                          margin: EdgeInsets.only(
+                                              left: 15.0, top: 5, bottom: 20),
+                                          child: Row(children: [
+                                            // Container(
+                                            //   child: Icon(Icons.network_cell),
+                                            //
+                                            // ),
+                                            //SizedBox(width: 10),
+                                            Container(
+                                              child: Text('6 sep 2021'),
+                                            )
+                                          ]),
+                                        ),
+                                      ],
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 15.0, top: 5, bottom: 20),
-                                      child: Row(children: [
-                                        // Container(
-                                        //   child: Icon(Icons.network_cell),
-                                        //
-                                        // ),
-                                        //SizedBox(width: 10),
-                                        Container(
-                                          child: Text('6 sep 2021'),
-                                        )
-                                      ]),
-                                    ),
-                                  ],
-                                ),
 
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 5.0, top: 20.0, bottom: 20.0),
-                                      child: Row(children: [
-                                        // Container(
-                                        //   child: Icon(Icons.network_cell),
-                                        // ),
-                                        // SizedBox(width: 20,),
+                                    Column(
+                                      children: <Widget>[
                                         Container(
-                                          child: Text('20 Days Ago'),
-                                        )
-                                      ]),
+                                          margin: EdgeInsets.only(
+                                              left: 5.0, top: 20.0, bottom: 20.0),
+                                          child: Row(children: [
+                                            // Container(
+                                            //   child: Icon(Icons.network_cell),
+                                            // ),
+                                            // SizedBox(width: 20,),
+                                            Container(
+                                              child: Text('20 Days Ago'),
+                                            )
+                                          ]),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
 
-                                // For Second Column
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: 50.0, top: 20.0),
-                                      child: Row(children: [
-                                        // Container(
-                                        //   child: Icon(Icons.network_cell),
-                                        //
-                                        // ),
-                                        // SizedBox(width: 10),
+                                    // For Second Column
+                                    Column(
+                                      children: <Widget>[
                                         Container(
-                                          child: Text('Rs 222.45'),
-                                        )
-                                      ]),
-                                    ),
-                                    Container(
-                                      margin:
+                                          margin: EdgeInsets.only(
+                                              left: 50.0, top: 20.0),
+                                          child: Row(children: [
+                                            // Container(
+                                            //   child: Icon(Icons.network_cell),
+                                            //
+                                            // ),
+                                            // SizedBox(width: 10),
+                                            Container(
+                                              child: Text('Rs 222.45'),
+                                            )
+                                          ]),
+                                        ),
+                                        Container(
+                                          margin:
                                           EdgeInsets.only(left: 50.0, top: 5.0),
-                                      child: Row(children: [
-                                        // Container(
-                                        //   child: Icon(Icons.network_cell),
-                                        //   // child: Checkbox(
-                                        //   //
-                                        //   //   activeColor: Colors.green,
-                                        //   // ),
-                                        //
-                                        // ),
-                                        // SizedBox(width: 10),
-                                        Container(
-                                          child: Text('19 oct 2021'),
-                                        )
-                                      ]),
+                                          child: Row(children: [
+                                            // Container(
+                                            //   child: Icon(Icons.network_cell),
+                                            //   // child: Checkbox(
+                                            //   //
+                                            //   //   activeColor: Colors.green,
+                                            //   // ),
+                                            //
+                                            // ),
+                                            // SizedBox(width: 10),
+                                            Container(
+                                              child: Text('19 oct 2021'),
+                                            )
+                                          ]),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
 
-                            color: Colors.white,
-                            shadowColor: Colors.lightBlue,
-                            elevation: 5.0,
-                            //margin: EdgeInsets.all(15.0),
-                            margin: EdgeInsets.only(
-                                left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
-                          ),
-                        );
-                      }),
-                ),
+                                color: Colors.white,
+                                shadowColor: Colors.lightBlue,
+                                elevation: 5.0,
+                                //margin: EdgeInsets.all(15.0),
+                                margin: EdgeInsets.only(
+                                    left: 15.0, right: 15.0, top: 5.0, bottom: 5.0),
+                              ),
+                            );
+                          }),
+                    ),
+                  )
+                ],
               ),
             ),
             Container(
@@ -316,6 +320,7 @@ class _SubscriptionState extends State<Subscription> {
                             ),
                             onPressed: () {
                               print('Add On package tapped');
+                              //showCustomModelBottomSheetChannel();
                               showCustomModelBottomSheetBasicPackage();
                             },
                             textColor: Color(0xffFFFFFF),
@@ -353,6 +358,7 @@ class _SubscriptionState extends State<Subscription> {
                             ),
                             onPressed: () {
                               print('A-LA Carte package tapped');
+                             // showCustomModelBottomSheetChannel();
                               showCustomModelBottomSheetBasicPackage();
                             },
                             textColor: Color(0xffFFFFFF),
@@ -841,7 +847,7 @@ class _SubscriptionState extends State<Subscription> {
         ),
         context: context,
         builder: (context) {
-          return Expanded(
+          return Container(
             //margin: EdgeInsets.only(top: 10.0,bottom: 5.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -861,30 +867,31 @@ class _SubscriptionState extends State<Subscription> {
                   margin: EdgeInsets.only(left: 5.0, right: 5.0),
                   color: Colors.white,
                   child: new Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: new Card(
-                      child: new ListTile(
-                        leading: new Icon(Icons.search),
-                        title: new TextField(
-                          controller: controller,
-                          decoration: InputDecoration(
-                              hintText: 'Search', border: InputBorder.none),
-                          //onChanged: onSearchTextChanged,
+                        padding: EdgeInsets.all(8.0),
+                        child: new Card(
+                          child: new ListTile(
+                            leading: new Icon(Icons.search),
+                            title: new TextField(
+                              controller: controller,
+                              decoration: InputDecoration(
+                                  hintText: 'Search', border: InputBorder.none),
+                              //onChanged: onSearchTextChanged,
+                            ),
+                            trailing: new IconButton(
+                              icon: new Icon(Icons.cancel),
+                              onPressed: () {
+                                controller.clear();
+                                //onSearchTextChanged('');
+                              },
+                            ),
+                          ),
                         ),
-                        trailing: new IconButton(
-                          icon: new Icon(Icons.cancel),
-                          onPressed: () {
-                            controller.clear();
-                            //onSearchTextChanged('');
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
+                      )
+
                 ),
 
                 Container(
-                  height: 500,
+                  height: 300,
                   color: Color(0xFCFCFC),
                   padding: const EdgeInsets.all(8.0),
                   child: GridView.builder(
@@ -907,7 +914,7 @@ class _SubscriptionState extends State<Subscription> {
                                 spreadRadius: 15,
                                 blurRadius: 7,
                                 offset:
-                                    Offset(0, 3), // changes position of shadow
+                                Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
