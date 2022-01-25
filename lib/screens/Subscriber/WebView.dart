@@ -53,12 +53,14 @@ class _WebView extends State<WebView> {
               onLoadStart: (InAppWebViewController controller, String url) {
                 setState(() {
                   this.url = url;
+                  print(this.url);
                 });
               },
               onLoadStop:
                   (InAppWebViewController controller, String url) async {
                 setState(() {
                   this.url = url;
+                  print(this.url);
                   isLoading = false;
                 });
               },
