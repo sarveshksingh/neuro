@@ -707,7 +707,10 @@ class _QuickRechargeState extends State<QuickRecharge> {
           subTotalAmount = basicTotal + addOnTotal + alaCarteTotal;
           totalAmount = subTotalAmount + cgstAmount + sgstAmount;
           strTotalAmount = totalAmount.toString();
-          netPayableAmount = totalAmount - walletBalance;
+          if(totalAmount > walletBalance)
+            {
+              netPayableAmount = totalAmount - walletBalance;
+            }
           strNetpayableAmt = netPayableAmount.toString();
           _basicRechargeSubscriptionListView(context, basicList);
           _addOnRechargeSubscriptionListView(context, addOnList);
@@ -875,6 +878,15 @@ class _QuickRechargeState extends State<QuickRecharge> {
                         url: response.returnUrl,
                       )));
         }
+        else if (response.status == 0)
+          {
+
+          }
+        else if (response.status == 1)
+        {
+          Navigator.pop(context);
+        }
+
       });
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
