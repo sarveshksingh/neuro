@@ -8,5 +8,6 @@ class Apis {
   static const String subsTransactnHistory = 'Home/subsTransactnHistory';
   static const String quickRecharge = 'Home/quickRecharge';
   static const String rechargeRenew = 'Recharge/rechargeRenew';
+  static const String subscription = 'Recharge/manualSubscription';
   static const String changePassword = 'Home/resetPassword';
 }

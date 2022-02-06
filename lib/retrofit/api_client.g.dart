@@ -175,6 +175,25 @@ class _ApiClient implements ApiClient {
   }
 
   @override
+  Future<SubscriptionModel> getSubscriptionData(dataJson) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = dataJson;
+    final _result = await _dio.request<Map<String, dynamic>>(
+        Apis.subscription,
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            contentType: 'application/json',
+            baseUrl: baseUrl),
+        data: _data);
+    final value = SubscriptionModel.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<RechargeRenewResponseModel> rechargeRenew(dataJson) async {
     //ArgumentError.checkNotNull(queryParameters, 'queryParameters');
     const _extra = <String, dynamic>{};

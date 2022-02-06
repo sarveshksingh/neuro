@@ -7,6 +7,7 @@ import 'package:neurosms/models/RechargeRenewResponseModel.dart';
 import 'package:neurosms/models/SubsDashboardResponse.dart';
 import 'package:neurosms/models/SubsTransactionHistoryResponse.dart';
 import 'package:neurosms/models/QuickRechargeResponse.dart';
+import 'package:neurosms/models/SubscriptionModel.dart';
 import 'package:retrofit/retrofit.dart';
 
 import 'apis.dart';
@@ -54,6 +55,11 @@ abstract class ApiClient {
     @Field("subsId") subsId,
     @Field("encdvcId") encdvcId,
   );
+
+  @POST(Apis.subscription)
+  Future<SubscriptionModel> getSubscriptionData(
+      @Body() queryParameters,
+      );
 
   @POST(Apis.rechargeRenew)
   Future<RechargeRenewResponseModel> rechargeRenew(

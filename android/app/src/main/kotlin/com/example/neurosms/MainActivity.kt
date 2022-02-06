@@ -1,4 +1,4 @@
-package com.example.neurosms
+package com.neurosms
 
 import io.flutter.embedding.android.FlutterActivity
 
