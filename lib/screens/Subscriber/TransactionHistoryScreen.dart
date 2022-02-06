@@ -7,8 +7,15 @@ import 'package:neurosms/models/SubsTransactionHistoryResponse.dart';
 import 'package:neurosms/retrofit/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+import 'package:ext_storage/ext_storage.dart';
+import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../Common.dart';
+final imgUrl =
+    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
+
+var dio = Dio();
 
 class TransactionHistoryScreen extends StatefulWidget {
   static const String routeName = '/transaction';
@@ -420,31 +427,37 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
                     // ),
                     Expanded(
                         child: Container(
-                            // width: 350,
+                            //width: 10,
                             height: 40,
                             margin: EdgeInsets.only(top: 5),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 0),
-                            decoration: BoxDecoration(color: Color(0xffE02935)),
-                            child: DropdownButton<String>(
+                            padding: const EdgeInsets.only(right: 0.0),
+                            decoration: BoxDecoration(color: Colors.transparent),
+                            child: RaisedButton(
+                              onPressed: () async {
+                                String path =
+                                await ExtStorage.getExternalStoragePublicDirectory(
+                                    ExtStorage.DIRECTORY_DOWNLOADS);
+                                //String fullPath = tempDir.path + "/boo2.pdf'";
+                                String fullPath = "$path/test.pdf";
+                                print('full path ${fullPath}');
+                                print('Download button clicked');
+                                download2(dio, imgUrl, fullPath);
+                              },
+                              color: Color(0xffE02935),
+                              child: Text('Download',
+                                style:
+                                TextStyle(color: Colors.white, fontSize: 15,fontFamily: 'Roboto_Regular'),),
+                            ),
+                              /*
+                            DropdownButton<String>(
                               value: _downloadType,
                               isExpanded: true,
-                              // icon: Image.asset(
-                              //   'assets/images/DownArrow.png',
-                              //   width: 15.0,
-                              //   height: 15.0,
-                              // ),
                               iconSize: 24,
                               elevation: 16,
                               style: TextStyle(
                                   color: Color(0xff333333),
                                   fontSize: 12,
                                   fontFamily: 'Roboto_Regular'),
-                              // underline: Container(
-                              //   height: 2,
-                              //   width: 300,
-                              //   color: Colors.black38,
-                              // ),
                               onChanged: (String newValue) {
                                 setState(() {
                                   _downloadType = newValue;
@@ -459,7 +472,9 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
                                     );
                                   }).toList() ??
                                   [],
-                            ))),
+                            )
+                            */
+                        )),
                   ],
                 ),
               ),
@@ -814,7 +829,7 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2022));
+        lastDate: DateTime(2025));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked; //formatter.format(picked) as DateTime;
@@ -828,7 +843,7 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2022));
+        lastDate: DateTime(2025));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked; //formatter.format(picked) as DateTime;
@@ -839,9 +854,47 @@ class _TransactionHistoryState extends State<TransactionHistoryScreen> {
 
   @override
   void initState() {
+    getPermission();
     super.initState();
     _loadUserInfo();
   }
+
+  void getPermission() async {
+    print("getPermission");
+    Map<PermissionGroup, PermissionStatus> permissions =
+    await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+  }
+
+  Future download2(Dio dio, String url, String savePath) async {
+    try {
+      Response response = await dio.get(
+        url,
+        onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            }),
+      );
+      print(response.headers);
+      File file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      print((received / total * 100).toStringAsFixed(0) + "%");
+    }
+  }
+
 
   _loadUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

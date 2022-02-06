@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:neurosms/routes/Routes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -372,7 +373,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${subTotalAmount}',
+                                '\u{20B9} ${subTotalAmount.toPrecision(3)}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -403,7 +404,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${cgstAmount}',
+                                '\u{20B9} ${cgstAmount.toPrecision(3)}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -437,7 +438,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                       //width: 220.0,
                                       ),
                                   Text(
-                                    '\u{20B9} ${sgstAmount}',
+                                    '\u{20B9} ${sgstAmount.toPrecision(3)}',
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontFamily: "Roboto",
@@ -468,7 +469,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${totalAmount}',
+                                '\u{20B9} ${totalAmount.toPrecision(3)}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -499,7 +500,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                   //width: 220.0,
                                   ),
                               Text(
-                                '\u{20B9} ${walletBalance}',
+                                '\u{20B9} ${walletBalance.toPrecision(3)}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -527,7 +528,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
                                     color: Color(0xff333333)),
                               ),
                               Text(
-                                '\u{20B9} ${netPayableAmount}',
+                                '\u{20B9} ${netPayableAmount.toPrecision(3)}',
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: "Roboto",
@@ -866,7 +867,7 @@ class _QuickRechargeState extends State<QuickRecharge> {
     try {
       Common().showAlertDialog(context);
       response = await client.rechargeRenew(json.encode(rechargeRequest));
-      //Navigator.pop(context);
+      Navigator.pop(context);
       setState(() async {
         if (response.status == 10) {
           SharedPreferences pref = await SharedPreferences.getInstance();
@@ -884,7 +885,8 @@ class _QuickRechargeState extends State<QuickRecharge> {
           }
         else if (response.status == 1)
         {
-          Navigator.pop(context);
+         // Navigator.pop(context);
+          showAlertDialog(context);
         }
 
       });
@@ -897,11 +899,41 @@ class _QuickRechargeState extends State<QuickRecharge> {
               builder: (_) =>
                   WebView()));
        */
-      Navigator.pop(context);
+     // Navigator.pop(context);
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
   }
+
+  showAlertDialog(BuildContext context) {
+
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Quick Recharge"),
+      content: Text("Congratualation Your Recharge is Successfully"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 
   Widget _mostRescentSubscriptionListView(
       BuildContext context,
@@ -1608,5 +1640,13 @@ class _QuickRechargeState extends State<QuickRecharge> {
                 EdgeInsets.only(left: 0.0, right: 0.0, top: 5.0, bottom: 5.0),
           );
         });
+  }
+}
+
+
+extension Precision on double {
+  double toPrecision(int fractionDigits) {
+    double mod = pow(10, fractionDigits.toDouble());
+    return ((this * mod).round().toDouble() / mod);
   }
 }

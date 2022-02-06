@@ -460,12 +460,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                                 prefs.setString('encDvcMapId', encDvcMapId);
                                                 prefs.setString('subsId', subsId);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          QuickRecharge()),
-                                                );
+                                                // Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
+                                                //       builder: (context) =>
+                                                //           QuickRecharge()),
+                                                // );
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder: (context) =>  QuickRecharge(),
+                                                ))
+                                                    .then((value) {
+                                                  // you can do what you need here
+                                                  // setState etc.
+                                                  print("coming from quickrecharge page");
+                                                  _loadUserInfo();
+                                                });
                                               },
                                               child: Row(children: [
                                                 Container(
